@@ -1,0 +1,20 @@
+{
+  "URL": {
+    "basic": "https://www.pivotaltracker.com/services/v5",
+    "projects": "/projects/$ID(0)",
+    "stories": "/projects/$ID(0)/stories/$ID(1)",
+    "tasks": "/projects/$ID(0)/stories/$ID(1)/tasks/$ID(2)",
+    "comments": "/projects/$ID(0)/stories/$ID(1)/comments/$ID(2)",
+    "workspaces": "/my/workspaces/$ID(0)",
+    "accounts": "/accounts/$ID(0)",
+    "account_summary": "/account_summaries"
+  },
+  "USER": {
+    "1": {
+      "X-TrackerToken": "8546384678c50d8bd26e4aaf102808aa"
+    },
+    "2": "",
+    "3": ""
+  },
+  "PREFIX": "AWT03_"
+}
