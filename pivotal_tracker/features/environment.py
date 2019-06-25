@@ -11,4 +11,4 @@ def after_scenario(context, scenario):
 
 # This will be executed at the beginning of the all scenarios only once
 def before_all(context):
-    func.delete_items(context, 'projects', 'project_auto_created')
+    func.delete_items('projects')

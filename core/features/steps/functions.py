@@ -2,6 +2,7 @@ from json import loads
 from datetime import datetime
 from core.request_api.generic_api import GenericApi
 from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
+import json
 
 
 current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
@@ -57,21 +58,24 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
 # Delete items of the object
 # object_endpoint: object end point it should be added to the main url
 # prefix_find: prefix that should be found in the list of the objects
-def delete_items(object_endpoint, prefix_find):
+def delete_items(object_endpoint):
     api = GenericApi()
     pivotal_config = get_config(pivotal_tracker_path + "\\config.json")
     api.set_config(pivotal_config)
     headers = pivotal_config.get("USER").get(str(1))
     basic = pivotal_config.get("URL").get("basic")
+    prefix = pivotal_config.get("PREFIX")
     url = basic + '/' + object_endpoint
     api.set_url(url)
     http_method = 'GET'
-    response = api.do_request(http_method.lower(), headers=headers)
-    data = response.json()
-    delete_items_from_list(api, headers, data, prefix_find)
+    api.do_request(http_method.lower(), headers=headers)
+    data = json.loads(api.get_full_response())
+    delete_items_from_list(api, headers, data, prefix)
 
 
 # Delete items by id of the object list
+# api: object to do the request methods
+# headers: for using the token for the request
 # data: where all object item list is saved
 # compare_project_name: name of the object that should be compared
 # url_prepare: the url where items will be delete by id parameter
@@ -83,6 +87,7 @@ def delete_items_from_list(api, headers, data, compare_project_name):
             object_id = value.get('id', None)
             url_prepare = '{0}/{1}'.format(api.get_url(), object_id)
             api.set_url(url_prepare)
-            response = api.do_request(http_method.lower(), headers)
-            data = response.text
+            api.do_request(http_method.lower(), headers)
+            response = api.get_full_response()
+            data = json.loads(response)
             print(data)
