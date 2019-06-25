@@ -11,12 +11,22 @@
     "account_summary": "/account_summaries",
     "memberships": "/accounts/$ID(0)/memberships/$ID(1)"
   },
-  "ACCOUNT_ID": "1100150",
+  "TOKEN_HEADER" : "X-TrackerToken",
+  "PREFIX": "AWT03_",
+
   "USER": {
-    "HEADER" : "X-TrackerToken",
-    "3190382": "8546384678c50d8bd26e4aaf102808aa",
-    "3194048": "b13e2656993a6912c85a79bd40b6bcab",
-    "3194054": "485646e711b6f56151e32163aaeed717"
+    "owner": {
+      "ID": "3190382",
+      "TOKEN": "8546384678c50d8bd26e4aaf102808aa"
+    },
+    "member1": {
+      "ID": "3194048",
+      "TOKEN": "b13e2656993a6912c85a79bd40b6bcab"
+    },
+    "member2": {
+      "ID": "3190382",
+      "3194054": "485646e711b6f56151e32163aaeed717"
+    }
   },
-  "PREFIX": "AWT03_"
+  "ACCOUNT_ID": "1100150"
 }
