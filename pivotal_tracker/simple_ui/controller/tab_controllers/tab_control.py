@@ -12,7 +12,7 @@ class TabControl(ABC):
         self._api.set_config(self._get_config())
         self._headers = {}
         user_config = self._get_config().get("USER")
-        self._headers[user_config.get("HEADER")] = user_config.get("1")
+        self._headers[user_config.get("HEADER")] = user_config.get("3190382")
 
     def _show_response(self):
         self._view.set_request_status(str(self._api.get_status()))
