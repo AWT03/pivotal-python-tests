@@ -26,5 +26,5 @@ class AccountsControl(TabControl):
 
     def _get_accounts_summary(self):
         self._update_api(True)
-        self._api.do_get_request()
+        self._generic_get()
         self._show_response()

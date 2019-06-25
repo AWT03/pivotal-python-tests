@@ -1,4 +1,5 @@
 from json import dumps, JSONDecodeError
+from simplejson.errors import JSONDecodeError
 from requests import request
 
 

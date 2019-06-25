@@ -19,6 +19,7 @@ def generate_data(context):
     if context.text:
         data = context.text.replace('(prefix)', context.api.get_config().get("PREFIX"))
         data = data.replace('(current_date_time)', current_date_time)
+        data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
         data = loads(data)
     else:
         data = {}

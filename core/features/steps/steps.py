@@ -30,6 +30,11 @@ def step_impl(context, post_type, feature):
     do_request(context, feature, post_type, context.headers, False)
 
 
+@when('I make sure last id is None')
+def set_imp(context):
+    context.saved_ids[-1] = ''
+
+
 @then('I expect status code is {status_code}')
 def step_impl(context, status_code):
     assert str(context.api.get_status()) == str(status_code)

@@ -9,12 +9,12 @@
     "accounts": "/accounts/$ID(0)",
     "account_summary": "/account_summaries"
   },
+  "ACCOUNT_ID": "1100150",
   "USER": {
-    "1": {
-      "X-TrackerToken": "8546384678c50d8bd26e4aaf102808aa"
-    },
-    "2": "",
-    "3": ""
+    "HEADER" : "X-TrackerToken",
+    "1": "8546384678c50d8bd26e4aaf102808aa",
+    "2": "b13e2656993a6912c85a79bd40b6bcab",
+    "3": "485646e711b6f56151e32163aaeed717"
   },
   "PREFIX": "AWT03_"
 }
