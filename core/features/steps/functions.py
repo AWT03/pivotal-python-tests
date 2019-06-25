@@ -1,5 +1,8 @@
 from json import loads
 from datetime import datetime
+from core.request_api.generic_api import GenericApi
+from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
+
 
 current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
 
@@ -49,3 +52,37 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
     context.api.do_request(http_method.lower(), data=data, headers=headers)
     if http_method.lower() == 'post':
         save_to_delete(context, is_requirement)
+
+
+# Delete items of the object
+# object_endpoint: object end point it should be added to the main url
+# prefix_find: prefix that should be found in the list of the objects
+def delete_items(object_endpoint, prefix_find):
+    api = GenericApi()
+    pivotal_config = get_config(pivotal_tracker_path + "\\config.json")
+    api.set_config(pivotal_config)
+    headers = pivotal_config.get("USER").get(str(1))
+    basic = pivotal_config.get("URL").get("basic")
+    url = basic + '/' + object_endpoint
+    api.set_url(url)
+    http_method = 'GET'
+    response = api.do_request(http_method.lower(), headers=headers)
+    data = response.json()
+    delete_items_from_list(api, headers, data, prefix_find)
+
+
+# Delete items by id of the object list
+# data: where all object item list is saved
+# compare_project_name: name of the object that should be compared
+# url_prepare: the url where items will be delete by id parameter
+def delete_items_from_list(api, headers, data, compare_project_name):
+    http_method = 'DELETE'
+    for value in data:
+        object_name = value.get('name', None)
+        if compare_project_name in object_name:
+            object_id = value.get('id', None)
+            url_prepare = '{0}/{1}'.format(api.get_url(), object_id)
+            api.set_url(url_prepare)
+            response = api.do_request(http_method.lower(), headers)
+            data = response.text
+            print(data)
