@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton, QLineEdit, \
     QCheckBox, QTextEdit
 from pivotal_tracker.simple_ui.view.chuchusmote_splitter import ChuchusmoteSplitter
-from jsons import loads
+from json import loads
 
 
 class WorkspacesWidget(QWidget):

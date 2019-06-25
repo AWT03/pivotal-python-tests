@@ -1,4 +1,5 @@
 from json import loads
+from os.path import join
 from abc import ABC, abstractmethod
 from core.request_api.generic_api import GenericApi
 from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
@@ -17,7 +18,7 @@ class TabControl(ABC):
 
     @staticmethod
     def _get_config():
-        f = open(pivotal_tracker_path + "\\config.json")
+        f = open(join(pivotal_tracker_path, "config.json"))
         config = f.read()
         f.close()
         config = loads(config)
