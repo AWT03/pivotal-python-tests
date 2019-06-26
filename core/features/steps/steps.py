@@ -63,6 +63,13 @@ def step_impl(context):
     assert isinstance(api_response, list)
 
 
+@then('I expect the response list contains {n} values')
+def step_imp(context, n):
+    api_response = loads(context.api.get_full_response())
+    assert isinstance(api_response, list)
+    assert len(api_response) == int(n)
+
+
 @step('delete urls marked to delete')
 def step_impl(context):
     for url in context.to_delete:
