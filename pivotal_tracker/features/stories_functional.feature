@@ -5,7 +5,7 @@ Feature: Stories Functions
 # For each case we need a project and a story to interact with
 Background: precondition
   Given I start a connection with the API
-    And I log in as user 3190382
+    And I log in as user owner
     And I send a POST request to projects with data
     '''
     {"name": "(prefix)_project_(current_date_time)",
