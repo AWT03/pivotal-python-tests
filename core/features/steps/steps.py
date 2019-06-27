@@ -15,12 +15,28 @@ def step_impl(context):
 @given(u'I send a {post_type} request to {feature} with data')
 def step_impl(context, post_type, feature):
     assert context.text is not None
+    context.data_text = context.text
+    do_request(context, feature, post_type, context.headers, True)
+
+
+@given(u'I send a {post_type} request to {feature} with {data_tag} data from {config_file_path}')
+def step_impl(context, post_type, feature, data_tag, config_file_path):
+    assert context.text is None
+    context.data_text = get_data_text(config_file_path, data_tag)
     do_request(context, feature, post_type, context.headers, True)
 
 
 @when(u'I send a {post_type} request to {feature} with data')
 def step_impl(context, post_type, feature):
     assert context.text is not None
+    context.data_text = context.text
+    do_request(context, feature, post_type, context.headers, False)
+
+
+@when(u'I send a {post_type} request to {feature} with {data_tag} data from {config_file_path}')
+def step_impl(context, post_type, feature, data_tag, config_file_path):
+    assert context.text is None
+    context.data_text = get_data_text(config_file_path, data_tag)
     do_request(context, feature, post_type, context.headers, False)
 
 
@@ -37,11 +53,25 @@ def set_imp(context):
 
 @then('I expect status code is {status_code}')
 def step_impl(context, status_code):
+    print(context.api.get_status())
     assert str(context.api.get_status()) == str(status_code)
 
 
-@then('I expect the single response contains')
+@then('I expect the single response contains previously set values')
 def step_impl(context):
+    must_contain = generate_data(context)
+    assert must_contain is not None
+    api_response = loads(context.api.get_full_response())
+    assert api_response is not None
+    for tag in must_contain:
+        assert tag in api_response
+        assert api_response[tag] == must_contain[tag]
+
+
+@then('I expect the single response contains {data_tag} data from {config_file_path}')
+def step_impl(context, data_tag, config_file_path):
+    assert context.text is None
+    context.data_text = get_data_text(config_file_path, data_tag)
     must_contain = generate_data(context)
     assert must_contain is not None
     api_response = loads(context.api.get_full_response())

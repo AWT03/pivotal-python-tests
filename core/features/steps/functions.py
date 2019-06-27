@@ -1,5 +1,7 @@
-from json import loads
+from json import loads, dumps
 from datetime import datetime
+from os.path import join
+from project_path import PROJECT_PATH
 
 current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
 
@@ -14,10 +16,18 @@ def get_config(config_path):
     return config
 
 
-# From a context.text returns data as a dict
+def get_data_text(config_file_path, data_tag):
+    path_to_config = join(PROJECT_PATH, *config_file_path.split("/"))
+    f = open(path_to_config)
+    data_text = dumps(loads(f.read())[data_tag])
+    f.close()
+    return data_text
+
+
+# From a context.data_text returns data as a dict
 def generate_data(context):
-    if context.text:
-        data = context.text.replace('(prefix)', context.api.get_config().get("PREFIX"))
+    if context.data_text:
+        data = context.data_text.replace('(prefix)', context.api.get_config().get("PREFIX"))
         data = data.replace('(current_date_time)', current_date_time)
         data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
         data = loads(data)
