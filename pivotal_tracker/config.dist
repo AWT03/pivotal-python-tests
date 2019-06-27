@@ -1,6 +1,6 @@
 {
   "URL": {
-    "basic": "https://www.pivotaltracker.com/services/v5",
+    "base": "https://www.pivotaltracker.com/services/v5",
     "me": "/me",
     "projects": "/projects/$ID(0)",
     "stories": "/projects/$ID(0)/stories/",
