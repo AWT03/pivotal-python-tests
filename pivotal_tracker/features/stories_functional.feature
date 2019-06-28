@@ -19,5 +19,5 @@ Background: precondition
   Scenario: Story GET all stories in project
      When I send a POST request to stories with base data from /pivotal_tracker/features/test_data/stories.json
       And I send a GET request to stories
-#     Then I expect the response list contains 1 values
-      Then I expect status code is 200
+     Then I expect the response list contains 1 values
+      And I expect status code is 200
