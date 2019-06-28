@@ -3,6 +3,7 @@ from datetime import datetime
 from core.request_api.generic_api import GenericApi
 from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 import json
+from os.path import join
 
 
 current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
@@ -58,10 +59,9 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
 
 # Delete items of the object
 # object_endpoint: object end point it should be added to the main url
-# prefix_find: prefix that should be found in the list of the objects
 def delete_items(object_endpoint):
     api = GenericApi()
-    pivotal_config = get_config(pivotal_tracker_path + "\\config.json")
+    pivotal_config = get_config(join(pivotal_tracker_path, "config.json"))
     api.set_config(pivotal_config)
     user_config = pivotal_config.get("USER").get('owner')
     headers = {pivotal_config.get("TOKEN_HEADER"): user_config.get("TOKEN")}
@@ -80,7 +80,6 @@ def delete_items(object_endpoint):
 # headers: for using the token for the request
 # data: where all object item list is saved
 # compare_project_name: name of the object that should be compared
-# url_prepare: the url where items will be delete by id parameter
 def delete_items_from_list(api, headers, data, compare_project_name):
     for value in data:
         object_name = value.get('name', None)
