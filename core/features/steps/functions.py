@@ -80,14 +80,10 @@ def delete_items(object_endpoint):
 # compare_project_name: name of the object that should be compared
 # url_prepare: the url where items will be delete by id parameter
 def delete_items_from_list(api, headers, data, compare_project_name):
-    http_method = 'DELETE'
     for value in data:
         object_name = value.get('name', None)
         if compare_project_name in object_name:
             object_id = value.get('id', None)
             url_prepare = '{0}/{1}'.format(api.get_url(), object_id)
             api.set_url(url_prepare)
-            api.do_request(http_method.lower(), headers)
-            response = api.get_full_response()
-            data = json.loads(response)
-            print(data)
+            api.do_request('delete', headers=headers)
