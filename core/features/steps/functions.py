@@ -63,7 +63,8 @@ def delete_items(object_endpoint):
     api = GenericApi()
     pivotal_config = get_config(pivotal_tracker_path + "\\config.json")
     api.set_config(pivotal_config)
-    headers = pivotal_config.get("USER").get(str(1))
+    user_config = pivotal_config.get("USER").get('owner')
+    headers = {pivotal_config.get("TOKEN_HEADER"): user_config.get("TOKEN")}
     basic = pivotal_config.get("URL").get("basic")
     prefix = pivotal_config.get("PREFIX")
     url = basic + '/' + object_endpoint
