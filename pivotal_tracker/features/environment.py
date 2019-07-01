@@ -1,4 +1,4 @@
-from core.features.steps import functions as func
+from pivotal_tracker.features.steps import functions as func
 
 
 # After each scenario we will be deleting all data that was created

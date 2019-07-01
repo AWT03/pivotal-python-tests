@@ -4,7 +4,7 @@ Feature: Story Functions
 # We define a background that will be run each scenario
 # For each case we need a project and a story to interact with
 Background: precondition
-  Given I start a connection with the API
+  Given I start a connection with the Pivotal Tracker API
     And I log in as user owner
     And I send a POST request to projects with data
     '''

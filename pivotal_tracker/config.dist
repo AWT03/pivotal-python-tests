@@ -1,18 +1,5 @@
 {
-  "URL": {
-    "base": "https://www.pivotaltracker.com/services/v5",
-    "me": "/me",
-    "projects": "/projects/$ID(0)",
-    "stories": "/projects/$ID(0)/stories/",
-    "story": "/projects/$ID(0)/stories/$ID(1)",
-    "tasks": "/projects/$ID(0)/stories/$ID(1)/tasks/$ID(2)",
-    "comments": "/projects/$ID(0)/stories/$ID(1)/comments/$ID(2)",
-    "workspaces": "/my/workspaces/$ID(0)",
-    "accounts": "/accounts/$ID(0)",
-    "account_summary": "/account_summaries",
-    "memberships": "/accounts/$ID(0)/memberships/$ID(1)"
-  },
-  "TOKEN_HEADER" : "X-TrackerToken",
+  "BASE_URL": ""
 
   "PREFIX": "",
   "USER": {
@@ -29,5 +16,6 @@
       "3194054": ""
     }
   },
+  "TOKEN_HEADER" : "",
   "ACCOUNT_ID": ""
 }
