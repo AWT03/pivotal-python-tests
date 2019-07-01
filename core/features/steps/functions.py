@@ -32,6 +32,23 @@ def generate_data(context):
         data = data.replace('(current_date_time)', current_date_time)
         data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
         data = loads(data)
+    elif context.table:
+        data_list = context.data_row
+        prefix = context.api.get_config().get("PREFIX")
+        data_prepare = '{'
+        data_prepare_fin = '}'
+        coma = ','
+        row_header = data_list.headings
+        for head in row_header:
+            if head == 'description' or head == 'name':
+                to_replace = data_list[head]
+                to_replace = to_replace.replace('(prefix)', prefix)
+                to_replace = to_replace.replace('(random)', context.current_time_random)
+                data_prepare = data_prepare + '"' + head + '":"' + to_replace + '"'
+            else:
+                data_prepare = data_prepare + coma + '"' + head + '":"' + data_list[head] + '"'
+        data_prepare = data_prepare + data_prepare_fin
+        data = loads(data_prepare)
     else:
         data = {}
     return data
@@ -59,5 +76,10 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
     context.api.build_end_point(feature_key, *context.saved_ids)
     data = generate_data(context)
     context.api.do_request(http_method.lower(), data=data, headers=headers)
-    if http_method.lower() == 'post':
-        save_to_delete(context, is_requirement)
+    response = loads(context.api.get_full_response())
+    print(response)
+    if response:
+        if response.get('kind', None) != 'error':
+            if http_method.lower() == 'post':
+                if context.table is None:
+                    save_to_delete(context, is_requirement)

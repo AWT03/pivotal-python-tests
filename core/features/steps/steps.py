@@ -14,9 +14,20 @@ def step_impl(context):
 
 @given(u'I send a {post_type} request to {feature} with data')
 def step_impl(context, post_type, feature):
-    assert context.text is not None
-    context.data_text = context.text
-    do_request(context, feature, post_type, context.headers, True)
+    if context.text:
+        context.data_text = context.text
+        do_request(context, feature, post_type, context.headers, True)
+    elif context.table:
+        test1 = context.api.get_config().get("CONTENT_TYPE_HEADER")
+        text2 = context.api.get_config().get("CONTENT_TYPE_VALUE")
+        #context.headers.update({context.api.get_config().get("CONTENT_TYPE_HEADER"):
+         #                       context.api.get_config().get("CONTENT_TYPE_VALUE")})
+        for row in context.table:
+            current_time_random = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S.%f')[:-3]
+            context.current_time_random = current_time_random
+            context.data_row = row
+            context.data_text = None
+            do_request(context, feature, post_type, context.headers, False)
 
 
 @given(u'I send a {post_type} request to {feature} with {data_tag} data from {config_file_path}')
