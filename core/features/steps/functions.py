@@ -1,9 +1,9 @@
-from json import loads
+from json import loads, dumps
+from os.path import join
 from datetime import datetime
+from project_path import PROJECT_PATH
 from core.request_api.generic_api import GenericApi
 from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
-import json
-from os.path import join
 
 
 current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
@@ -19,10 +19,18 @@ def get_config(config_path):
     return config
 
 
-# From a context.text returns data as a dict
+def get_data_text(config_file_path, data_tag):
+    path_to_config = join(PROJECT_PATH, *config_file_path.split("/"))
+    f = open(path_to_config)
+    data_text = dumps(loads(f.read())[data_tag])
+    f.close()
+    return data_text
+
+
+# From a context.data_text returns data as a dict
 def generate_data(context):
-    if context.text:
-        data = context.text.replace('(prefix)', context.api.get_config().get("PREFIX"))
+    if context.data_text:
+        data = context.data_text.replace('(prefix)', context.api.get_config().get("PREFIX"))
         data = data.replace('(current_date_time)', current_date_time)
         data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
         data = loads(data)
@@ -65,13 +73,13 @@ def delete_items(object_endpoint):
     api.set_config(pivotal_config)
     user_config = pivotal_config.get("USER").get('owner')
     headers = {pivotal_config.get("TOKEN_HEADER"): user_config.get("TOKEN")}
-    basic = pivotal_config.get("URL").get("basic")
+    basic = pivotal_config.get("URL").get("base")
     prefix = pivotal_config.get("PREFIX")
     url = basic + '/' + object_endpoint
     api.set_url(url)
     http_method = 'GET'
     api.do_request(http_method.lower(), headers=headers)
-    data = json.loads(api.get_full_response())
+    data = loads(api.get_full_response())
     delete_items_from_list(api, headers, data, prefix)
 
 

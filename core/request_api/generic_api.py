@@ -12,7 +12,7 @@ class GenericApi:
 
     # Build the end_point (url) for request according to configuration file
     def build_end_point(self, tag, *ids):
-        end_point = self.__config['URL']['basic'] + self.__config['URL'][tag]
+        end_point = self.__config['URL']['base'] + self.__config['URL'][tag]
         index = 0
         for n_id in ids:
             end_point = end_point.replace('$ID(' + str(index) + ')', n_id)

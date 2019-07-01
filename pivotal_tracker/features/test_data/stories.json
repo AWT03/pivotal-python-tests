@@ -1,0 +1,9 @@
+{
+  "base": {
+    "name": "(prefix)_story_(current_date_time)"
+  },
+  "project": {
+    "name": "(prefix)_project_(current_date_time)",
+    "account_id": "(current_account_id)"
+  }
+}

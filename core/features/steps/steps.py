@@ -15,18 +15,35 @@ def step_impl(context):
 @given(u'I send a {post_type} request to {feature} with data')
 def step_impl(context, post_type, feature):
     assert context.text is not None
+    context.data_text = context.text
+    do_request(context, feature, post_type, context.headers, True)
+
+
+@given(u'I send a {post_type} request to {feature} with {data_tag} data from {config_file_path}')
+def step_impl(context, post_type, feature, data_tag, config_file_path):
+    assert context.text is None
+    context.data_text = get_data_text(config_file_path, data_tag)
     do_request(context, feature, post_type, context.headers, True)
 
 
 @when(u'I send a {post_type} request to {feature} with data')
 def step_impl(context, post_type, feature):
     assert context.text is not None
+    context.data_text = context.text
+    do_request(context, feature, post_type, context.headers, False)
+
+
+@when(u'I send a {post_type} request to {feature} with {data_tag} data from {config_file_path}')
+def step_impl(context, post_type, feature, data_tag, config_file_path):
+    assert context.text is None
+    context.data_text = get_data_text(config_file_path, data_tag)
     do_request(context, feature, post_type, context.headers, False)
 
 
 @when(u'I send a {post_type} request to {feature}')
 def step_impl(context, post_type, feature):
     assert context.text is None
+    context.data_text = {}
     do_request(context, feature, post_type, context.headers, False)
 
 
@@ -40,8 +57,33 @@ def step_impl(context, status_code):
     assert str(context.api.get_status()) == str(status_code)
 
 
+@then('I expect the single response contains previously set values')
+def step_impl(context):
+    must_contain = generate_data(context)
+    assert must_contain is not None
+    api_response = loads(context.api.get_full_response())
+    assert api_response is not None
+    for tag in must_contain:
+        assert tag in api_response
+        assert api_response[tag] == must_contain[tag]
+
+
+@then('I expect the single response contains {data_tag} data from {config_file_path}')
+def step_impl(context, data_tag, config_file_path):
+    assert context.text is None
+    context.data_text = get_data_text(config_file_path, data_tag)
+    must_contain = generate_data(context)
+    assert must_contain is not None
+    api_response = loads(context.api.get_full_response())
+    assert api_response is not None
+    for tag in must_contain:
+        assert tag in api_response
+        assert api_response[tag] == must_contain[tag]
+
+
 @then('I expect the single response contains')
 def step_impl(context):
+    assert context.text is not None
     must_contain = generate_data(context)
     assert must_contain is not None
     api_response = loads(context.api.get_full_response())
@@ -61,6 +103,13 @@ def step_impl(context, field):
 def step_impl(context):
     api_response = loads(context.api.get_full_response())
     assert isinstance(api_response, list)
+
+
+@then('I expect the response list contains {n} values')
+def step_imp(context, n):
+    api_response = loads(context.api.get_full_response())
+    assert isinstance(api_response, list)
+    assert len(api_response) == int(n)
 
 
 @step('delete urls marked to delete')
