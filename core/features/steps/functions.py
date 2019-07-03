@@ -17,10 +17,10 @@ def get_config(config_path):
     return config
 
 
-def get_data_text(config_file_path, data_tag):
-    path_to_config = join(PROJECT_PATH, *config_file_path.split("/"))
+def get_data_text(file_path):
+    path_to_config = join(PROJECT_PATH, *file_path.split("/"))
     f = open(path_to_config)
-    data_text = dumps(loads(f.read())[data_tag])
+    data_text = dumps(loads(f.read()))
     f.close()
     return data_text
 

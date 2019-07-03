@@ -1,7 +1,9 @@
-from behave import given
-from core.features.steps.functions import *
+from behave import given, then
+from pivotal_tracker.features.steps.functions import *
 from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 from pivotal_tracker.pivotal_tracker_api import PivotalTrackerApi
+
+path_data_files = get_config(join(pivotal_tracker_path, 'config.json'))['PATH_DATA_FILES']
 
 
 # This way of logging as user is proper of Pivotal Tracker
@@ -22,4 +24,17 @@ def step_impl(context):
     context.api = api
     context.to_delete = []
     context.saved_ids = ['']
+    context.path_data_files = path_data_files
     context.headers = None
+
+
+@then('I expect the {kind} message {message_tag}')
+def step_imp(context, kind, message_tag):
+    assert context.text is None
+    api_response = loads(context.api.get_full_response())
+    assert api_response is not None
+    message = get_message(message_tag)
+    assert message is not None
+    for tag in message:
+        assert tag in api_response
+        assert api_response[tag] == message[tag]
