@@ -1,5 +1,5 @@
 # On this feature we will make sure all functions are working
-Feature: Stories Functions
+Feature: Stories Functional
 
 # We define a background that will be run each scenario
 # For each case we need a project to interact with
