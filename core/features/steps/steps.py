@@ -26,6 +26,38 @@ def step_impl(context, post_type, feature):
             do_request(context, feature, post_type, context.headers, False)
 
 
+@when(u'I send a "{post_type}" request to "{feature}" with data "{description}" "{complete}" "{position}"')
+def step_impl(context, post_type, feature, description, complete, position):
+    data_dict = {'description':description, 'complete':bool(complete), 'position':int(position)}
+    data = dumps(data_dict)
+    context.data = data
+    context.data_text = None
+    content_type = context.api.get_config()['Content-Type']
+    context.headers.update({"Content-Type": content_type})
+    do_request(context, feature, post_type, context.headers, True)
+
+@when(u'I send a "{post_type}" request to "{feature}" with data')
+def step_impl(context, post_type, feature):
+#     #data_dict = {'description':description, 'complete':bool(complete), 'position':int(position)}
+#     if context.table:
+#         data = context.table
+#     if context.text:
+#         data = context.text
+    if context.table:
+        for row in context.table:
+            current_time_random = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S.%f')[:-3]
+            context.current_time_random = current_time_random
+            context.data_row = row
+            context.data_text = None
+            do_request(context, feature, post_type, context.headers, False)
+#     # data = dumps(data_dict)
+#     # context.data = data
+#     # context.data_text = None
+#     # content_type = context.api.get_config()['Content-Type']
+#     # context.headers.update({"Content-Type": content_type})
+#     # do_request(context, feature, post_type, context.headers, True)
+
+
 @given(u'I send a {post_type} request to {feature} with {data_tag} data from {config_file_path}')
 def step_impl(context, post_type, feature, data_tag, config_file_path):
     assert context.text is None

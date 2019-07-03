@@ -61,3 +61,5 @@ Feature: Task
     Then I expect status code is 204
     And I send a GET request to tasks
     And I expect this error get_deleted_object is thrown
+
+
