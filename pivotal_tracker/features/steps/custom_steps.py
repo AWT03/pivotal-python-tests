@@ -8,12 +8,15 @@ from pivotal_tracker.pivotal_tracker_api import PivotalTrackerApi
 @given('I log in as user {user_name}')
 def step_impl(context, user_name):
     pivotal_config = get_config(join(pivotal_tracker_path, "config.json"))
+    pivotal_message = get_config(join(pivotal_tracker_path, "message.json"))
     context.api.set_config(pivotal_config)
+    context.api.set_message(pivotal_message)
     if not context.headers:
         context.headers = {}
     user_config = pivotal_config.get("USER").get(user_name)
     context.headers[pivotal_config.get("TOKEN_HEADER")] = user_config.get("TOKEN")
     context.user_id = user_config.get("ID")
+    context.path_data_files = join(pivotal_tracker_path, pivotal_config.get("PATH_DATA_FILES"))
 
 
 @given('I start a connection with the Pivotal Tracker API')
@@ -23,3 +26,6 @@ def step_impl(context):
     context.to_delete = []
     context.saved_ids = ['']
     context.headers = None
+    context.ids_list = []
+    context.save_response = []
+    context.data = None

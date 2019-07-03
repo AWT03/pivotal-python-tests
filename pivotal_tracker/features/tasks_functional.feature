@@ -14,22 +14,28 @@ Feature: Tasks
   '''
 
   # Basic operations
-#  Scenario: Task POST
-#    When I send a "POST" request to "tasks" with data
-#  '''
-#  {"description": "(prefix)_task_(current_date_time)"}
-#  '''
-#    Then I expect status code is 200
-#    And I expect the single response contains
-#  '''
-#  {
-#  "description": "(prefix)_task_(current_date_time)",
-#  "complete": "false",
-#    "position": "1"
-#  }
-#  '''
-#    And I expect the response id is not null
+  @acceptance
+  Scenario: Create a Task
+    When I send a POST request to tasks with data
+  '''
+  {
+  "description": "(prefix)_task_(current_date_time)",
+  "complete": "false",
+  "position": "1"
+  }
+  '''
+    Then I expect status code is 200
+    And I expect the single response contains
+  '''
+  {
+  "description": "(prefix)_task_(current_date_time)",
+  "complete": "false",
+  "position": "1"
+  }
+  '''
+    And I expect the response id is not null
 
+  @functional
   Scenario: Task GET all tasks in story
     Given I send a POST request to tasks with data
       | description            | complete | position |
@@ -38,10 +44,6 @@ Feature: Tasks
       | (prefix)_task_(random) | false    | 3        |
     When I send a GET request to tasks
     Then I expect status code is 200
-#    And I expect the response is a list with 3 items
-#    And I expect the items' ids obtained are equal to the items' ids created before
-#    And I expect the items' value obtained are equal to the "Task" items' value created before
-#      | description            | complete | position |
-#      | (prefix)_task_1 | false    | 1        |
-#      | (prefix)_task_2 | false    | 2        |
-#      | (prefix)_task_3 | false    | 3        |
+    And I expect the response list contains 3 values
+    And I expect the items' ids obtained are equal to the items' ids created before
+    And I expect the items' value obtained are equal to the items' value created before

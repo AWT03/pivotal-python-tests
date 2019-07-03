@@ -49,6 +49,10 @@ def generate_data(context):
                 data_prepare = data_prepare + coma + '"' + head + '":"' + data_list[head] + '"'
         data_prepare = data_prepare + data_prepare_fin
         data = loads(data_prepare)
+    elif context.data:
+        data = context.data
+        data = data.replace('(prefix)', context.api.get_config().get("PREFIX"))
+        data = data.replace('(current_date_time)', current_date_time)
     else:
         data = {}
     return data
@@ -66,6 +70,12 @@ def save_to_delete(context, is_requirement):
     context.to_delete.append(context.api.get_url()+str(obj_id))
 
 
+# To save a list of ids created
+def save_ids_data(context):
+    obj_id = loads(context.api.get_full_response())["id"]
+    context.ids_list.append(str(obj_id))
+
+
 # Does the request
 # context contains the api for the request and other data
 # feature_key, according to configuration file
@@ -79,7 +89,11 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
     response = loads(context.api.get_full_response())
     print(response)
     if response:
-        if response.get('kind', None) != 'error':
-            if http_method.lower() == 'post':
-                if context.table is None:
-                    save_to_delete(context, is_requirement)
+        if not isinstance(response, list):
+            if response.get('kind', None) != 'error':
+                if http_method.lower() == 'post':
+                    if context.table is None:
+                        save_to_delete(context, is_requirement)
+                    else:
+                        save_ids_data(context)
+                        context.save_response.append(response)
