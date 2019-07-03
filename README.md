@@ -36,4 +36,4 @@ you can fill this with "/pivotal_tracker/features/test_data". If customized test
 After filling all these field you can change the configuration file name "config.dist" -> "config.json". 
 Once we do this we are good to go for some testing. 
 
-You can simply go to the project folder and run form your terminal: **python3 test_pivotal_tracker.py**
+You can simply go to the project folder and run from your terminal: **python3 test_pivotal_tracker.py**
