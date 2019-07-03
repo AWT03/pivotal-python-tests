@@ -10,7 +10,7 @@ Background: preconditions
     And I send a POST request to story with data from stories_base.json
 
   # We delete the initial post to check if delete option is working
-  Scenario: Verify that I can delete a story
+  Scenario: Verify that I can delete a Story
      When I send a DELETE request to story
      Then I expect status code is 204
      When I send a GET request to story
@@ -18,13 +18,13 @@ Background: preconditions
       And I expect the error message unfound_resource
 
   # We put an arbitrary new name to the already created story
-  Scenario: Stories PUT a new name
+  Scenario: Verify that I can change a Story's name
      When I send a PUT request to story with data from stories_put_name.json
      Then I expect the single response contains data from stories_put_name.json
       And I expect status code is 200
 
   # We get the information from the created story
-  Scenario: Story GET a story information
+  Scenario: Verify that I can get a specific Story information
      When I send a GET request to story
      Then I expect the single response contains data from stories_base.json
       And I expect status code is 200
