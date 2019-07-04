@@ -22,7 +22,7 @@ def delete_items(object_endpoint):
     http_method = 'GET'
     api.do_request(http_method.lower(), headers=headers)
     data = loads(api.get_full_response())
-    delete_items_from_list(api, headers, data, prefix)
+    delete_items_from_list(api, headers, data, prefix, url)
 
 
 # Delete items by id of the object list
@@ -30,11 +30,12 @@ def delete_items(object_endpoint):
 # headers: for using the token for the request
 # data: where all object item list is saved
 # compare_project_name: name of the object that should be compared
-def delete_items_from_list(api, headers, data, compare_project_name):
+# url: this is BASE_URL plus endpoint
+def delete_items_from_list(api, headers, data, compare_project_name, url):
     for value in data:
         object_name = value.get('name', None)
         if compare_project_name in object_name:
             object_id = value.get('id', None)
-            url_prepare = '{0}/{1}'.format(api.get_url(), object_id)
+            url_prepare = '{0}/{1}'.format(url, object_id)
             api.set_url(url_prepare)
             api.do_request('delete', headers=headers)

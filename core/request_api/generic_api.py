@@ -9,6 +9,7 @@ class GenericApi:
         self._url = ""
         self._config = {}
         self._request = None
+        self._message = {}
 
     # Build the end_point (url) for request according to configuration file
     def build_end_point(self, tag, *ids):
@@ -45,3 +46,11 @@ class GenericApi:
     # Gets the configuration that the API object is currently using
     def get_config(self):
         return self._config
+
+    # Manually sets the messages that the API object will use (should be a dict)
+    def set_message(self, message):
+        self._message = message
+
+    # Gets the messages that the API object is currently using
+    def get_message(self):
+        return self._message
