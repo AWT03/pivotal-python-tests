@@ -5,6 +5,7 @@ from project_path import PROJECT_PATH
 
 
 current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
+current_ISO8601_datetime = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 # Gets the configuration from a path
@@ -42,6 +43,7 @@ def generate_data(context):
     if context.data_text:
         data = context.data_text.replace('(prefix)', context.api.get_config().get("PREFIX"))
         data = data.replace('(current_date_time)', current_date_time)
+        data = data.replace('(current_date_time_ISO8601)', current_ISO8601_datetime)
         data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
         data = loads(data)
     elif context.table:
