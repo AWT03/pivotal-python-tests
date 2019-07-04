@@ -49,12 +49,12 @@ Feature: Tasks
     And I expect the items' value obtained are equal to the items' value created before
 
   @functional
-  Scenario Outline: Create a Task with different ways two set up the complete field
-    When I send a "POST" request to "tasks" with data
+  Scenario Outline: Create a Task with different ways to set up the complete field
+    When I send a POST request to tasks with data
       | description   | complete   | position   |
       | <description> | <complete> | <position> |
     Examples:
       | description   | complete   | position   |
-      | (prefix)_task_(current_date_time) | false | 1 |
-      | (prefix)_task_(current_date_time) | true | 1 |
+      | (prefix)_task_(random) | false | 1 |
+      | (prefix)_task_(random) | true | 1 |
 

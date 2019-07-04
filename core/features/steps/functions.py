@@ -25,6 +25,18 @@ def get_data_text(config_file_path, data_tag):
     return data_text
 
 
+# From a context.table returns data as a dict
+def generate_dict_from_data_table(context):
+    if context.table:
+        data_list = context.data_row
+        dict_data = {}
+        row_header = data_list.headings
+        for head in row_header:
+            if head != 'error':
+                dict_data.update({head: data_list[head]})
+    return dict_data
+
+
 # From a context.data_text returns data as a dict
 def generate_data(context):
     if context.data_text:
@@ -33,22 +45,12 @@ def generate_data(context):
         data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
         data = loads(data)
     elif context.table:
-        data_list = context.data_row
+        dict_data = generate_dict_from_data_table(context)
+        data = dumps(dict_data)
         prefix = context.api.get_config().get("PREFIX")
-        data_prepare = '{'
-        data_prepare_fin = '}'
-        coma = ','
-        row_header = data_list.headings
-        for head in row_header:
-            if head == 'description' or head == 'name':
-                to_replace = data_list[head]
-                to_replace = to_replace.replace('(prefix)', prefix)
-                to_replace = to_replace.replace('(random)', context.current_time_random)
-                data_prepare = data_prepare + '"' + head + '":"' + to_replace + '"'
-            else:
-                data_prepare = data_prepare + coma + '"' + head + '":"' + data_list[head] + '"'
-        data_prepare = data_prepare + data_prepare_fin
-        data = loads(data_prepare)
+        data = data.replace('(prefix)', prefix)
+        data = data.replace('(random)', context.current_time_random)
+        data = loads(data)
     elif context.data:
         data = context.data
         data = data.replace('(prefix)', context.api.get_config().get("PREFIX"))
@@ -87,7 +89,6 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
     data = generate_data(context)
     context.api.do_request(http_method.lower(), data=data, headers=headers)
     response = loads(context.api.get_full_response())
-    print(response)
     if response:
         if not isinstance(response, list):
             if response.get('kind', None) != 'error':

@@ -1,5 +1,5 @@
 {
-  "BASE_URL": ""
+  "BASE_URL": "",
 
   "PREFIX": "",
   "USER": {
@@ -17,5 +17,7 @@
     }
   },
   "TOKEN_HEADER" : "",
-  "ACCOUNT_ID": ""
+  "ACCOUNT_ID": "",
+  "PATH_DATA_FILES": "",
+  "Content-Type": ""
 }
