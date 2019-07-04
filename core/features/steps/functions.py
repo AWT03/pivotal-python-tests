@@ -17,10 +17,10 @@ def get_config(config_path):
     return config
 
 
-def get_data_text(config_file_path, data_tag):
-    path_to_config = join(PROJECT_PATH, *config_file_path.split("/"))
+def get_data_text(file_path):
+    path_to_config = join(PROJECT_PATH, *file_path.split("/"))
     f = open(path_to_config)
-    data_text = dumps(loads(f.read())[data_tag])
+    data_text = dumps(loads(f.read()))
     f.close()
     return data_text
 
@@ -51,7 +51,7 @@ def generate_data(context):
         data = data.replace('(prefix)', prefix)
         data = data.replace('(random)', context.current_time_random)
         data = loads(data)
-    elif context.data:
+    elif "data" in context:
         data = context.data
         data = data.replace('(prefix)', context.api.get_config().get("PREFIX"))
         data = data.replace('(current_date_time)', current_date_time)

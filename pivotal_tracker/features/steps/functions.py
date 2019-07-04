@@ -3,6 +3,10 @@ from pivotal_tracker.pivotal_tracker_api import PivotalTrackerApi
 from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 
 
+def get_message(message_tag):
+    return get_config(join(pivotal_tracker_path, 'message.json'))[message_tag]
+
+
 # Delete items of the object
 # object_endpoint: object end point it should be added to the main url
 def delete_items(object_endpoint):

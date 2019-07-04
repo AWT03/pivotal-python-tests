@@ -15,7 +15,7 @@ Feature: Task Corner and Negative cases
 
   @corner_case
   Scenario: Create a Task with description field more than allowed
-    When I send a POST request to tasks with data in task.json
+    When I send a POST request to tasks with data from task.json
     Then I expect this error set_more_chars is thrown
 
 
