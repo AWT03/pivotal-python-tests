@@ -1,5 +1,40 @@
 {
   "error": {
     "404": "Not found"
+  },
+  "get_deleted_object": {
+    "code": "unfound_resource",
+    "kind": "error",
+    "error": "The object you tried to access could not be found.  It may have been removed by another user, you may be using the ID of another object type, or you may be trying to access a sub-resource at the wrong point in a tree."
+  },
+  "set_more_chars": {
+    "code": "invalid_parameter",
+    "kind": "error",
+    "error": "One or more request parameters was missing or invalid.",
+    "general_problem": "This extended_string is too long",
+    "requirement": "'description' parameter must be 1000 characters or less."
+  },
+  "set_empty_description_field":{
+      "code": "invalid_parameter",
+      "kind": "error",
+      "error": "One or more request parameters was missing or invalid.",
+      "general_problem": "Description can't be blank"
+  },
+  "set_position_more_than_size":{
+      "code": "invalid_parameter",
+      "kind": "error",
+      "error": "One or more request parameters was missing or invalid.",
+      "requirement": "Task position can not be greater than the number of tasks in the story plus 1"
+  },
+  "set_position_low_or_equal_zero":{
+    "code": "api_internal_error",
+    "kind": "error",
+    "error": "We encountered an unexpected, unhandleable error while processing your request.  The problem may be transient.  The failure has been logged."
+  },
+  "set_chars_in_position":{
+    "code": "invalid_parameter",
+    "kind": "error",
+    "error": "One or more request parameters was missing or invalid.",
+    "general_problem": "'position' must be an integer value"
   }
 }
