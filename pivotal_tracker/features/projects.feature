@@ -1,64 +1,87 @@
 Feature: projects
 Background: common log in
-  Given I start a connection with the API
-    And I log in as user 1
+    Given I start a connection with the Pivotal Tracker API
+    And I log in as user member2
+
+
+  Scenario: Task GET all tasks in story
+    Given I send a POST request to projects with data
+      | name                   |
+      | (prefix)_project_(random) |
+      | (prefix)_project_(random) |
+      | (prefix)_project_(random) |
+    When I send a GET request to projects
+    Then I expect status code is 200
+    And I expect the response list contains 3 values
+    And I expect the items' ids obtained are equal to the items' ids created before
+    And I expect the items' value obtained are equal to the items' value created before
+
+
+    @functional
+  Scenario Outline: Create a project with different project_type
+    When I send a POST request to projects with data
+      | name   | project_type   |
+      | <name> | <project_type> |
+    Then I expect status code is 200
+    Examples:
+      | name                      | project_type |
+      | (prefix)_project_(random) | public       |
+      | (prefix)_project_(random) | private      |
+
 
   Scenario: Project POST
-     When I send a POST request to projects with data
-          '''
-          {"name": "(prefix)_project_(current_date_time)"}
-          '''
-     Then I expect status code is 200
-      And I expect the single response contains
-          '''
-          {"name": "(prefix)_project_(current_date_time)"}
-          '''
-	  And I expect the response id is not null
-
-  Scenario: Project DELETE
-     When I send a POST request to projects with data
-          '''
-          {"name": "(prefix)_project_(current_date_time)"}
-          '''
-      And I send a DELETE request to projects
-     Then I expect status code is 204
-
-  Scenario: Project PUT a new name
-     When I send a POST request to projects with data
-          '''
-          {"name": "(prefix)_project_(current_date_time)"}
-          '''
-      And I send a PUT request to projects with data
-          '''
-          {"name": "(prefix)_new_name_(current_date_time)"}
-          '''
-     Then I expect the single response contains
-          '''
-          {"name": "(prefix)_new_name_(current_date_time)"}
-          '''
-      And I expect status code is 200
-
-  Scenario: Project GET a project information
-     When I send a POST request to projects with data
-          '''
-          {"name": "(prefix)_project_(current_date_time)"}
-          '''
-      And I send a GET request to projects
-     Then I expect the single response contains
-          '''
-          {"name": "(prefix)_project_(current_date_time)"}
-          '''
-      And I expect status code is 200
+    When I send a POST request to projects with data
+  '''
+  {"name": "(prefix)_project_(current_date_time)"}
+  '''
+   Then I expect status code is 200
+    And I expect the single response contains
+        '''
+        {"name": "(prefix)_project_(current_date_time)"}
+        '''
+    And I expect the response id is not null
 
   Scenario: Project GET all projects information
-      When I send a GET request to projects
-     Then I expect the response is a list
-      And I expect status code is 200
+    When I send a GET request to projects
+    Then I expect the response is a list
+     And I expect status code is 200
 
-# Hooks after and before scenario, they are run on every scenario
-# Hooks with tag on a specific scenario
-# Hook before all - delete/disable/hide all objects with prefix
-# Hook after - delete/disable/hide objects created
-# Acceptance, Functional
-# Negative (if i don't send something what error messages we get)
-# Corner test cases, is validating data is logically correct/coherent
+  Scenario: POST a project with "public" attribute to be visible for all
+     When I send a POST request to projects with data
+    '''
+    {"name": "(prefix)_project_(current_date_time)",
+    "public": "true"}
+    '''
+    And I log in as user member1
+    And I send a GET request to projects
+    Then I expect status code is 200
+
+    Scenario: Project name is larger than 50 characters
+    When I send a POST request to projects with data from project.json
+     Then I expect status code is 400
+     And I expect this error too_large_name is thrown
+
+    Scenario: Project POST with all fields
+      When I send a POST request to projects with data
+      '''
+      {"name": "(prefix)_project_(current_date_time)",
+      "public": "true",
+      "iteration_length": "2",
+      "week_start_day": "Monday",
+      "point_scale": "0,1,2,3",
+      "enable_tasks": "true",
+      "project_type": "private",
+      "enable_incoming_emails": "true"}
+      '''
+      Then I expect status code is 200
+
+  Scenario Outline: Create a project with out of range iteration length
+    When I send a POST request to projects with data
+      | name   | project_type   |
+      | <name> | <iteration_length> |
+    Then I expect status code is 400
+    Then I expect this error iteration_length_out_of_range is thrown
+    Examples:
+      | name                      | iteration_length |
+      | (prefix)_project_(random) | -1               |
+      | (prefix)_project_(random) | 8                |
