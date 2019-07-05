@@ -49,4 +49,6 @@ behave --verbose
 To run only features marked with a certain tag like "@acceptance" or "@functional":
 ```sh 
 behave -t acceptance
+behave -t functional
 ```
+You can check the behave for better understanding of the tool, [click here](https://behave.readthedocs.io/en/stable/).
