@@ -81,8 +81,6 @@ def set_imp(context):
 
 @then('I expect status code is {status_code}')
 def step_impl(context, status_code):
-    print(context.api.get_status())
-    print(context.api.get_full_response())
     assert str(context.api.get_status()) == str(status_code)
 
 
