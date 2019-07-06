@@ -1,0 +1,16 @@
+sudo: required
+language: python
+python:
+  - "3.7"
+addons:
+  sonarcloud:
+    organization: awt03
+    token:
+      secure: "$SONAR_TOKEN"
+install:
+  - pip3 install -r requirements.txt
+script:
+  - sonar-scanner
+  - behave pivotal_tracker/features --tags=~@wip
+notifications:
+  email: true
