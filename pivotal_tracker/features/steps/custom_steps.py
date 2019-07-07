@@ -58,8 +58,7 @@ def step_imp(context, kind, message_tag):
     for tag in message:
         assert tag in api_response
         assert api_response[tag] == message[tag]
-# =======
-#     context.ids_list = []
-#     context.save_response = []
-#     context.data = None
-# >>>>>>> 53401559b449d8342a8e241fb26444de88cc47e6
+     #context.ids_list = []
+     #context.save_response = []
+     #context.data = None
+
