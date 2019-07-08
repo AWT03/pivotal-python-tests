@@ -21,8 +21,8 @@ Feature: Task Corner and Negative cases
   }
   '''
 
-  @corner_case
-  Scenario Outline: Try to update a Task with description empty and position with different invalid values
+  @task @corner_case
+  Scenario Outline: Verify that I can not update a Task with description empty and position with different invalid values
     When I send a PUT request to tasks with data
       | description   | complete   | position   | error   |
       | <description> | <complete> | <position> | <error> |
@@ -35,4 +35,3 @@ Feature: Task Corner and Negative cases
       | (prefix)_project_(random) | false    | -1       | set_position_low_or_equal_zero       |
       | (prefix)_project_(random) | false    | 1.25     | set_chars_in_position                |
       | (prefix)_project_(random) | false    | task     | set_chars_in_position                |
-
