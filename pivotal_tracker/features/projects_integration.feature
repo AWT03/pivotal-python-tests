@@ -1,7 +1,7 @@
 Feature: Project
 Background: precondition
   Given I start a connection with the Pivotal Tracker API
-    And I log in as user member2
+    And I log in as user owner
     And I send a POST request to projects with data
     '''
     {"name": "(prefix)_project_(current_date_time)"}
@@ -22,6 +22,7 @@ Background: precondition
     '''
      Then I expect status code is 200
 
+  @defect
   Scenario: Project disable to create tasks
      When I send a PUT request to projects with data
       '''
@@ -31,5 +32,5 @@ Background: precondition
     '''
     {"description": "(prefix)_task_(current_date_time)"}
     '''
-     Then I expect status code is 200
+     Then I expect status code is 400
 

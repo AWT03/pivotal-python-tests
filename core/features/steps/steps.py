@@ -41,7 +41,7 @@ def step_impl(context, post_type, feature, description, complete, position):
 @given(u'I send a {post_type} request to {feature} with data from {config_file_path}')
 def step_impl(context, post_type, feature, config_file_path):
     assert context.text is None
-    context.data_text = get_data_text(join(context.path_data_files, config_file_path))
+    context.data_text = get_data_text(join(context.path_data_files, *config_file_path.split("/")))
     do_request(context, feature, post_type, context.headers, True)
 
 
@@ -62,7 +62,8 @@ def step_impl(context, post_type, feature):
 @when(u'I send a {post_type} request to {feature} with data from {config_file_path}')
 def step_impl(context, post_type, feature, config_file_path):
     assert context.text is None
-    context.data_text = get_data_text(join(context.path_data_files, config_file_path))
+    context.data_text = dumps(get_data_text(join(context.path_data_files, *config_file_path.split("/"))))
+    context.headers['Content-Type'] = 'application/json'
     do_request(context, feature, post_type, context.headers, False)
 
 
@@ -97,14 +98,15 @@ def step_impl(context):
 @then('I expect the single response contains data from {config_file_path}')
 def step_impl(context, config_file_path):
     assert context.text is None
-    context.data_text = get_data_text(join(context.path_data_files, config_file_path))
+    context.data_text = get_data_text(join(context.path_data_files, *config_file_path.split("/")))
     must_contain = generate_data(context)
     assert must_contain is not None
     api_response = loads(context.api.get_full_response())
     assert api_response is not None
     for tag in must_contain:
         assert tag in api_response
-        assert api_response[tag] == must_contain[tag]
+        if not isinstance(must_contain[tag], list):
+            assert api_response[tag] == must_contain[tag]
 
 
 @then('I expect the single response contains')
@@ -220,3 +222,8 @@ def step_impl(context, general_problem):
     api_response = loads(context.api.get_full_response())
     if api_response is not None:
         assert api_response.get("general_problem", None) == general_problem
+
+
+@then('I save the response id as URL reference')
+def step_impl(context):
+    context.saved_ids.append('')

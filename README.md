@@ -1,21 +1,33 @@
 # Pivotal Tests
 
-**Overview**
+
+## Overview
+
+[![Build status](https://travis-ci.com/AWT03/pivotal-tests.svg?branch=develop)](https://travis-ci.com/AWT03/pivotal-tests) 
+
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=AWT03_pivotal-tests&metric=alert_status)](https://sonarcloud.io/dashboard/index/AWT03_pivotal-tests)
+
 
 This project's objective is to set up some testing for the Pivotal Tracker API.
 
-**Requirements**
+## Requirements
 
-This project was intended to work with python 3.6. 
-This means all required libraries should be installed with "pip3 install".
-A list of required libraries can be found on "requirements.txt" file.
+This project was intended to work with python 3.6. A list of required libraries can be found on "requirements.txt" file.
+ 
+* behave
+* request
+* simplejson
 
-**About the project**
+This means all required libraries can be installed from the project path using:
+```sh 
+pip3 install -r requirements.txt
+```
+## About the project
 
 On the 'core' folder we intend to put generic steps and functions that can be used on any API testing. 
 We also included a generic API request class, this class can be inherited to customize request options.
 
-**Setting Up - PIVOTAL TRACKER**
+## Setting Up - PIVOTAL TRACKER
 
 Go to "pivotal_tracker" folder inside the project directory.
 There you will find a "config.dist" file (Configurations are based on json file format). 
@@ -34,6 +46,15 @@ you can fill this with "/pivotal_tracker/features/test_data". If customized test
 * "Content-Type": This depends on the type of request we are sending. If not customized please use "application/java".
 
 After filling all these field you can change the configuration file name "config.dist" -> "config.json". 
-Once we do this we are good to go for some testing. 
+Once we do this we are good to go for some testing.
 
-To test all Pivotal Tracker Features, you can simply go to the project folder and run from your terminal: **python3 test_pivotal_tracker.py**
+To run features you have to go to the project path and run:
+```sh 
+behave --verbose
+```
+To run only features marked with a certain tag like "@acceptance" or "@functional":
+```sh 
+behave -t acceptance
+behave -t functional
+```
+You can check the behave for better understanding of the tool, [click here](https://behave.readthedocs.io/en/stable/).

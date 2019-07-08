@@ -1,0 +1,7 @@
+{
+  "name": "(prefix)_story_(current_date_time)",
+  "description": "some random description",
+  "story_type": "feature",
+  "current_state": "accepted",
+  "estimate": 3
+}

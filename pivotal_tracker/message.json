@@ -25,6 +25,12 @@
       "error": "One or more request parameters was missing or invalid.",
       "general_problem": "Description can't be blank"
   },
+  "set_position_more_than_size_updating":{
+    "code": "invalid_parameter",
+    "kind": "error",
+    "error": "One or more request parameters was missing or invalid.",
+    "requirement": "Task position can not be greater than the number of tasks in the story"
+  },
   "set_position_more_than_size":{
       "code": "invalid_parameter",
       "kind": "error",
@@ -76,5 +82,10 @@
     "error": "One or more request parameters was missing or invalid.",
     "general_problem": "'iteration_length' must be an integer value",
     "kind": "error"
-}
+},
+  "invalid_parameter": {
+    "code": "invalid_parameter",
+    "error": "One or more request parameters was missing or invalid.",
+    "kind": "error"
+  }
 }

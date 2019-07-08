@@ -1,0 +1,11 @@
+{
+  "name": "(prefix)_story_(current_date_time)",
+  "tasks": [
+    {
+      "description": "Task 1, appear and exist."
+    },
+    {
+      "description": "Task 2, say goodbye and hit the road."
+    }
+  ]
+}

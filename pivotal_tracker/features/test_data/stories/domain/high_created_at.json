@@ -1,0 +1,6 @@
+{
+  "name": "(prefix)_story_(current_date_time)",
+  "description": "story created as far in the future as possible plus some time.",
+  "story_type": "feature",
+  "created_at": "3000-12-31T23:59:59Z"
+}
