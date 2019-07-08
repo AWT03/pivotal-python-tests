@@ -7,7 +7,7 @@
   "created_at": "2005-01-01T00:00:00Z",
   "accepted_at": "2005-01-01T00:00:00Z",
   "labels": ["label01", "label02"],
-  "follower_ids": [3190382],
+  "follower_ids": [],
   "tasks": [
     {
       "description": "Task 1, appear and exist."
