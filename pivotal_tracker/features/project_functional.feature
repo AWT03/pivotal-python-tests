@@ -1,7 +1,7 @@
 Feature: projects
-Background: Task preconditions
+Background: common log in
     Given I start a connection with the Pivotal Tracker API
-    And I log in as user member2
+    And I log in as user owner
     And I send a POST request to projects with data
     '''
     {"name": "(prefix)_project_(current_date_time)"}
@@ -11,7 +11,7 @@ Background: Task preconditions
      When I send a DELETE request to projects
      Then I expect status code is 204
 
-  Scenario: Project PUT a new name
+  Scenario: Project PUT all fields
       When I send a PUT request to projects with data
           '''
           {"name": "(prefix)_project_(current_date_time)",
@@ -33,7 +33,7 @@ Background: Task preconditions
           '''
       And I expect status code is 200
 
-    Scenario: Project PUT with all fields
+    Scenario: Project PUT new name
       When I send a PUT request to projects with data
           '''
           {"name": "(prefix)_new_name_(current_date_time)"}
@@ -43,3 +43,5 @@ Background: Task preconditions
           {"name": "(prefix)_new_name_(current_date_time)"}
           '''
       And I expect status code is 200
+
+

@@ -65,6 +65,16 @@
     "code": "invalid_parameter",
     "error": "One or more request parameters was missing or invalid.",
     "kind": "error"
-  }
-
+  },
+  "project_start_date_assigned_incorrectly":{
+    "code": "invalid_parameter",
+    "error": "One or more request parameters was missing or invalid.",
+    "kind": "error"
+  },
+  "iteration_length_only_integer_value":{
+    "code": "invalid_parameter",
+    "error": "One or more request parameters was missing or invalid.",
+    "general_problem": "'iteration_length' must be an integer value",
+    "kind": "error"
+}
 }
