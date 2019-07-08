@@ -18,8 +18,7 @@ def step_impl(context, user_name):
     user_config = pivotal_config.get("USER").get(user_name)
     context.headers[pivotal_config.get("TOKEN_HEADER")] = user_config.get("TOKEN")
     context.user_id = user_config.get("ID")
-    path_to_data_files = pivotal_config.get("PATH_DATA_FILES").replace('/pivotal_tracker', '')
-    context.path_data_files = join(pivotal_tracker_path, *path_to_data_files.split("/"))
+    context.path_data_files = join(pivotal_tracker_path, pivotal_config.get("PATH_DATA_FILES"))
 
 # This way of logging as user is proper of Pivotal Tracker
 @when('I log in as user {user_name}')
@@ -59,4 +58,3 @@ def step_imp(context, kind, message_tag):
     for tag in message:
         assert tag in api_response
         assert api_response[tag] == message[tag]
-

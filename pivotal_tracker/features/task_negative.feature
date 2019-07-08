@@ -35,4 +35,3 @@ Feature: Task Corner and Negative cases
       | (prefix)_project_(random) | false    | -1       | set_position_low_or_equal_zero       |
       | (prefix)_project_(random) | false    | 1.25     | set_chars_in_position                |
       | (prefix)_project_(random) | false    | task     | set_chars_in_position                |
-
