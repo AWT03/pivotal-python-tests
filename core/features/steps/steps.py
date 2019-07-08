@@ -139,7 +139,13 @@ def step_imp(context, n):
     api_response = loads(context.api.get_full_response())
     context.list_data = api_response
     assert isinstance(api_response, list)
-    assert len(api_response) == int(n)
+    assert (len(api_response)-context.projects_already_created) == int(n)
+
+
+@given('I count how many projects are already created')
+def step_imp(context):
+    api_response = loads(context.api.get_full_response())
+    context.projects_already_created = len(api_response)
 
 
 @step('delete urls marked to delete')
