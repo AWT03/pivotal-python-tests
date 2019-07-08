@@ -7,7 +7,7 @@ Background: common log in
 
     Scenario: Project POST multiple projects in an account
     When I send a POST request to projects with data
-      | name                   |
+      | name                                |
       | (prefix)_multiple_projects_(random) |
       | (prefix)_multiple_projects_(random) |
       | (prefix)_multiple_projects_(random) |
