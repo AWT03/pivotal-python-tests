@@ -1,6 +1,12 @@
 # Pivotal Tests
 
+
 ## Overview
+
+[![Build status](https://travis-ci.com/AWT03/pivotal-tests.svg?branch=develop)](https://travis-ci.com/AWT03/pivotal-tests) 
+
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=AWT03_pivotal-tests&metric=alert_status)](https://sonarcloud.io/dashboard/index/AWT03_pivotal-tests)
+
 
 This project's objective is to set up some testing for the Pivotal Tracker API.
 
