@@ -28,11 +28,11 @@ Feature: Task Corner and Negative cases
       | <description> | <complete> | <position> | <error> |
     Then I expect this error <error> is thrown
     Examples:
-      | description               | complete | position | error                          |
-      |                           | false    | 1        | set_empty_description_field    |
-      | (prefix)_project_(random) | false    | 2        | set_position_more_than_size    |
-      | (prefix)_project_(random) | false    | 0        | set_position_low_or_equal_zero |
-      | (prefix)_project_(random) | false    | -1       | set_position_low_or_equal_zero |
-      | (prefix)_project_(random) | false    | 1.25     | set_chars_in_position          |
-      | (prefix)_project_(random) | false    | task     | set_chars_in_position          |
+      | description               | complete | position | error                                |
+      |                           | false    | 1        | set_empty_description_field          |
+      | (prefix)_project_(random) | false    | 2        | set_position_more_than_size_updating |
+      | (prefix)_project_(random) | false    | 0        | set_position_low_or_equal_zero       |
+      | (prefix)_project_(random) | false    | -1       | set_position_low_or_equal_zero       |
+      | (prefix)_project_(random) | false    | 1.25     | set_chars_in_position                |
+      | (prefix)_project_(random) | false    | task     | set_chars_in_position                |
 
