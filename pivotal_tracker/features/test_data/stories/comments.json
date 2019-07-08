@@ -1,0 +1,14 @@
+{
+  "name": "(prefix)_story_(current_date_time)",
+  "comments": [
+    {
+      "text": "First comment."
+    },
+    {
+      "text": "Second comment."
+    },
+    {
+      "text": "Third comment."
+    }
+  ]
+}

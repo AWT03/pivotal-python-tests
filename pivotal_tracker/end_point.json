@@ -8,5 +8,6 @@
   "workspaces": "/my/workspaces/$ID(0)",
   "accounts": "/accounts/$ID(0)",
   "account_summary": "/account_summaries",
-  "memberships": "/accounts/$ID(0)/memberships/$ID(1)"
+  "memberships": "/accounts/$ID(0)/memberships/$ID(1)",
+   "blockers": "/projects/$ID(0)/stories/$ID(1)/blockers/$ID(2)"
 }
