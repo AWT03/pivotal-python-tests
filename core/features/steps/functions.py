@@ -92,11 +92,53 @@ def do_request(context, feature_key, http_method, headers, is_requirement):
     context.api.do_request(http_method.lower(), data=data, headers=headers)
     response = loads(context.api.get_full_response())
     if response:
-        if not isinstance(response, list):
-            if response.get('kind', None) != 'error':
-                if http_method.lower() == 'post':
-                    if context.table is None:
-                        save_to_delete(context, is_requirement)
-                    else:
-                        save_ids_data(context)
-                        context.save_response.append(response)
+        save_ids_only_response_not_list(response, http_method, context, is_requirement)
+
+
+# Function to save the ids generated during creation of the different object
+# Taking account that response is not a list
+def save_ids_only_response_not_list(response, http_method, context, is_requirement):
+    if not isinstance(response, list):
+        save_ids_response_is_not_error(response, http_method, context, is_requirement)
+
+
+# Function to save the ids generated during creation of the different object
+# Taking account that response is not an error type
+def save_ids_response_is_not_error(response, http_method, context, is_requirement):
+    if response.get('kind', None) != 'error':
+        save_ids_according_type_of_request(response, http_method, context, is_requirement)
+
+
+# Function to save the ids generated during creation of the different object
+# Taking account that type of the http_method
+def save_ids_according_type_of_request(response, http_method, context, is_requirement):
+    if http_method.lower() == 'post':
+        if context.table is None:
+            save_to_delete(context, is_requirement)
+        else:
+            save_ids_data(context)
+            context.save_response.append(response)
+
+
+# Function to compare data between data list
+def compare_data_list(data_created, data_obtained):
+    data_equal = False
+    count = 0
+    for obj in data_created:
+        for data in data_obtained:
+            if obj.get('id', None) == data.get('id', None):
+                for key in obj:
+                    if obj[key] != data[key]:
+                        assert data_equal is True
+                count += 1
+                break
+    data_equal = verify_data_len(data_created, count)
+    return data_equal
+
+
+# Function to verify if lists of length is the same as count variable
+def verify_data_len(data_created, count):
+    data_equal = False
+    if len(data_created) == count:
+        data_equal = True
+    return data_equal
