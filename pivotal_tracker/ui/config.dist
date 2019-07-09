@@ -1,0 +1,11 @@
+{
+  "BROWSER": "",
+  "INITIAL_PAGE": "",
+  "PREFIX": "",
+  "USERS": {
+    "owner": {
+      "username": "",
+      "password": ""
+    }
+  }
+}
