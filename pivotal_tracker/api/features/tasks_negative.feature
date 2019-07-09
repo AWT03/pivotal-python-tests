@@ -24,7 +24,7 @@ Feature: Task Corner and Negative cases
     When I send a POST request to tasks with data
       | description   | complete   | position   | error   |
       | <description> | <complete> | <position> | <error> |
-    Then I expect this error <error> is thrown
+    Then I expect the error message <error>
     Examples:
       | description               | complete | position | error                          |
       |                           | false    | 1        | set_empty_description_field    |
