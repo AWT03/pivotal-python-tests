@@ -21,11 +21,11 @@ Feature: Task
   }
   '''
 
-  # Basic operations
-  @acceptance
-  Scenario: Get Task's information
+  @task @acceptance
+  Scenario: Verify that I can get a specific Task's information
     When I send a GET request to tasks
-    Then I expect the single response contains
+    Then I expect status code is 200
+    And I expect the single response contains
   '''
   {
   "description": "(prefix)_task_(current_date_time)",
@@ -33,10 +33,9 @@ Feature: Task
   "position": "1"
   }
   '''
-    And I expect status code is 200
 
-  @acceptance
-  Scenario: Modify Task's values
+  @task @acceptance
+  Scenario: Verify that I can modify a specific Task's values
     When I send a PUT request to tasks with data
   '''
   {
@@ -45,7 +44,8 @@ Feature: Task
   "position": "1"
   }
   '''
-    Then I expect the single response contains
+    Then I expect status code is 200
+    And I expect the single response contains
   '''
   {
   "description": "(prefix)_new_description_(current_date_time)",
@@ -53,13 +53,10 @@ Feature: Task
   "position": "1"
   }
   '''
-    And I expect status code is 200
 
-  @acceptance
-  Scenario: Delete a Task
+  @task @acceptance
+  Scenario: Verify that I can delete a Task
     When I send a DELETE request to tasks
     Then I expect status code is 204
     And I send a GET request to tasks
     And I expect this error get_deleted_object is thrown
-
-

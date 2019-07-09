@@ -1,4 +1,3 @@
-@wip
 Feature: Task Corner and Negative cases
 
   Background: Task preconditions
@@ -14,14 +13,15 @@ Feature: Task Corner and Negative cases
   {"name": "(prefix)_story_(current_date_time)"}
   '''
 
-  @corner_case
-  Scenario: Create a Task with description field more than allowed
-    When I send a POST request to tasks with data from task.json
-    Then I expect this error set_more_chars is thrown
+  @task @corner_case
+  Scenario: Verify that I can not create a Task with description field more than allowed
+    When I send a POST request to tasks with data in task.json
+    Then I expect status code is 400
+    And I expect this error set_more_chars is thrown
 
 
-  @corner_case
-  Scenario Outline: Try to create a Task with description empty and position with different invalid values
+  @task @corner_case
+  Scenario Outline: Verify that I can not create a Task with description empty and position with different invalid values
     When I send a POST request to tasks with data
       | description   | complete   | position   | error   |
       | <description> | <complete> | <position> | <error> |

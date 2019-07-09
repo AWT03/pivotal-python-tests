@@ -1,4 +1,3 @@
-@wip
 Feature: Tasks
 
   Background: Tasks preconditions
@@ -14,9 +13,8 @@ Feature: Tasks
   {"name": "(prefix)_story_(current_date_time)"}
   '''
 
-  # Basic operations
-  @acceptance
-  Scenario: Create a Task
+  @task @acceptance
+  Scenario: Verify that I can create a Task
     When I send a POST request to tasks with data
   '''
   {
@@ -36,8 +34,8 @@ Feature: Tasks
   '''
     And I expect the response id is not null
 
-  @functional
-  Scenario: Task GET all tasks in story
+  @task @functional
+  Scenario: Verify that I can get all tasks in story
     Given I send a POST request to tasks with data
       | description            | complete | position |
       | (prefix)_task_(random) | false    | 1        |
@@ -49,13 +47,12 @@ Feature: Tasks
     And I expect the items' ids obtained are equal to the items' ids created before
     And I expect the items' value obtained are equal to the items' value created before
 
-  @functional
-  Scenario Outline: Create a Task with different ways to set up the complete field
+  @task @functional
+  Scenario Outline: Verify that I can create a Task with different ways to set up the complete field
     When I send a POST request to tasks with data
       | description   | complete   | position   |
       | <description> | <complete> | <position> |
     Examples:
-      | description   | complete   | position   |
-      | (prefix)_task_(random) | false | 1 |
-      | (prefix)_task_(random) | true | 1 |
-
+      | description            | complete | position |
+      | (prefix)_task_(random) | false    | 1        |
+      | (prefix)_task_(random) | true     | 1        |
