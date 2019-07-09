@@ -1,4 +1,4 @@
-from pivotal_tracker.features.steps import functions as func
+from pivotal_tracker.api.features.steps import functions as func
 
 
 # After each scenario we will be deleting all data that was created
@@ -8,6 +8,7 @@ def after_scenario(context, scenario):
         Then delete urls marked to delete
         ''')
     func.delete_items('projects')
+
 
 def after_all(context):
     func.delete_items('projects')

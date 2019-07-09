@@ -21,7 +21,7 @@ Feature: Task
   }
   '''
 
-  @task @acceptance
+  @task @acceptance @wip
   Scenario: Verify that I can get a specific Task's information
     When I send a GET request to tasks
     Then I expect status code is 200

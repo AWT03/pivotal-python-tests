@@ -1,7 +1,7 @@
 from behave import given, then, when
-from pivotal_tracker.features.steps.functions import *
-from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
-from pivotal_tracker.pivotal_tracker_api import PivotalTrackerApi
+from pivotal_tracker.api.features.steps.functions import *
+from pivotal_tracker.api.pivotal_tracker_dir import pivotal_tracker_path
+from pivotal_tracker.api.pivotal_tracker_api import PivotalTrackerApi
 
 path_data_files = get_config(join(pivotal_tracker_path, 'config.json'))['PATH_DATA_FILES']
 

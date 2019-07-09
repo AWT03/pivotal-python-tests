@@ -1,2 +1,2 @@
 # Here we are importing all generic steps from core
-from core.features.steps.steps import *
+from core.api.features.steps.steps import *

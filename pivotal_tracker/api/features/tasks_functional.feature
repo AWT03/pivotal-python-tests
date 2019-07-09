@@ -52,6 +52,7 @@ Feature: Tasks
     When I send a POST request to tasks with data
       | description   | complete   | position   |
       | <description> | <complete> | <position> |
+    Then I expect status code is 200
     Examples:
       | description            | complete | position |
       | (prefix)_task_(random) | false    | 1        |
