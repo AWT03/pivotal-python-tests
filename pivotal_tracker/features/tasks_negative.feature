@@ -13,9 +13,9 @@ Feature: Task Corner and Negative cases
   {"name": "(prefix)_story_(current_date_time)"}
   '''
 
-  @task @corner_case @wip
+  @task @corner_case
   Scenario: Verify that I can not create a Task with description field more than allowed
-    When I send a POST request to tasks with data in task.json
+    When I send a POST request to tasks with data from task.json
     Then I expect status code is 400
     And I expect this error set_more_chars is thrown
 

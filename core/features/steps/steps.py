@@ -171,22 +171,11 @@ def step_impl(context):
 def step_impl(context):
     data_created = context.save_response
     data_obtained = context.list_data
-    equal = False
-    count = 0
     if len(data_obtained) == len(data_created):
-        for obj in data_created:
-            for data in data_obtained:
-                if obj.get('id', None) == data.get('id', None):
-                    for key in obj:
-                        if obj[key] != data[key]:
-                            assert equal is True
-                    count += 1
-                    break
-        if len(data_created) == count:
-            equal = True
+        data_equal = compare_data_list(data_created, data_obtained)
     else:
-        equal = False
-    assert equal is True
+        data_equal = False
+    assert data_equal is True
 
 
 @then(u'I expect this error {error_key} is thrown')
