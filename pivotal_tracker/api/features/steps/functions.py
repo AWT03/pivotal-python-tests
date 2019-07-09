@@ -1,6 +1,6 @@
-from core.features.steps.functions import *
-from pivotal_tracker.pivotal_tracker_api import PivotalTrackerApi
-from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
+from core.api.features.steps.functions import *
+from pivotal_tracker.api.pivotal_tracker_api import PivotalTrackerApi
+from pivotal_tracker.api.pivotal_tracker_dir import pivotal_tracker_path
 
 
 def get_message(message_tag):

@@ -1,6 +1,6 @@
 from behave import given, then, when, step
-from core.features.steps.functions import *
-from core.request_api.generic_api import GenericApi
+from core.api.features.steps.functions import *
+from core.api.request_api.generic_api import GenericApi
 
 
 @given('I start a connection with the API')

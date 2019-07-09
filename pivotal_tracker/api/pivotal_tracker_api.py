@@ -1,6 +1,6 @@
-from core.request_api.generic_api import GenericApi
-from core.features.steps import functions
-from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
+from core.api.request_api.generic_api import GenericApi
+from core.api.features.steps import functions
+from pivotal_tracker.api.pivotal_tracker_dir import pivotal_tracker_path
 from os.path import join
 
 
