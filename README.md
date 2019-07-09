@@ -58,3 +58,20 @@ behave -t acceptance
 behave -t functional
 ```
 You can check the behave for better understanding of the tool, [click here](https://behave.readthedocs.io/en/stable/).
+
+## Generate the Report
+
+To generate the report make sure have installed the following:
+```sh 
+allure-behave
+allure 2.12.1
+java 1.8.0_201
+```
+You can check the folllowing link [click here](https://docs.qameta.io/allure/#_get_started) for doing that.
+
+Then on terminal execute these commands:
+```sh 
+behave -f allure_behave.formatter:AllureFormatter -o ./pivotal_tracker/allure/results ./pivotal_tracker/features
+allure serve ./pivotal_tracker/allure/results
+```
+Finally a web page with the report should be displayed on the browser.
