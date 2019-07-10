@@ -3,6 +3,7 @@ language: python
 python:
 - '3.6'
 addons:
+  chrome: stable
   sonarcloud:
     organization: awt03
     token:
