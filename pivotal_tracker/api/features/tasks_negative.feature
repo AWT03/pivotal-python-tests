@@ -17,14 +17,14 @@ Feature: Task Corner and Negative cases
   Scenario: Verify that I can not create a Task with description field more than allowed
     When I send a POST request to tasks with data from task.json
     Then I expect status code is 400
-    And I expect this error set_more_chars is thrown
+     And I expect the error message set_more_chars
 
   @task @corner_case
   Scenario Outline: Verify that I can not create a Task with description empty and position with different invalid values
     When I send a POST request to tasks with data
       | description   | complete   | position   | error   |
       | <description> | <complete> | <position> | <error> |
-    Then I expect this error <error> is thrown
+    Then I expect the error message <error>
     Examples:
       | description               | complete | position | error                          |
       |                           | false    | 1        | set_empty_description_field    |

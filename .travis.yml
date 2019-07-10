@@ -3,6 +3,7 @@ language: python
 python:
 - '3.6'
 addons:
+  chrome: stable
   sonarcloud:
     organization: awt03
     token:
@@ -10,10 +11,13 @@ addons:
 install:
 - pip3 install -r requirements.txt
 before_install:
+- openssl aes-256-cbc -K $encrypted_5711e838a041_key -iv $encrypted_5711e838a041_iv
+  -in pivotal_tracker/ui/config.json.enc -out pivotal_tracker/ui/config.json -d
 - openssl aes-256-cbc -K $encrypted_64f0ac5ca813_key -iv $encrypted_64f0ac5ca813_iv
   -in pivotal_tracker/api/config.json.enc -out pivotal_tracker/api/config.json -d
 script:
 - sonar-scanner
 - behave pivotal_tracker/api/features --tags=~@wip --tags=~@defect
+- behave pivotal_tracker/ui/features --tags=~@wip --tags=~@defect
 notifications:
   email: true

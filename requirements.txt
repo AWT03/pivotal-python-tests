@@ -1,3 +1,5 @@
 behave
 requests
 simplejson
+selenium
+webdriver_manager
