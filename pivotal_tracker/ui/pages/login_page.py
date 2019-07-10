@@ -11,22 +11,22 @@ class LoginPage(FormPage, ActionPage):
     def __init__(self, driver):
         super().__init__(driver)
         fields = {
-            "username": lambda value: self.set_username(value),
+            "sign_in_as": lambda value: self.set_username(value),
             "password": lambda value: self.set_password(value)
         }
         actions = {
-            "signin": lambda: self.click_sign_in()
+            "Sign In": lambda: self.sign_in()
         }
         self.update_form_fields(**fields)
         self.update_actions(**actions)
 
     def set_username(self, value):
-        self.add_value(username_field, value)
+        self.set_value(username_field, value)
         self.click(signin_button)
 
     def set_password(self, value):
-        self.add_value(password_field, value)
+        self.set_value(password_field, value)
 
-    def click_sign_in(self):
+    def sign_in(self):
         self.click(signin_button)
         return DashboardPage(self._driver)

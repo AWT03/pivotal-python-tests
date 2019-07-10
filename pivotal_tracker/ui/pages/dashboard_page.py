@@ -8,10 +8,10 @@ class DashboardPage(ActionPage):
     def __init__(self, driver):
         super().__init__(driver)
         actions = {
-            "Create Project": lambda: self.click_create_project()
+            "Create Project": lambda: self.open_create_project_form()
         }
         self.update_actions(**actions)
 
-    def click_create_project(self):
+    def open_create_project_form(self):
         self.click(create_project_button)
         return ProjectCreationForm(self._driver)

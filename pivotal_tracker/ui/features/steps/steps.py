@@ -13,9 +13,9 @@ CONFIG = loads(open(join(pivotal_tracker_path, 'config.json')).read())
 @given('I login the app as {username}')
 def step_impl(context, username):
     context.page = LoginPage(set_up_driver(CONFIG))
-    context.page.set_multiple(username=CONFIG.get("USERS").get("owner").get("username"),
-                              password=CONFIG.get("USERS").get("owner").get("password"))
-    context.page = context.page.click_sign_in()
+    context.page.set_form(sign_in_as=CONFIG.get("USERS").get("owner").get("username"),
+                          password=CONFIG.get("USERS").get("owner").get("password"))
+    context.page = context.page.do_action("Sign In")
 
 
 @step('I click on {action_id} button')
@@ -29,10 +29,10 @@ def step_impl(context):
     set_values = {}
     for row in context.table.rows:
         set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
-    context.page.set_multiple(**set_values)
+    context.page.set_form(**set_values)
 
 
-@then('I exist')
+@step('I exist')
 def step_impl(context):
-    sleep(5)
+    sleep(3)
     assert True is not False

@@ -20,13 +20,13 @@ class ProjectCreationForm(FormPage, ActionPage):
             "public": lambda value: self.check_public() if value else None,
         }
         actions = {
-            "Create": lambda: self.click_create()
+            "Create": lambda: self.create_project()
         }
         self.update_actions(**actions)
         self.update_form_fields(**fields)
 
     def set_project_name(self, value):
-        self.add_value(project_name_field, value)
+        self.set_value(project_name_field, value)
 
     def set_account(self, value):
         self.click(account_selector_field)
@@ -42,6 +42,6 @@ class ProjectCreationForm(FormPage, ActionPage):
         if not button.is_selected():
             button.click()
 
-    def click_create(self):
+    def create_project(self):
         self.click(create_button)
         return ProjectMainPage(self._driver)
