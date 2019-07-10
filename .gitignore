@@ -109,5 +109,5 @@ config.json
 /pivotal_tracker/simple_ui/*
 
 # results of reports
-/pivotal_tracker/my_ignore/*
-!/pivotal_tracker/my_ignore/.__init__.py
+pivotal_tracker/api/allure/results/*
+!pivotal_tracker/api/allure/results/__init__.p
