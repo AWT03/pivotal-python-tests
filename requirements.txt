@@ -2,4 +2,4 @@ behave
 requests
 simplejson
 selenium
-webdriver-manager
+webdriver_manager
