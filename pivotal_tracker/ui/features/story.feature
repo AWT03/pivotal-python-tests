@@ -12,7 +12,11 @@ Feature: Create projects
         | private       | True                                 |
         | public        | False                                |
       And I click on Create button
-     Then I click on More button
+      And I click on Add Story button
+      And I fill the form with data
+        | key         | value                              |
+        | story_title | (prefix)_story_(current_date_time) |
+      Then I click on Save button
       And I exist
 
 
