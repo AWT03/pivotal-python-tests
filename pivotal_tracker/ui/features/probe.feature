@@ -1,6 +1,6 @@
 Feature: Create projects
   Background: preconditions
-    Given I login the app as member1
+    Given I login the app as owner
 
   @gui
   Scenario: Verify that I can create a new Project
@@ -12,12 +12,10 @@ Feature: Create projects
         | private       | True                                 |
         | public        | False                                |
       And I click on Create button
-      And I click on Add Story button
+      And I click on More button
       And I fill the form with data
-        | key         | value                              |
-        | story_title | (prefix)_story_(current_date_time) |
-        | task_title  | (prefix)_task_(current_date_time)  |
+        | key          | value |
+        | Enable Tasks | True  |
       And I click on Save button
+      And I click on Stories Tab button
       Then I exist
-
-
