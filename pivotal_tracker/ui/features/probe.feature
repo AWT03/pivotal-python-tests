@@ -16,6 +16,6 @@ Feature: Create projects
       And I fill the form with data
         | key          | value |
         | Enable Tasks | True  |
-      And I click on Save button
+        | Save         | True  |
       And I click on Stories Tab button
       Then I exist

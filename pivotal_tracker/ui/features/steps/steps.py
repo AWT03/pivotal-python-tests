@@ -20,6 +20,9 @@ def step_impl(context, username):
                           password=CONFIG.get("USERS").get(username).get("password"))
     context.page = context.page.do_action("Sign In")
 
+#@given('I verify this {element} does not exist')
+#def step_impl(context, element):
+
 
 @step('I click on {action_id} button')
 def step_impl(context, action_id):
