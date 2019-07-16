@@ -1,6 +1,6 @@
 Feature: Create projects
   Background: preconditions
-    Given I login the app as member1
+    Given I login the app as owner
 
   @gui
   Scenario: Verify that I can create a new Project

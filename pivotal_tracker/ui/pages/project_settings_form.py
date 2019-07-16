@@ -21,8 +21,7 @@ class ProjectSettingsForm(FormPage, ActionPage):
             "Save": lambda value: self.save_changes() if value else None
         }
         actions = {
-            #Stories Tab": lambda: self.click(stories_tab),
-            "Stories Tab": lambda: self.stories_tab(),
+            "Stories Tab": lambda: self.click(stories_tab),
             "Analytics tab": lambda: self.click(analytics_tab),
         }
         self.update_actions(**actions)
@@ -37,8 +36,4 @@ class ProjectSettingsForm(FormPage, ActionPage):
         self.click(save_button)
         self._driver.switch_to.alert.accept()
 
-    def stories_tab(self):
-        self.click(stories_tab)
-        #self._driver.switchToTab()
-        return ProjectMainPage()
 
