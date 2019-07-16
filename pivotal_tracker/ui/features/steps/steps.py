@@ -10,15 +10,22 @@ import pivotal_tracker.api.features.steps.custom_steps
 import core.api.features.steps.steps
 from pivotal_tracker.ui.features.steps.functions import *
 
+
 CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
 
 
 @given('I login the app as {username}')
 def step_impl(context, username):
     context.page = LoginPage(set_up_driver(CONFIG))
-    context.page.set_form(sign_in_as=CONFIG.get("USERS").get("owner").get("username"),
-                          password=CONFIG.get("USERS").get("owner").get("password"))
+    context.page.set_form(sign_in_as=CONFIG.get("USERS").get(username).get("username"),
+                          password=CONFIG.get("USERS").get(username).get("password"))
     context.page = context.page.do_action("Sign In")
+
+
+@step('I verify that {element} does not exist')
+def step_impl(context, element):
+    exist = context.page.do_action(element)
+    print(exist)
 
 
 @step('I click on {action_id} button')
@@ -64,7 +71,7 @@ def step_impl(context, type_object, object_attribute, displayed):
         task_element = context.page.get_element()
         assert task_element is None
 
-#
+
 @step('I verify that task counter is "{method}" by "{count_value}"')
 def step_impl(context, count_value, method):
     value_count_task_all = context.page.get_count_task_value()

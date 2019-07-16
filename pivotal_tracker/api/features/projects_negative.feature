@@ -1,10 +1,11 @@
-Feature: projects
+Feature: Projects
 
-  Background: common log in
+  Background: Preconditions
     Given I start a connection with the Pivotal Tracker API
     And I log in as user owner
 
-  Scenario Outline: Create a project with out of wrong iteration length
+  @corner_case
+  Scenario Outline: Verify that I can not create a project with out of wrong iteration length
     When I send a POST request to projects with data
       | name   | iteration_length   |
       | <name> | <iteration_length> |
@@ -17,7 +18,8 @@ Feature: projects
       | (prefix)_project_(random) | 1.2              | iteration_length_only_integer_value |
       | (prefix)_project_(random) | hello            | iteration_length_only_integer_value |
 
-  Scenario Outline: Create a project with different project_type
+  @corner_case
+  Scenario Outline: Verify that I can not create a project with a day that does not match with the date
     When I send a POST request to projects with data
       | name   | week_start_day   | start_date   |
       | <name> | <week_start_day> | <start_date> |
@@ -30,21 +32,27 @@ Feature: projects
       | (prefix)_project_(random) | Thursday       | 2019-07-19 |
       | (prefix)_project_(random) | Friday         | 2019-07-20 |
 
-
-  Scenario: POST a project with "public" attribute as "false" and prohibit other accounts to see projects information
+  @corner_case
+  Scenario: Verify that I can create a project with "public" attribute as "false" and prohibit
+  other accounts to see projects information
     When I send a POST request to projects with data
   '''
-  {"name": "(prefix)_project_(current_date_time)",
-  "public": "false"}
+  {
+  "name": "(prefix)_project_(current_date_time)",
+  "public": "false"
+  }
   '''
     And I log in as user member1
     And I send a GET request to projects
     Then I expect status code is 403
 
-  Scenario: Set the start date of a project with a distant past date
+  @corner_case
+  Scenario: Verify that I can not set the start date of a project with a distant past date
     When I send a POST request to projects with data
   '''
-  {"start_date": "1988-08-19"}
+  {
+  "start_date": "1988-08-19"
+  }
   '''
     Then I expect status code is 400
     And I expect this error too_far_in_the_past is thrown

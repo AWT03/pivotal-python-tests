@@ -3,7 +3,7 @@ Feature: Stories features as a whole
 
 # We define a background that will be run each scenario
 # For each case we need a project to interact with
-  Background: precondition
+  Background: Precondition
     Given I start a connection with the Pivotal Tracker API
     And I log in as user owner
     And I send a POST request to projects with data from stories/project.json
@@ -48,7 +48,7 @@ Feature: Stories features as a whole
       | blockers   | blockers         | 2        |
 
   # Domain testing for variable "created at" valid domain
-  @corner_cases
+  @corner_case
   Scenario Outline: Verify "created at" variable valid domain on primary dimensions
     When I send a POST request to stories with data from stories/domain/<archive_id>.json
     Then I expect status code is 200
@@ -59,7 +59,7 @@ Feature: Stories features as a whole
       | bottom_created_at |
 
 #  Domain testing for variable "created at" outside valid domain
-  @corner_cases
+  @corner_case
   Scenario Outline: Verify "created at" variable invalid domain on primary dimensions
     When I send a POST request to stories with data from stories/domain/<archive_id>.json
     Then I expect status code is 400

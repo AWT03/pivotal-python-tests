@@ -32,4 +32,3 @@ def clean_projects(scenario):
 def close_driver(context):
     if context.page is not None:
         context.page.get_driver().quit()
-        

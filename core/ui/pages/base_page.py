@@ -2,6 +2,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 
 
 class BasePage:
@@ -39,3 +40,10 @@ class BasePage:
         element = self.find_element(value)
         hover = ActionChains(self._driver).move_to_element(element)
         hover.perform()
+
+    def is_existing(self, value):
+        try:
+            self._driver.find_element(self.get_selector(value), value)
+        except NoSuchElementException:
+            return False
+        return True
