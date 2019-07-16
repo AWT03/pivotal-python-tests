@@ -1,6 +1,6 @@
 Feature: Project
 
-  Background: precondition
+  Background: Precondition
     Given I start a connection with the Pivotal Tracker API
     And I log in as user owner
     And I send a POST request to projects with data
@@ -12,7 +12,8 @@ Feature: Project
   {"name": "(prefix)_story_(current_date_time)"}
   '''
 
-  Scenario: Project enable to create tasks
+  @functional
+  Scenario: Verify that I can enable to a project for creating tasks
     When I send a PUT request to projects with data
   '''
   {"enable_tasks": "true"}
@@ -24,7 +25,7 @@ Feature: Project
     Then I expect status code is 200
 
   @defect
-  Scenario: Project disable to create tasks
+  Scenario: Verify that when Project is disable to create task any task should be possible to create
     When I send a PUT request to projects with data
   '''
   {"enable_tasks": "false"}
