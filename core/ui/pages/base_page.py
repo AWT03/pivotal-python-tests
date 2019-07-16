@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
 
 
 class BasePage:
@@ -33,3 +34,8 @@ class BasePage:
 
     def get_driver(self):
         return self._driver
+
+    def mouse_hover_element(self, value):
+        element = self.find_element(value)
+        hover = ActionChains(self._driver).move_to_element(element)
+        hover.perform()

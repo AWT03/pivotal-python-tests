@@ -5,6 +5,8 @@ more_options = 'a[href*="/settings"]'
 background_div = '.scrim'
 story_arrow_element = '[data-type="icebox"] [aria-label="$(story)"] [data-aid="StoryPreviewItem__expander"]'
 add_new_task_select = '[data-type="icebox"] [class="tasks full"] [data-aid="TaskAdd"]  span:nth-child(2)'
+task_description_field = '[data-type="icebox"] [class="tasks full"] div[data-aid="Tasks"] ' \
+                         'div[data-aid="TaskShow"] span:nth-child(1) p'
 
 
 class ProjectMainPage(ActionPage):
@@ -13,7 +15,8 @@ class ProjectMainPage(ActionPage):
         actions = {
             "More": lambda: self.more_settings(),
             "Arrow Story Name Icebox": lambda value: self.click_on_arrow_story_icebox(value),
-            "Add a task": lambda: self.click_on_add_a_task()
+            "Add a task": lambda: self.click_on_add_a_task(),
+            "Mouse Hover Task Description": lambda: self.mouse_over_task_description()
         }
         self.update_actions(**actions)
 
@@ -29,4 +32,8 @@ class ProjectMainPage(ActionPage):
 
     def click_on_add_a_task(self):
         self.click(add_new_task_select)
+        return TaskPage(self.get_driver())
+
+    def mouse_over_task_description(self):
+        self.mouse_hover_element(task_description_field)
         return TaskPage(self.get_driver())

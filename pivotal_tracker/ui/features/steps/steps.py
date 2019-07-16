@@ -42,23 +42,6 @@ def step_impl(context):
     assert True is not False
 
 
-@step('I go to the {object_find} created before through url {url_page}')
-def step_impl(context, object_find, url_page):
-    response = context.save_response
-    object_id_prepared = object_find + '_id'
-    object_id = 0
-    for res in response:
-        if object_id_prepared in res:
-            object_id = res[object_id_prepared]
-    if object_id != 0:
-        current_handler = context.page.get_driver()
-        main_page = CONFIG.get("MAIN_PAGE")
-        object_url = main_page + url_page + str(object_id)
-        object_page = FactoryPage.create_page(object_find, current_handler)
-        context.page = object_page
-        object_page.go_to_url(object_url)
-
-
 @step('I click on {type_element} element of the {type_object} {type_attribute} on {type_panel} panel')
 def step_impl(context, type_element, type_attribute, type_object, type_panel):
     value_attribute = get_object_attribute_value(context, type_attribute, type_object)
@@ -66,22 +49,37 @@ def step_impl(context, type_element, type_attribute, type_object, type_panel):
     context.page = context.page.do_action_with_value(action_id, value_attribute)
 
 
-@step('I verify that field {object_attribute} is displayed in the panel')
-def step_impl(context, object_attribute):
-    object_field_dict = context.data_verify
-    object_field = None
-    for data in object_field_dict:
-        if object_attribute in data:
-            object_field = object_field_dict[object_attribute]
-    assert object_field is not None
-    value_form_story = context.page.verify_description()
-    assert object_field == value_form_story
+@step('I verify that {type_object} {object_attribute} is {displayed} in the panel')
+def step_impl(context, type_object, object_attribute, displayed):
+    if displayed == 'displayed':
+        object_field_dict = context.data_verify
+        object_field = None
+        for data in object_field_dict:
+            if object_attribute in data:
+                object_field = object_field_dict[object_attribute]
+        assert object_field is not None
+        value_form_story = context.page.verify_description()
+        assert object_field == value_form_story
+    else:
+        task_element = context.page.get_element()
+        assert task_element is None
 
 
-@step('I verify that {count_value} is added to the task counter')
-def step_impl(context, count_value):
+@step('I verify that {count_value} is {method} to the task counter')
+def step_impl(context, count_value, method):
     value_count_task_all = context.page.get_count_task_value()
     value_count_task_all = value_count_task_all.split('/')
     value_count_task = value_count_task_all[1]
     value_count_task_prepared = value_count_task[-2]
-    assert value_count_task_prepared == count_value
+    if method == 'added':
+        assert value_count_task_prepared == count_value
+    elif method == 'subtracted':
+        task_counter = 1
+        task_counter = task_counter - int(count_value)
+        assert value_count_task_prepared == str(task_counter)
+
+
+@step('I mouse hover the {type_object} {object_attribute} create before')
+def step_impl(context, type_object, object_attribute):
+    action_id = 'Mouse Hover {0} {1}'.format(type_object, object_attribute)
+    context.page = context.page.do_action(action_id)
