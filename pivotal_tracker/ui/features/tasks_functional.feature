@@ -19,8 +19,8 @@ Feature: Create Task
   '''
     And I send a GET request to story
     And I login the app as owner
-    And I click on Link element of the Project Name on Dashboard panel
-    And I click on Arrow element of the Story Name on Icebox panel
+    And I open the Project Name on Dashboard
+    And I open the Story Name on Icebox
 
   @gui @task @acceptance @clean_response
   Scenario: Verify that I can create a new Task on Icebox panel
@@ -29,5 +29,5 @@ Feature: Create Task
       | key         | value                             |
       | description | (prefix)_task_(current_date_time) |
     And I click on Add button
-    Then I verify that Task description is displayed in the panel
-    And I verify that 1 is added to the task counter
+    Then I verify that "Task" "description" is "displayed"
+    And I verify that task counter is "incremented" by "1"

@@ -42,14 +42,14 @@ def step_impl(context):
     assert True is not False
 
 
-@step('I click on {type_element} element of the {type_object} {type_attribute} on {type_panel} panel')
-def step_impl(context, type_element, type_attribute, type_object, type_panel):
+@step('I open the {type_object} {type_attribute} on {type_panel}')
+def step_impl(context, type_attribute, type_object, type_panel):
     value_attribute = get_object_attribute_value(context, type_attribute, type_object)
-    action_id = '{0} {1} {2} {3}'.format(type_element, type_object, type_attribute, type_panel)
+    action_id = '{0} {1} {2}'.format(type_object, type_attribute, type_panel)
     context.page = context.page.do_action_with_value(action_id, value_attribute)
 
 
-@step('I verify that {type_object} {object_attribute} is {displayed} in the panel')
+@step('I verify that "{type_object}" "{object_attribute}" is "{displayed}"')
 def step_impl(context, type_object, object_attribute, displayed):
     if displayed == 'displayed':
         object_field_dict = context.data_verify
@@ -64,25 +64,26 @@ def step_impl(context, type_object, object_attribute, displayed):
         task_element = context.page.get_element()
         assert task_element is None
 
-
-@step('I verify that {count_value} is {method} to the task counter')
+#
+@step('I verify that task counter is "{method}" by "{count_value}"')
 def step_impl(context, count_value, method):
     value_count_task_all = context.page.get_count_task_value()
     value_count_task_all = value_count_task_all.split('/')
     value_count_task = value_count_task_all[1]
     value_count_task_prepared = value_count_task[-2]
-    if method == 'added':
+    if method == 'incremented':
         assert value_count_task_prepared == count_value
-    elif method == 'subtracted':
+    elif method == 'decremented':
         task_counter = 1
         task_counter = task_counter - int(count_value)
         assert value_count_task_prepared == str(task_counter)
 
 
-@step('I mouse hover the {type_object} {object_attribute} create before')
-def step_impl(context, type_object, object_attribute):
+@step('I {action_method} the {type_object} {object_attribute}')
+def step_impl(context, action_method, type_object, object_attribute):
     action_id = 'Mouse Hover {0} {1}'.format(type_object, object_attribute)
     context.page = context.page.do_action(action_id)
+    context.page = context.page.do_action(action_method)
 
 
 @step('I click on {type_object} {type_attribute} element')

@@ -11,7 +11,7 @@ class DashboardPage(ActionPage):
         super().__init__(driver)
         actions = {
             "Create Project": lambda: self.open_create_project_form(),
-            "Link Project Name Dashboard": lambda value: self.open_project_created_before(value),
+            "Project Name Dashboard": lambda value: self.open_project_created_before(value),
         }
         self.update_actions(**actions)
 

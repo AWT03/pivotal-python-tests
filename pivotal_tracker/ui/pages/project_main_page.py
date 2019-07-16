@@ -15,7 +15,7 @@ class ProjectMainPage(ActionPage):
         super().__init__(driver)
         actions = {
             "More": lambda: self.more_settings(),
-            "Arrow Story Name Icebox": lambda value: self.click_on_arrow_story_icebox(value),
+            "Story Name Icebox": lambda value: self.click_on_arrow_story_icebox(value),
             "Add a task": lambda: self.click_on_add_a_task(),
             "Mouse Hover Task Description": lambda: self.mouse_over_task_description(),
             "Task Description": lambda value: self.click_on_task_description(value)
