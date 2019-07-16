@@ -37,3 +37,12 @@ Feature: Create Task
     And I click on Delete button
     Then I verify that task description is not displayed in the panel
     And I verify that 1 is subtracted to the task counter
+
+  @gui @task @acceptance @clean_response
+  Scenario: Verify that I can update a Task on Icebox panel
+    When I click on Task Description element
+    And I fill the form with data to update
+      | key         | value                                 |
+      | description | (prefix)_new_task_(current_date_time) |
+    And I click on Save button
+    Then I verify that Task description is displayed in the panel

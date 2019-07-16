@@ -24,3 +24,8 @@ class FormPage(BasePage):
         for tag in setting_values:
             if tag in self._form_fields:
                 self._form_fields[tag](setting_values[tag])
+
+    def set_form_action(self, type_action, **setting_values):
+        for tag in setting_values:
+            if tag in self._form_fields:
+                self._form_fields[tag](type_action, setting_values[tag])

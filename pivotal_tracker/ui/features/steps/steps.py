@@ -83,3 +83,20 @@ def step_impl(context, count_value, method):
 def step_impl(context, type_object, object_attribute):
     action_id = 'Mouse Hover {0} {1}'.format(type_object, object_attribute)
     context.page = context.page.do_action(action_id)
+
+
+@step('I click on {type_object} {type_attribute} element')
+def step_impl(context, type_object, type_attribute):
+    value_attribute = get_object_attribute_value(context, type_attribute, type_object)
+    action_id = '{0} {1}'.format(type_object, type_attribute)
+    context.page = context.page.do_action_with_value(action_id, value_attribute)
+
+
+@when('I fill the form with data to {type_action}')
+def step_impl(context, type_action):
+    assert context.table is not None
+    set_values = {}
+    for row in context.table.rows:
+        set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+    context.page.set_form_action(type_action, **set_values)
+    context.data_verify = set_values

@@ -25,7 +25,7 @@ Feature: Create Task
   @gui @task @acceptance @clean_response
   Scenario: Verify that I can create a new Task on Icebox panel
     When I click on Add a task button
-    And I fill the form with data
+    And I fill the form with data to create
       | key         | value                             |
       | description | (prefix)_task_(current_date_time) |
     And I click on Add button
