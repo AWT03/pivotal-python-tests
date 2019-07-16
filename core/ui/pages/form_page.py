@@ -13,6 +13,9 @@ class FormPage(BasePage):
     def add_value(self, element, value):
         self.find_element(element).send_keys(value)
 
+    def get_value(self, element):
+        return self.find_element(element).text
+
     def set_value(self, element, value):
         self._driver.execute_script("arguments[0].value = ''", self.find_element(element))
         self.find_element(element).send_keys(value)

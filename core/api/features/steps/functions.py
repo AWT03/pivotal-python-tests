@@ -118,6 +118,8 @@ def save_ids_according_type_of_request(response, http_method, context, is_requir
         else:
             save_ids_data(context)
             context.save_response.append(response)
+    elif http_method.lower() == 'get':
+        context.save_response.append(response)
 
 
 # Function to compare data between data list

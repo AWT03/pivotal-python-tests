@@ -30,3 +30,6 @@ class BasePage:
 
     def set_wait(self, seconds):
         self.__wait = WebDriverWait(self._driver, seconds)
+
+    def get_driver(self):
+        return self._driver
