@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 
 class BasePage:
@@ -30,3 +31,10 @@ class BasePage:
 
     def set_wait(self, seconds):
         self.__wait = WebDriverWait(self._driver, seconds)
+
+    def is_existing(self, value):
+        try:
+            self._driver.find_element(self.get_selector(value), value)
+        except NoSuchElementException:
+            return False
+        return True

@@ -18,4 +18,9 @@ Feature: Create projects
         | Enable Tasks | True  |
         | Save         | True  |
       And I click on Stories Tab button
-      Then I exist
+      And I click on Add Story button
+      And I fill the form with data
+        | key         | value                              |
+        | story_title | (prefix)_story_(current_date_time) |
+      Then I verify that Task does not exist
+      And I exist

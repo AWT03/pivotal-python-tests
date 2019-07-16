@@ -20,7 +20,8 @@ class StoryCreationPage(FormPage, ActionPage):
             "Save": lambda: self.click(save_button),
             "Cancel": lambda: self.click(cancel_button),
             "Add a Task": lambda: self.click(add_task),
-            "Add": lambda: self.click(add_button)
+            "Add": lambda: self.click(add_button),
+            "Task": lambda: self.is_existing(add_task)
         }
         self.update_actions(**actions)
         self.update_form_fields(**fields)
