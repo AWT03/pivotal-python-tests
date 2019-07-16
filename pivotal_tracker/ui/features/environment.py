@@ -7,3 +7,12 @@ def after_all(context):
 
 def before_all(context):
     delete_items('projects')
+
+
+def after_scenario(context, scenario):
+    close_driver(context)
+
+
+def close_driver(context):
+    if context.page is not None:
+        context.page._driver.quit()

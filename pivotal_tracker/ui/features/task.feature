@@ -12,7 +12,12 @@ Feature: Create projects
         | private       | True                                 |
         | public        | False                                |
       And I click on Create button
-     Then I click on More button
-      And I exist
+      And I click on Add Story button
+      And I fill the form with data
+        | key         | value                              |
+        | story_title | (prefix)_story_(current_date_time) |
+        | task_title  | (prefix)_task_(current_date_time)  |
+      And I click on Save button
+      Then I exist
 
 

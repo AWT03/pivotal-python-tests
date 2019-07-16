@@ -14,7 +14,7 @@ class ProjectCreationForm(FormPage, ActionPage):
     def __init__(self, driver):
         super().__init__(driver)
         fields = {
-            "project_name": lambda value: self.set_project_name(value),
+            "project_name": lambda value: self.set_value(project_name_field, value),
             "account": lambda value: self.set_account(value),
             "private": lambda value: self.check_private() if value else None,
             "public": lambda value: self.check_public() if value else None,
@@ -24,9 +24,6 @@ class ProjectCreationForm(FormPage, ActionPage):
         }
         self.update_actions(**actions)
         self.update_form_fields(**fields)
-
-    def set_project_name(self, value):
-        self.set_value(project_name_field, value)
 
     def set_account(self, value):
         self.click(account_selector_field)

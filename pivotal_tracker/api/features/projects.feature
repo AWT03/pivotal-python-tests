@@ -6,7 +6,7 @@ Feature: Projects
     And I send a GET request to projects
     And I count how many projects are already created
 
-  @functional
+  @functional @wip
   Scenario: Verify that I can create a multiple projects in an account
     When I send a POST request to projects with data
       | name                                |
