@@ -37,7 +37,7 @@ Feature: Create Task
     Then I verify that "Task" "description" is "not displayed"
     And I verify that task counter is "decremented" by "1"
 
-  @gui @task @acceptance @clean_response @clean_projects
+  @gui @task @acceptance @clean_response @clean_projects @wip
   Scenario: Verify that I can update a Task on Icebox panel
     When I click on Task Description element
     And I fill the form with data to update
