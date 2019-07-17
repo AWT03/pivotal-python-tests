@@ -13,6 +13,9 @@ class FormPage(BasePage):
     def add_value(self, element, value):
         self.find_element(element).send_keys(value)
 
+    def get_value(self, element):
+        return self.find_element(element).text
+
     def set_value(self, element, value):
         self._driver.execute_script("arguments[0].value = ''", self.find_element(element))
         self.find_element(element).send_keys(value)
@@ -21,3 +24,8 @@ class FormPage(BasePage):
         for tag in setting_values:
             if tag in self._form_fields:
                 self._form_fields[tag](setting_values[tag])
+
+    def set_form_action(self, type_action, **setting_values):
+        for tag in setting_values:
+            if tag in self._form_fields:
+                self._form_fields[tag](type_action, setting_values[tag])

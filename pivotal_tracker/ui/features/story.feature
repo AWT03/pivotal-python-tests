@@ -2,7 +2,7 @@ Feature: Create projects
   Background: preconditions
     Given I login the app as owner
 
-  @gui
+  @gui @clean_projects
   Scenario: Verify that I can create a new Project
      When I click on Create Project button
       And I fill the form with data
