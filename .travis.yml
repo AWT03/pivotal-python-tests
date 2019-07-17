@@ -11,13 +11,16 @@ addons:
 install:
 - pip3 install -r requirements.txt
 before_install:
-- openssl aes-256-cbc -K $encrypted_5711e838a041_key -iv $encrypted_5711e838a041_iv
-  -in pivotal_tracker/ui/config.json.enc -out pivotal_tracker/ui/config.json -d
-- openssl aes-256-cbc -K $encrypted_64f0ac5ca813_key -iv $encrypted_64f0ac5ca813_iv
+- openssl aes-256-cbc -K $encrypted_e571030d7ac1_key -iv $encrypted_e571030d7ac1_iv
   -in pivotal_tracker/api/config.json.enc -out pivotal_tracker/api/config.json -d
+- openssl aes-256-cbc -K $encrypted_bd4a2482cc70_key -iv $encrypted_bd4a2482cc70_iv
+  -in pivotal_tracker/ui/config.json.enc -out pivotal_tracker/ui/config.json -d
 script:
 - sonar-scanner
 - behave pivotal_tracker/api/features --tags=~@wip --tags=~@defect
 - behave pivotal_tracker/ui/features --tags=~@wip --tags=~@defect
 notifications:
   email: true
+env:
+  global:
+    secure: KEmLtqHQduNWR34rh74R05KZYZjYMccNv4Y589KxHelEIJekJVS4aE19iAYFdcpLPLJS1syb6OfQqkjxvsdZ86Y6Rbr043aWNEoOuQVM0SJcpnigtnHAmR55vBOWUE4KFtPeR8W7VTBRoz3l19KKH+gNAGXii5xNVYBOw0xTBpthhjK4tYBTzJ6bm5rAqhRCRVVyeqLGuywis38HcQ7zUAzv+JqKkW2qG3UukZfKFAG63jB8/7WkfA5r5DHGNDYQ+jdLKuN3xnMgUz1D3DzfnmChVUtwl0Oc43L6DJNZ2RduqTwlo8He6v363RwMIZlWGRyu7guq25s4QpzgjM7Ph5mDk4crVQXI9kTAtF9QnO9n5Ra/mmb82hYOVitT071YGRop9Bq+hQc5aSzPdYopcXrpzghPE8On61hr/tzsg8JO8HeuUfi/I4NHueCxsK3KmVuKIqWQiduP78XNL49Pf5Wv/ZW38WrfkGUXvWD3XYmB4cJweBRvjdrMFk3LU5pLkh/N4bAoz79k+JKkT83ajRqgO3iQcplVNbLDOxErtIpouvkOOFWJtHLK0418xz4iB6XMfuGyoZ8vyK7XIcwJpzbYSn3wZMGxFPHjypAYaPG+SoEyYZGwnn2Yi4s7RTBvBjQnkYOl7crUHICLl4n5/MRy8S4AheLPj6WCZwZfqkE=

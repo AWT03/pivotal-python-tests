@@ -13,6 +13,3 @@ Feature: Create projects
         | public        | False                                |
       And I click on Create button
      Then I click on More button
-      And I exist
-
-
