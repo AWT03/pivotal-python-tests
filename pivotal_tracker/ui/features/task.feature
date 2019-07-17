@@ -1,9 +1,9 @@
-Feature: Create projects
+Feature: Task
   Background: preconditions
     Given I login the app as owner
 
   @gui @clean_projects
-  Scenario: Verify that I can create a new Project
+  Scenario: Verify that I can create a new task
      When I click on Create Project button
       And I fill the form with data
         | key           | value                                |
@@ -18,6 +18,3 @@ Feature: Create projects
         | story_title | (prefix)_story_(current_date_time) |
         | task_title  | (prefix)_task_(current_date_time)  |
       And I click on Save button
-      Then I exist
-
-

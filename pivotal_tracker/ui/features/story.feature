@@ -1,9 +1,9 @@
-Feature: Create projects
+Feature: Story general
   Background: preconditions
     Given I login the app as owner
 
   @gui @clean_projects
-  Scenario: Verify that I can create a new Project
+  Scenario: Verify that I can create a new story
      When I click on Create Project button
       And I fill the form with data
         | key           | value                                |
@@ -17,6 +17,3 @@ Feature: Create projects
         | key         | value                              |
         | story_title | (prefix)_story_(current_date_time) |
       Then I click on Save button
-      And I exist
-
-
