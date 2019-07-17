@@ -1,6 +1,6 @@
 from core.ui.pages.form_page import FormPage
 from core.ui.pages.action_page import ActionPage
-from pivotal_tracker.ui.pages.dashboard_page import DashboardPage
+from pivotal_tracker.ui.pages.user_page import UserPage
 
 username_field = '#credentials_username'
 password_field = '#credentials_password'
@@ -26,4 +26,4 @@ class LoginPage(FormPage, ActionPage):
 
     def sign_in(self):
         self.click(signin_button)
-        return DashboardPage(self._driver)
+        return UserPage(self._driver)
