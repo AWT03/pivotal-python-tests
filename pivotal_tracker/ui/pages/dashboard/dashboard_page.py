@@ -19,6 +19,9 @@ class DashboardPage:
         else:
             return switch
 
+    def set_form(self, **values):
+        self.current_tab.set_form(**values)
+
     def get_projects_tab(self):
         return DashboardProjects(self.driver)
 
