@@ -12,6 +12,6 @@ Feature: Create projects
     And I go to ProjectMain->More
     And I verify project settings were created according to characteristics
     And I go to Dashboard->Projects
-    And I verify project name is displayed
+    And I verify project_name is displayed on projects_dashboard
     And I go to AllProjects
-    And I verify project name is displayed
+    And I verify project_name is displayed on projects_list
