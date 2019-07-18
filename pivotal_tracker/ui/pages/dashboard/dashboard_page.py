@@ -1,29 +1,19 @@
+from core.ui.pages.tab_page import TabPage
 from pivotal_tracker.ui.pages.dashboard.dashboard_projects import DashboardProjects
 from pivotal_tracker.ui.pages.dashboard.dashboard_workspaces import DashboardWorkspaces
 
 
-class DashboardPage:
+class DashboardPage(TabPage):
     def __init__(self, driver):
-        self.driver = driver
-        self.tab_switch = {
+        super().__init__(driver)
+        self._tabs = {
             "Projects": lambda: self.get_projects_tab(),
             "Workspaces": lambda: self.get_workspaces_tab()
         }
-        self.current_tab = DashboardProjects(self.driver)
-
-    def do_action(self, value):
-        switch = self.current_tab.do_action(value)
-        if switch in self.tab_switch:
-            self.current_tab = self.tab_switch[switch]()
-            return ''
-        else:
-            return switch
-
-    def set_form(self, **values):
-        self.current_tab.set_form(**values)
+        self._tab = DashboardProjects(self._driver)
 
     def get_projects_tab(self):
-        return DashboardProjects(self.driver)
+        self._tab = DashboardProjects(self._driver)
 
     def get_workspaces_tab(self):
-        return DashboardWorkspaces(self.driver)
+        self._tab = DashboardWorkspaces(self._driver)

@@ -12,6 +12,7 @@ CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
 
 @given('I login the app as {username}')
 def step_impl(context, username):
+    context.tab_level = 0
     context.page = LoginPage(set_up_driver(CONFIG))
     context.page.set_form(sign_in_as=CONFIG.get("USERS").get(username).get("username"),
                           password=CONFIG.get("USERS").get(username).get("password"))
@@ -25,31 +26,31 @@ def step_impl(context):
     context.last_set_values = {}
     for row in context.table.rows:
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
-    context.page.set_form(**context.last_set_values)
+    context.page.go_to("ProjectCreation")
+    context.page.get_tab().set_form(**context.last_set_values)
     context.page.do_action("Create")
 
 
-@step('I verify project name is displayed in header')
+@step('I go to {navigation}')
+def step_impl(context, navigation):
+    context.tab_level = len(navigation.split('->'))
+    for index, tab in enumerate(navigation.split('->')):
+        eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
+
+
+@step('I verify project name is displayed on header')
 def step_impl(context):
     assert context.page.validate_name(context.last_set_values["project_name"]) is True
 
 
-@step('I verify that project name is on dashboard')
+@step('I verify project name is displayed')
 def step_impl(context):
-    context.page.go_to_dashboard()
-    assert context.page.current_tab.current_tab.project_exists(
-        context.last_set_values["project_name"]) is True
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    exists = tab.project_exists(context.last_set_values["project_name"])
+    assert exists is True
 
 
-@step('I verify that project settings were created according to characteristics')
+@step('I verify project settings were created according to characteristics')
 def step_impl(context):
-    context.page.current_tab.current_tab = context.page.current_tab.tab_switch["More"]()
-    assert context.page.current_tab.current_tab.\
+    assert context.page.get_tab().get_tab().\
         match_fields(**context.last_set_values) is True
-
-
-@step('I verify that project is on projects menu')
-def step_impl(context):
-    context.page.go_to_all_projects()
-    assert context.page.current_tab.project_exists(
-        context.last_set_values["project_name"]) is True
