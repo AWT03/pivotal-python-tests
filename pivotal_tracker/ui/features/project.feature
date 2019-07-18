@@ -8,7 +8,7 @@ Feature: Create projects
         | project_name  | (prefix)_project_(current_date_time) |
         | account       | (prefix)_account                     |
         | privacy       | public                               |
-    Then I verify project name is displayed on header
+    Then I verify project_name is displayed on header_name
     And I go to ProjectMain->More
     And I verify project settings were created according to characteristics
     And I go to Dashboard->Projects

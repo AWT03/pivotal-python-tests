@@ -21,23 +21,20 @@ class ProjectMain(TabPage):
             "More": lambda: self.get_more_tab()
         }
         self._tab = ProjectStories(self._driver)
+        self.wait_for_hidden(background_div)
 
     def get_stories_tab(self):
-        self.wait_until(background_div)
         self.click(project_stories_tab)
         self._tab = ProjectStories(self._driver)
 
     def get_analytics_tab(self):
-        self.wait_until(background_div)
         self.click(project_analytics_tab)
         self._tab = ProjectAnalytics(self._driver)
 
     def get_members_tab(self):
-        self.wait_until(background_div)
         self.click(project_members_tab)
         self._tab = ProjectMembers(self._driver)
 
     def get_more_tab(self):
-        self.wait_until(background_div)
         self.click(project_more_tab)
         self._tab = ProjectMore(self._driver)

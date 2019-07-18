@@ -1,7 +1,7 @@
-from core.ui.pages.base_page import BasePage
+from core.ui.pages.element import Element
 
 
-class TabPage(BasePage):
+class TabPage(Element):
     def __init__(self, driver):
         super().__init__(driver)
         self._tabs = {}

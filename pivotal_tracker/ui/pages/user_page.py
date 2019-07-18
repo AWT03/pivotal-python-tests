@@ -1,19 +1,22 @@
 from core.ui.pages.tab_page import TabPage
+from core.ui.pages.element_search import ElementSearch
 from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 from pivotal_tracker.ui.pages.project_view.project_main import ProjectMain
 from pivotal_tracker.ui.pages.project_view.projects_all import ProjectAll
 from pivotal_tracker.ui.pages.pop_ups.project_creation_form import ProjectCreationForm
-from selenium.common.exceptions import NoSuchElementException
 
 go_dashboard_button = '.headerLogo__image'
-page_name = '//span[text()="$(expected_name)"]'
 projects_dropdown_list = '.tc_projects_dropdown_link.tc_context_name'
+header_name = '//span[text()="$(expected_name)"]'
 show_all_projects_button = '//span[text()="Show All Projects"]'
 
 
-class UserPage(TabPage):
+class UserPage(TabPage, ElementSearch):
     def __init__(self, driver):
         super().__init__(driver)
+        self._search_elements = {
+            "header_name": lambda value: self.validate_header_name(value)
+        }
         self._tabs = {
             "Dashboard": lambda: self.get_dashboard_tab(),
             "ProjectMain": lambda: self.get_project_main_tab(),
@@ -37,9 +40,5 @@ class UserPage(TabPage):
     def get_project_creation_form(self):
         self._tab = ProjectCreationForm(self._driver)
 
-    def validate_name(self, name):
-        try:
-            self.find_element(page_name.replace('$(expected_name)', name))
-            return True
-        except NoSuchElementException:
-            return False
+    def validate_header_name(self, name):
+        return self.is_existing(header_name.replace('$(expected_name)', name))

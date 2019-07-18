@@ -1,7 +1,7 @@
-from core.ui.pages.base_page import BasePage
+from core.ui.pages.element import Element
 
 
-class ActionPage(BasePage):
+class ActionPage(Element):
     def __init__(self, driver):
         super().__init__(driver)
         self._actions = {}
@@ -13,7 +13,3 @@ class ActionPage(BasePage):
     def do_action(self, action_id):
         if action_id in self._actions:
             return self._actions[action_id]()
-
-    def do_action_with_value(self, action_id, value):
-        if action_id in self._actions:
-            return self._actions[action_id](value)

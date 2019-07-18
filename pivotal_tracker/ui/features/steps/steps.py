@@ -43,6 +43,13 @@ def step_impl(context):
     assert context.page.validate_name(context.last_set_values["project_name"]) is True
 
 
+@step('I verify {word} is displayed on {key}')
+def step_impl(context, word, key):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    exists = tab.is_displayed_as(key, context.last_set_values[word])
+    assert exists is True
+
+
 @step('I verify project name is displayed')
 def step_impl(context):
     tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
