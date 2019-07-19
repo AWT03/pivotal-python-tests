@@ -3,7 +3,7 @@ from core.ui.pages.form_page import FormPage
 from selenium.common.exceptions import NoSuchElementException
 
 project_title_field = 'input[name="project[name]"][value="$(name)"]'
-project_account_label = '//span[@id="project_account"]/b[contains(text(), "$(name)")]'
+project_account_label = '//span[@id="project_account"]/b[contains(text(), $(name))]'
 privacy_checked = 'input[name="project[public]"]'
 
 field_map = {

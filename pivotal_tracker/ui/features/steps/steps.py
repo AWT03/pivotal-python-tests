@@ -19,7 +19,7 @@ def step_impl(context, username):
     context.page = context.page.do_action("Sign In")
 
 
-@step('I create a project with characteristics')
+@step('I create a project with')
 def step_impl(context):
     assert context.table is not None
     context.page.do_action("Create Project")
