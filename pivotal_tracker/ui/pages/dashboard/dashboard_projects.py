@@ -5,7 +5,6 @@ from pivotal_tracker.ui.pages.tabs.user_main_tabs import UserMainTabs
 create_project_button = 'button[id="create-project-button"'
 project_name_reference = '//a[text()="$(project_name)"]'
 projects_header_name = 'a.projectTileHeader__projectName'
-#project_counter = 'span.projectPaneSection__header__heading--count'
 project_counter = '//span[@data-aid = "my-projects-count"]  [text()="$(counter)"]'
 
 
