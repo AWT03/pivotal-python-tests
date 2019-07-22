@@ -31,6 +31,16 @@ def step_impl(context):
     context.page.do_action("Create")
 
 
+@step('I modify project settings with')
+def step_impl(context):
+    assert context.table is not None
+    context.last_set_values = {}
+    for row in context.table.rows:
+        context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+    context.page.get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Save")
+
+
 @step('I go to {navigation}')
 def step_impl(context, navigation):
     context.tab_level = len(navigation.split('->'))
