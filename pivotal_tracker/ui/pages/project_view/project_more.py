@@ -7,6 +7,7 @@ project_account_label = '//span[@id="project_account"]/b[contains(text(), $(name
 privacy_checked = 'input[name="project[public]"]'
 enable_tasks_checked = 'input#project_enable_tasks'
 description_field = 'input#project_description'
+save_button = 'input.save_bar__submit'
 
 field_map = {
     "project_name": project_title_field,
@@ -19,14 +20,12 @@ class ProjectMore(ActionPage, FormPage):
     def __init__(self, driver):
         super().__init__(driver)
         fields = {
-            # "project_title": lambda value: self.set_value(project_title_field, value),
+            "project_title": lambda value: self.set_value(project_title_field, value),
             "description_field": lambda value: self.set_value(description_field, value),
-            "Enable Tasks": lambda value: self.check_enable_tasks(value)
+            "enable_tasks": lambda value: self.check_enable_tasks(value),
         }
         actions = {
-            # "Stories Tab": lambda: self.click(stories_tab),
-            # "Analytics tab": lambda: self.click(analytics_tab),
-            "Save": lambda value: self.save_changes()
+            "Save": lambda: self.save_changes()
         }
         self.update_actions(**actions)
         self.update_form_fields(**fields)
@@ -35,7 +34,7 @@ class ProjectMore(ActionPage, FormPage):
         for tag in values:
             try:
                 field_ref = field_map[tag]
-                if tag == "privacy" and values[tag] == "private":
+                if tag == "Privacy" and values[tag] == "Private":
                     field_ref += '[checked="checked"]'
                 self.find_element(field_ref.replace('$(name)', values[tag]))
             except NoSuchElementException:
@@ -44,7 +43,7 @@ class ProjectMore(ActionPage, FormPage):
 
     def check_enable_tasks(self, value):
         button = self.find_element(enable_tasks_checked)
-        if button.is_selected() != value:
+        if button.is_selected() and (value == 'false'):
             button.click()
 
     def save_changes(self):

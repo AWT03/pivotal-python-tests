@@ -1,7 +1,6 @@
 from core.ui.pages.action_page import ActionPage
 from core.ui.pages.form_page import FormPage
-from core.ui.pages.element_search import ElementSearch
-from pivotal_tracker.ui.pages.tabs.user_main_tabs import UserMainTabs
+from core.ui.pages.element_search import Element
 
 add_story_backlog = 'div[id*="panel_backlog"] a[class*="FirstStoryAddButton"]'
 story_title = 'textarea[name*="story"]'
@@ -12,7 +11,7 @@ task_title = 'textarea[placeholder*="Add a task"]'
 add_button = 'button[data-aid*="addTaskButton"]'
 
 
-class StoriesBacklog(ActionPage, FormPage):
+class StoriesBacklog(ActionPage, FormPage, Element):
     def __init__(self, driver):
         super().__init__(driver)
         fields = {
@@ -20,6 +19,7 @@ class StoriesBacklog(ActionPage, FormPage):
             "task_title": lambda value: self.set_task(value)
         }
         actions = {
+            "Add Story": lambda: self.click(add_story_backlog),
             "Save": lambda: self.click(save_button),
             "Cancel": lambda: self.click(cancel_button),
             "Add a Task": lambda: self.click(add_task),
