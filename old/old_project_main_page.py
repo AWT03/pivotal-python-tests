@@ -28,12 +28,12 @@ class ProjectMainPage(ActionPage):
         self.update_actions(**actions)
 
     def more_settings(self):
-        self.wait_until(background_div)
+        self.wait_for_hidden(background_div)
         self.click(more_options)
         return ProjectSettingsForm(self._driver)
 
     def click_on_arrow_story_icebox(self, value):
-        self.wait_until(background_div)
+        self.wait_for_hidden(background_div)
         replaced = story_arrow_element.replace('$(story)', value)
         self.click(replaced)
         return ProjectMainPage(self.get_driver())
@@ -52,6 +52,6 @@ class ProjectMainPage(ActionPage):
         return TaskPage(self.get_driver())
 
     def add_story(self):
-        self.wait_until(background_div)
+        self.wait_for_hidden(background_div)
         self.click(add_story_backlog)
         return StoryCreationPage(self._driver)

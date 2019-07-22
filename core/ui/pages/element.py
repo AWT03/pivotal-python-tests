@@ -1,21 +1,26 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
-from selenium.webdriver import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
 
-class BasePage:
+# Elements class
+class Element:
     def __init__(self, driver):
         self._driver = driver
         self.__wait = WebDriverWait(self._driver, 30)
+
+    def get_driver(self):
+        return self._driver
+
+    def set_wait(self, seconds):
+        self.__wait = WebDriverWait(self._driver, seconds)
 
     @staticmethod
     def get_selector(value):
         if value[:2] == '//':
             return By.XPATH
-        else:
-            return By.CSS_SELECTOR
+        return By.CSS_SELECTOR
 
     def find_element(self, value):
         return self._driver.find_element(self.get_selector(value), value)
@@ -23,23 +28,24 @@ class BasePage:
     def find_elements(self, value):
         return self._driver.find_elements(self.get_selector(value), value)
 
-    def wait_until(self, *be_hidden):
-        for element in be_hidden:
-            self.__wait.until(ec.invisibility_of_element((self.get_selector(element), element)))
+    def add_value(self, element, value):
+        self.find_element(element).send_keys(value)
+
+    def clear_value(self, element):
+        pass
 
     def click(self, to_click):
         self.__wait.until(ec.element_to_be_clickable((self.get_selector(to_click), to_click))).click()
 
-    def set_wait(self, seconds):
-        self.__wait = WebDriverWait(self._driver, seconds)
+    def double_click(self, to_click):
+        pass
 
-    def get_driver(self):
-        return self._driver
+    def get_value(self, element):
+        return self.find_element(element).text
 
-    def mouse_hover_element(self, value):
-        element = self.find_element(value)
-        hover = ActionChains(self._driver).move_to_element(element)
-        hover.perform()
+    def set_value(self, element, value):
+        self._driver.execute_script("arguments[0].value = ''", self.find_element(element))
+        self.find_element(element).send_keys(value)
 
     def is_existing(self, value):
         try:
@@ -47,3 +53,7 @@ class BasePage:
         except NoSuchElementException:
             return False
         return True
+
+    def wait_for_hidden(self, *be_hidden):
+        for element in be_hidden:
+            self.__wait.until(ec.invisibility_of_element((self.get_selector(element), element)))
