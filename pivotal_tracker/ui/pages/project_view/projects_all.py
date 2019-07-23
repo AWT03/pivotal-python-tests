@@ -1,7 +1,7 @@
 from core.ui.pages.element_search import ElementSearch
 
 project_list = '//a[@class="project_name"][text()="$(project_name)"]'
-account_list = '//div[@class="account column"]/a[text()="$(account)"]'
+account_list = '//div[contains(@class,"account")]/a[text()="$(account)"]'
 
 
 class ProjectAll(ElementSearch):
