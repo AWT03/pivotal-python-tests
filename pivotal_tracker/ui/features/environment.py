@@ -9,6 +9,10 @@ def before_all(context):
     delete_items('projects')
 
 
+def after_scenario(context, scenario):
+    delete_items('projects')
+
+
 def close_driver(context):
     if context.page is not None:
         context.page.get_driver().quit()
