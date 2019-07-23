@@ -19,7 +19,8 @@ Feature: Create projects
     And I verify project_name is displayed on projects_list
     And I verify account is displayed on account_list
 
-  Scenario: Verify that new projects are displayed correctly
+
+  Scenario: Verify that is not  
     When I create a project with
         | key           | value                                |
         | project_name  | (prefix)_project_(current_date_time) |

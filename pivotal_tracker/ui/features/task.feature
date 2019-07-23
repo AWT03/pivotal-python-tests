@@ -2,7 +2,7 @@ Feature: Create tasks
   Background: preconditions
     Given I login the app as owner
 
-  Scenario: Verify that new projects are displayed correctly
+  Scenario: Verify that new tasks are created in a story
     When I create a project with
         | key           | value                                |
         | project_name  | (prefix)_project_(current_date_time) |
