@@ -45,7 +45,10 @@ def step_impl(context):
 def step_impl(context, navigation):
     context.tab_level = len(navigation.split('->'))
     for index, tab in enumerate(navigation.split('->')):
-        eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
+        if tab is not '':
+            eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
+        else:
+            context.tab_level = 0
 
 
 @step('I create a story with')
@@ -104,3 +107,14 @@ def step_impl(context):
 def step_impl(context):
     assert context.page.get_tab().get_tab().\
         match_fields(**context.last_set_values) is True
+
+
+@step('I create a workspace with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.do_action("Create workspace")
+    context.last_set_values = {}
+    for row in context.table.rows:
+        context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+    context.page.get_tab().get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Create")
