@@ -20,7 +20,7 @@ Feature: Create projects
     And I verify account is displayed on account_list
 
 
-  Scenario: Verify that is not  
+  Scenario: Verify that is not possible to manage tasks in a project when disable this property
     When I create a project with
         | key           | value                                |
         | project_name  | (prefix)_project_(current_date_time) |
