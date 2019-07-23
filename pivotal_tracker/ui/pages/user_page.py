@@ -8,6 +8,7 @@ from pivotal_tracker.ui.pages.pop_ups.project_creation_form import ProjectCreati
 go_dashboard_button = '.headerLogo__image'
 projects_dropdown_list = '.tc_projects_dropdown_link.tc_context_name'
 header_name = '//span[text()="$(expected_name)"]'
+header_privacy = '//span[text()="($(privacy))"]'
 show_all_projects_button = '//span[text()="Show All Projects"]'
 
 
@@ -15,7 +16,8 @@ class UserPage(TabPage, ElementSearch):
     def __init__(self, driver):
         super().__init__(driver)
         self._search_elements = {
-            "header_name": lambda value: self.validate_header_name(value)
+            "header_name": lambda value: self.validate_header_name(value),
+            "header_privacy": lambda value: self.validate_header_privacy(value)
         }
         self._tabs = {
             "Dashboard": lambda: self.get_dashboard_tab(),
@@ -42,3 +44,6 @@ class UserPage(TabPage, ElementSearch):
 
     def validate_header_name(self, name):
         return self.is_existing(header_name.replace('$(expected_name)', name))
+
+    def validate_header_privacy(self, privacy):
+        return self.is_existing(header_privacy.replace('$(privacy)', privacy))

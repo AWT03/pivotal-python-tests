@@ -31,11 +31,37 @@ def step_impl(context):
     context.page.do_action("Create")
 
 
+@step('I modify project settings with')
+def step_impl(context):
+    assert context.table is not None
+    context.last_set_values = {}
+    for row in context.table.rows:
+        context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+    context.page.get_tab().get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Save")
+
+
 @step('I go to {navigation}')
 def step_impl(context, navigation):
     context.tab_level = len(navigation.split('->'))
     for index, tab in enumerate(navigation.split('->')):
         eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
+
+
+@step('I create a story with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.do_action("Add Story")
+    context.last_set_values = {}
+    for row in context.table.rows:
+        context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+    context.page.get_tab().get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Save")
+
+
+@step('I click on {button}')
+def step_impl(context, button):
+    context.page.do_action(button)
 
 
 @step('I verify project name is displayed on header')
@@ -47,6 +73,23 @@ def step_impl(context):
 def step_impl(context, word, key):
     tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
     exists = tab.is_displayed_as(key, context.last_set_values[word])
+    assert exists is True
+
+
+@step('I verify {key} element {assertion} displayed')
+def step_impl(context, key, assertion):
+    exist = context.page.is_existing(key)
+    if assertion == "is not":
+        assert exist is False
+    else:
+        assert exist is True
+
+
+@step('I verify my projects counter is counting all projects')
+def step_impl(context):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    projects = tab.number_projects()
+    exists = tab.project_counter(str(projects))
     assert exists is True
 
 

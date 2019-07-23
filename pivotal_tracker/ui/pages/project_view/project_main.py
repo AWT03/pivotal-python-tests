@@ -3,6 +3,7 @@ from pivotal_tracker.ui.pages.project_view.project_stories import ProjectStories
 from pivotal_tracker.ui.pages.project_view.project_analytics import ProjectAnalytics
 from pivotal_tracker.ui.pages.project_view.project_members import ProjectMembers
 from pivotal_tracker.ui.pages.project_view.project_more import ProjectMore
+from pivotal_tracker.ui.pages.stories.stories_backlog import StoriesBacklog
 
 project_stories_tab = '[data-aid="navTab-stories"]'
 project_analytics_tab = '[data-aid="navTab-analytics"]'
@@ -25,7 +26,7 @@ class ProjectMain(TabPage):
 
     def get_stories_tab(self):
         self.click(project_stories_tab)
-        self._tab = ProjectStories(self._driver)
+        self._tab = StoriesBacklog(self._driver)
 
     def get_analytics_tab(self):
         self.click(project_analytics_tab)

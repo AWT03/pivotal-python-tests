@@ -30,9 +30,9 @@ class ProjectCreationForm(FormPage, ActionPage):
         self.click(account_selected.replace('$(name)', value))
 
     def change_privacy(self, value):
-        if value == "public":
+        if value == "Public":
             self.check_public()
-        elif value == "private":
+        elif value == "Private":
             self.check_private()
 
     def check_private(self):
