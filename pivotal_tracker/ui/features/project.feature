@@ -2,6 +2,7 @@ Feature: Create projects
   Background: preconditions
     Given I login the app as owner
 
+    @wip
   Scenario: Verify that new projects are displayed correctly
     When I create a project with
         | key           | value                                |
