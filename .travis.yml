@@ -11,9 +11,9 @@ addons:
 install:
 - pip3 install -r requirements.txt
 before_install:
-- openssl aes-256-cbc -K $encrypted_e571030d7ac1_key -iv $encrypted_e571030d7ac1_iv
+- openssl aes-256-cbc -K $encrypted_abf7fcea0a5b_key -iv $encrypted_abf7fcea0a5b_iv
   -in pivotal_tracker/api/config.json.enc -out pivotal_tracker/api/config.json -d
-- openssl aes-256-cbc -K $encrypted_bd4a2482cc70_key -iv $encrypted_bd4a2482cc70_iv
+- openssl aes-256-cbc -K $encrypted_d4184f8917e5_key -iv $encrypted_d4184f8917e5_iv
   -in pivotal_tracker/ui/config.json.enc -out pivotal_tracker/ui/config.json -d
 script:
 - sonar-scanner
