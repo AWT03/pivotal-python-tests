@@ -1,6 +1,6 @@
 from core.ui.pages.form_page import FormPage
 from core.ui.pages.action_page import ActionPage
-from pivotal_tracker.ui.pages.tabs.dashboard_tabs import DashboardTabs
+from pivotal_tracker.ui.pages.tabs.user_main_tabs import UserMainTabs
 
 workspace_name_field = '.tc-form__input'
 create_button = 'button[data-aid="FormModal__submit"]'
@@ -22,4 +22,4 @@ class WorkspaceCreationForm(FormPage, ActionPage):
     def create_workspace(self):
         self.click(create_button)
         self.wait_for_hidden(background_div)
-        return DashboardTabs.WORKSPACE_MAIN
+        return UserMainTabs.WORKSPACE_MAIN

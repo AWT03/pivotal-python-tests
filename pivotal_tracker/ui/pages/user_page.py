@@ -4,6 +4,9 @@ from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 from pivotal_tracker.ui.pages.project_view.project_main import ProjectMain
 from pivotal_tracker.ui.pages.project_view.projects_all import ProjectAll
 from pivotal_tracker.ui.pages.pop_ups.project_creation_form import ProjectCreationForm
+from pivotal_tracker.ui.pages.pop_ups.workspace_creation_form import WorkspaceCreationForm
+from pivotal_tracker.ui.pages.workspace_view.workspace_main import WorkspaceMain
+from pivotal_tracker.ui.pages.workspace_view.workspace_more import WorkspaceMore
 
 go_dashboard_button = '.headerLogo__image'
 projects_dropdown_list = '.tc_projects_dropdown_link.tc_context_name'
@@ -23,7 +26,10 @@ class UserPage(TabPage, ElementSearch):
             "Dashboard": lambda: self.get_dashboard_tab(),
             "ProjectMain": lambda: self.get_project_main_tab(),
             "AllProjects": lambda: self.get_all_projects(),
-            "ProjectCreation": lambda: self.get_project_creation_form()
+            "ProjectCreation": lambda: self.get_project_creation_form(),
+            "WorkspaceCreation": lambda: self.get_workspace_creation_form(),
+            "WorkspaceMain": lambda: self.get_workspace_main_tab(),
+            "WorkspaceMore": lambda: self.get_workspace_more_tab()
         }
         self._tab = DashboardPage(self._driver)
 
@@ -47,3 +53,12 @@ class UserPage(TabPage, ElementSearch):
 
     def validate_header_privacy(self, privacy):
         return self.is_existing(header_privacy.replace('$(privacy)', privacy))
+
+    def get_workspace_creation_form(self):
+        self._tab = WorkspaceCreationForm(self._driver)
+
+    def get_workspace_main_tab(self):
+        self._tab = WorkspaceMain(self._driver)
+
+    def get_workspace_more_tab(self):
+        self._tab = WorkspaceMore(self._driver)

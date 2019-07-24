@@ -116,5 +116,17 @@ def step_impl(context):
     context.last_set_values = {}
     for row in context.table.rows:
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
-    context.page.get_tab().get_tab().set_form(**context.last_set_values)
+    context.page.get_tab().set_form(**context.last_set_values)
     context.page.do_action("Create")
+
+
+@step('I verify workspace settings were created according to characteristics')
+def step_impl(context):
+    assert context.page.get_tab().get_tab().\
+        match_fields(**context.last_set_values) is True
+
+
+@step('I verify that project counter is equal to {counter}')
+def step_impl(context, counter):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    assert tab.validate_project_counter(counter) is True
