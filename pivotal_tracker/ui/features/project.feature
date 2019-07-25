@@ -2,7 +2,7 @@ Feature: Create projects
   Background: preconditions
     Given I login the app as owner
 
-    @wip
+  @wip
   Scenario: Verify that new projects are displayed correctly
     When I create a project with
         | key           | value                                |
@@ -18,6 +18,7 @@ Feature: Create projects
     And I verify my projects counter is counting all projects
     And I go to AllProjects
     And I verify project_name is displayed on projects_list
+      # Account name should be displayed side by side with project name
     And I verify account is displayed on account_list
 
 
