@@ -15,15 +15,19 @@ class UserInterfaceConnection:
         }
         self.__driver = drivers[browser]()
 
-    def set_firefox(self):
+    @staticmethod
+    def set_firefox():
         return webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
-    def set_chrome(self):
+    @staticmethod
+    def set_chrome():
         return webdriver.Chrome(ChromeDriverManager().install())
 
-    def set_chrome_headless(self):
+    @staticmethod
+    def set_chrome_headless():
         chrome_options = Options()
         chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
         return webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
 
     def get_driver(self):
