@@ -8,8 +8,8 @@ from selenium.common.exceptions import NoSuchElementException
 class Element:
     def __init__(self, driver):
         self._driver = driver
-        self.__wait = WebDriverWait(self._driver, 5)
-        self._driver.implicitly_wait(2)
+        self.__wait = WebDriverWait(self._driver, 4)
+        self._driver.implicitly_wait(4)
 
     def get_driver(self):
         return self._driver
