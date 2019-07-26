@@ -86,8 +86,19 @@ def step_impl(context):
 
 @step('I verify {word} is displayed on {key}')
 def step_impl(context, word, key):
-    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    if key not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
     exists = tab.is_displayed_as(key, context.last_set_values[word])
+    assert exists is True
+
+
+@step('I verify that {key} is displayed as {value}')
+def step_impl(context, key, value):
+    print(context.tab_level)
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    exists = tab.is_displayed_as(key, value)
     assert exists is True
 
 
@@ -145,7 +156,7 @@ def step_impl(context):
 
 @step('I verify that workspace settings were created according to characteristics')
 def step_impl(context):
-    assert eval('context.page' + ''.join(context.tab_level * ['.get_tab()'])+
+    assert eval('context.page' + ''.join((context.page.get_tab_level()+1) * ['.get_tab()'])+
                 '.match_fields(**context.last_set_values)') is True
 
 
@@ -157,7 +168,7 @@ def step_impl(context, counter):
 
 @step('I verify this message {message} is displayed for this {tag}')
 def step_impl(context, message, tag):
-    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
     assert tab.validate_sms_in_workspace(message, context.last_set_values[tag]) is True
 
 
@@ -169,28 +180,25 @@ def step_impl(context, option):
 
 @step('I do click on {button} of the {key}')
 def step_impl(context, button, key):
-    context.page.do_action_with_value(button, context.last_set_values[key])
-    context.tab_level = 1
+    context.page.do_action(button, context.last_set_values[key])
+    context.tab_level = context.page.get_tab_level()
 
 
-@step('I verify that {word} is displayed for {key}')
+@step('I verify that "{word}" is displayed for {key}')
 def step_impl(context, word, key):
-    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
-    value_sms_counter = tab.get_value_projects_counter_sms(word, context.last_set_values["workspace_name"])
-    assert value_sms_counter == word
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    assert tab.is_displayed_as("project_colors", word.replace("\'", ""),
+                               context.last_set_values[key]) is True
 
 
 @step('I verify {counter} projects is displayed for {key}')
 def step_impl(context, counter, key):
-    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
-    value_counter = tab.get_value_projects_counter(context.last_set_values["workspace_name"])
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    value_counter = tab.is_displayed_as("projects_counter", context.last_set_values[key])
     value_counter_splitter = value_counter.split()
     assert value_counter_splitter[0] == counter
 
 
-@step('I go through {navigation}')
-def step_impl(context, navigation):
-    context.tab_level = len(navigation.split('->'))
-    for index, tab in enumerate(navigation.split('->')):
-        if tab is not '':
-            eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
+@step('I open the workspace settings from stories')
+def step_impl(context):
+    context.page.do_action("Open Workspace Settings")

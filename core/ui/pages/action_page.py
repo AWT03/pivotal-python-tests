@@ -13,7 +13,3 @@ class ActionPage(Element):
     def do_action(self, action_id, *params):
         if action_id in self._actions:
             return self._actions[action_id](*params)
-
-    def do_action_with_value(self, action_id, value):
-        if action_id in self._actions:
-            return self._actions[action_id](value)

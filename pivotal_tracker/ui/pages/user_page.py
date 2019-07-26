@@ -39,12 +39,9 @@ class UserPage(TabPage, ElementSearch):
             "Profile": lambda: self.get_profile_tab(),
             "WorkspaceCreation": lambda: self.get_workspace_creation_form(),
             "WorkspaceMain": lambda: self.get_workspace_main_tab(),
-            "WorkspaceMore": lambda: self.get_workspace_more_tab(),
             "WorkspaceStory": lambda: self.get_workspace_story_tab(),
-            "AllWorkspaces": lambda: self.get_all_workspaces(),
-            "Stories": lambda: self.get_story(),
-            "MainMenuWorkspace": lambda: self.get_main_menu_workspace(),
-            "ShowAllWorkspaces": lambda: self.get_show_all_workspaces()
+            "AllWorkspaces": lambda: self.get_show_all_workspaces(),
+            "MainMenu": lambda: self.get_main_menu()
         }
         self._tab = DashboardPage(self._driver)
 
@@ -97,8 +94,14 @@ class UserPage(TabPage, ElementSearch):
     def get_story(self):
         self._tab = WorkspaceStories(self._driver)
 
-    def get_main_menu_workspace(self):
+    def get_main_menu(self):
+        self.click(projects_dropdown_list)
         self._tab = MainMenu(self._driver)
 
     def get_show_all_workspaces(self):
+        self.click(projects_dropdown_list)
+        self.click(show_all_workspaces_button)
         self._tab = WorkspacesShowAll(self._driver)
+
+    def get_search_keys(self):
+        return list(self._search_elements.keys())

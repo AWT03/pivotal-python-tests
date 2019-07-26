@@ -14,6 +14,7 @@ workspace_sms = {
     "workspace_without_projects": "You haven't added any projects to this workspace."
 }
 
+
 class DashboardWorkspaces(ActionPage, ElementSearch):
     def __init__(self, driver):
         super().__init__(driver)

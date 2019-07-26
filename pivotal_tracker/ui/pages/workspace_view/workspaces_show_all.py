@@ -4,9 +4,12 @@ from pivotal_tracker.ui.pages.tabs.workspace_tabs import WorkspaceTabs
 
 
 workspace_list = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]'
-project_count_sms = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]//ancestor::div[1]//following-sibling::div[@class="project_colors column"]/span[text()="$(sms_projects)"]'
-project_count = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]//ancestor::div[1]//following-sibling::div[2]'
-workspace_settings = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]//ancestor::div[1]//following-sibling::div[3]/div/a'
+project_count_sms = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]//ancestor::div[1]' \
+                    '//following-sibling::div[@class="project_colors column"]/span[text()="$(sms_projects)"]'
+project_count = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]//ancestor::div[1]' \
+                '//following-sibling::div[2]'
+workspace_settings = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]//ancestor::div[1]' \
+                     '//following-sibling::div[3]/div/a'
 workspace_title_field = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]'
 
 
@@ -14,7 +17,9 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
     def __init__(self, driver):
         super().__init__(driver)
         search_elements = {
-            "workspaces_list": lambda value: self.workspace_exists_in_list(value)
+            "workspaces_list": lambda value: self.workspace_exists_in_list(value),
+            "project_colors": lambda value, value2: self.verify_project_colors(value, value2),
+            "projects_counter": lambda value: self.get_value_projects_counter(value)
         }
         actions = {
             "Settings": lambda value: self.open_settings_workspace(value),
@@ -26,11 +31,10 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
     def workspace_exists_in_list(self, name):
         return self.is_existing(workspace_list.replace('$(workspace_name)', name))
 
-    def get_value_projects_counter_sms(self, value, name):
+    def verify_project_colors(self, value, name):
         selector = project_count_sms.replace('$(sms_projects)', value)
         selector = selector.replace('$(workspace_name)', name)
-        return self.get_value(selector)
-
+        return self.is_existing(selector)
 
     def get_value_projects_counter(self, name):
         selector = project_count.replace('$(workspace_name)', name)

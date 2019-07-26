@@ -10,5 +10,5 @@ class ElementSearch(Element):
         for tag in fields:
             self._search_elements[tag] = fields[tag]
 
-    def is_displayed_as(self, key, value):
-        return self._search_elements[key](value)
+    def is_displayed_as(self, key, *values):
+        return self._search_elements[key](*values)
