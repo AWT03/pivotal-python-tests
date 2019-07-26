@@ -31,6 +31,13 @@ def step_impl(context):
     context.page.do_action("Create")
 
 
+@step('I create an account with name {account_name}')
+def step_impl(context, account_name):
+    new_account_name = format_string(account_name)
+    context.page.do_action("Create Account", new_account_name)
+    context.last_set_values = {"account_name": new_account_name}
+
+
 @step('I modify project settings with')
 def step_impl(context):
     assert context.table is not None
@@ -43,10 +50,17 @@ def step_impl(context):
 
 @step('I go to {navigation}')
 def step_impl(context, navigation):
-    context.tab_level = len(navigation.split('->'))
-    for index, tab in enumerate(navigation.split('->')):
-        if tab is not '':
+    if navigation.split('->')[0]:
+        for index, tab in enumerate(navigation.split('->')):
             eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
+    else:
+        tabs = len(navigation.split('->'))-1
+        tab_levels = context.page.get_tab_level()
+        current = eval("context.page" + ''.join((tab_levels - tabs) * ['.get_tab()']))
+        for index, tab in enumerate(navigation.split('->')[1:]):
+            current = eval("current" + ''.join((index+1)*['.get_tab()']))
+            current.go_to(tab)
+    context.tab_level = context.page.get_tab_level()
 
 
 @step('I create a story with')
@@ -107,6 +121,17 @@ def step_impl(context):
         match_fields(**context.last_set_values) is True
 
 
+@step('I select Manage Account for recently created')
+def step_impl(context):
+    context.page.do_action("Manage Account", context.last_set_values["account_name"])
+
+
+@step('I exist {seconds}')
+def step_impl(context, seconds):
+    from time import sleep
+    sleep(int(seconds))
+
+
 @step('I create a workspace with')
 def step_impl(context):
     assert context.table is not None
@@ -161,3 +186,11 @@ def step_impl(context, counter, key):
     value_counter = tab.get_value_projects_counter(context.last_set_values["workspace_name"])
     value_counter_splitter = value_counter.split()
     assert value_counter_splitter[0] == counter
+
+
+@step('I go through {navigation}')
+def step_impl(context, navigation):
+    context.tab_level = len(navigation.split('->'))
+    for index, tab in enumerate(navigation.split('->')):
+        if tab is not '':
+            eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")

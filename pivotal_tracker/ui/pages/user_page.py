@@ -3,6 +3,7 @@ from core.ui.pages.element_search import ElementSearch
 from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 from pivotal_tracker.ui.pages.project_view.project_main import ProjectMain
 from pivotal_tracker.ui.pages.project_view.projects_all import ProjectAll
+from pivotal_tracker.ui.pages.profile.profile_page import ProfilePage
 from pivotal_tracker.ui.pages.pop_ups.project_creation_form import ProjectCreationForm
 from pivotal_tracker.ui.pages.pop_ups.workspace_creation_form import WorkspaceCreationForm
 from pivotal_tracker.ui.pages.workspace_view.workspace_main import WorkspaceMain
@@ -18,6 +19,8 @@ header_name_more = '//div[text()="$(expected_name)"]'
 header_privacy = '//span[text()="($(privacy))"]'
 show_all_projects_button = '//span[text()="Show All Projects"]'
 show_all_workspaces_button = '//span[text()="Show All Projects"]'
+user_options_dropdown = 'button[aria-label="Profile Dropdown"]'
+profile_details_button = 'a[href*="/profile"][class*="Dropdown"]'
 
 
 class UserPage(TabPage, ElementSearch):
@@ -33,6 +36,7 @@ class UserPage(TabPage, ElementSearch):
             "ProjectMain": lambda: self.get_project_main_tab(),
             "AllProjects": lambda: self.get_all_projects(),
             "ProjectCreation": lambda: self.get_project_creation_form(),
+            "Profile": lambda: self.get_profile_tab(),
             "WorkspaceCreation": lambda: self.get_workspace_creation_form(),
             "WorkspaceMain": lambda: self.get_workspace_main_tab(),
             "WorkspaceMore": lambda: self.get_workspace_more_tab(),
@@ -58,6 +62,11 @@ class UserPage(TabPage, ElementSearch):
 
     def get_project_creation_form(self):
         self._tab = ProjectCreationForm(self._driver)
+
+    def get_profile_tab(self):
+        self.click(user_options_dropdown)
+        self.click(profile_details_button)
+        self._tab = ProfilePage(self._driver)
 
     def validate_header_name(self, name):
         return self.is_existing(header_name.replace('$(expected_name)', name))

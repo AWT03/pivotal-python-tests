@@ -14,8 +14,8 @@ class TabPage(Element):
     def go_to(self, tab):
         self._tabs[tab]()
 
-    def do_action(self, value):
-        switch = self._tab.do_action(value)
+    def do_action(self, value, *params):
+        switch = self._tab.do_action(value, *params)
         if switch in self._tabs:
             self.go_to(switch)
             return ''
@@ -30,3 +30,15 @@ class TabPage(Element):
 
     def get_tab(self):
         return self._tab
+
+    def get_tab_level(self):
+        current = self
+        has_tab = True
+        level = -1
+        while has_tab:
+            if hasattr(current, 'get_tab'):
+                current = current.get_tab()
+                level += 1
+            else:
+                has_tab = False
+        return level

@@ -5,26 +5,26 @@ Feature: Workspace
 
   @gui @acceptance @clean_workspaces
   Scenario: Verify that I can create a Workspace
-    When I go to ->Workspaces
+    When I go through ->Workspaces
     And I create a workspace with
       | key            | value                        |
       | workspace_name | (prefix)w(current_date_time) |
     Then I verify workspace_name is displayed on header_name
-    And I go to WorkspaceMain->More
+    And I go through WorkspaceMain->More
     And I verify that workspace settings were created according to characteristics
     And I verify workspace_name is displayed on header_name_more
-    And I go to WorkspaceMain->Stories->SideBar
+    And I go through WorkspaceMain->Stories->SideBar
     And I verify that project counter is equal to 0
-    And I go to ->WorkspaceSettings
+    And I go through ->WorkspaceSettings
     And I verify that workspace settings were created according to characteristics
     And I verify workspace_name is displayed on header_name_more
-    And I go to Dashboard->Workspaces
+    And I go through Dashboard->Workspaces
     And I verify workspace_name is displayed on workspaces_list
     And I verify this message workspace_without_projects is displayed for this workspace_name
     And I do click on Workspace settings of the workspace_name
     And I verify that workspace settings were created according to characteristics
     And I click on Header Logo
-    And I go to ->Workspaces
+    And I go through ->Workspaces
     And I verify workspace_name is displayed on workspaces_list
     And I do click on Workspace name of the workspace_name
     And I verify workspace_name is displayed on header_name
@@ -36,6 +36,6 @@ Feature: Workspace
     And I verify 0 projects is displayed for workspace_name
     And I do click on Settings of the workspace_name
     And I verify that workspace settings were created according to characteristics
-    And I go to AllWorkspaces
+    And I go through AllWorkspaces
     And I do click on Workspace name of the workspace_name
     And I verify workspace_name is displayed on header_name
