@@ -86,8 +86,19 @@ def step_impl(context):
 
 @step('I verify {word} is displayed on {key}')
 def step_impl(context, word, key):
-    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    if key not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
     exists = tab.is_displayed_as(key, context.last_set_values[word])
+    assert exists is True
+
+
+@step('I verify that {key} is displayed as {value}')
+def step_impl(context, key, value):
+    print(context.tab_level)
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    exists = tab.is_displayed_as(key, value)
     assert exists is True
 
 
@@ -130,3 +141,64 @@ def step_impl(context):
 def step_impl(context, seconds):
     from time import sleep
     sleep(int(seconds))
+
+
+@step('I create a workspace with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.do_action("Create workspace")
+    context.last_set_values = {}
+    for row in context.table.rows:
+        context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+    context.page.get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Create")
+
+
+@step('I verify that workspace settings were created according to characteristics')
+def step_impl(context):
+    assert eval('context.page' + ''.join((context.page.get_tab_level()+1) * ['.get_tab()'])+
+                '.match_fields(**context.last_set_values)') is True
+
+
+@step('I verify that project counter is equal to {counter}')
+def step_impl(context, counter):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    assert tab.validate_project_counter(counter) is True
+
+
+@step('I verify this message {message} is displayed for this {tag}')
+def step_impl(context, message, tag):
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    assert tab.validate_sms_in_workspace(message, context.last_set_values[tag]) is True
+
+
+@step('I verify that {option} option is visible')
+def step_impl(context, option):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    assert tab.validate_option_displayed(option) is True
+
+
+@step('I do click on {button} of the {key}')
+def step_impl(context, button, key):
+    context.page.do_action(button, context.last_set_values[key])
+    context.tab_level = context.page.get_tab_level()
+
+
+@step('I verify that "{word}" is displayed for {key}')
+def step_impl(context, word, key):
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    assert tab.is_displayed_as("project_colors", word.replace("\'", ""),
+                               context.last_set_values[key]) is True
+
+
+@step('I verify {counter} projects is displayed for {key}')
+def step_impl(context, counter, key):
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    value_counter = tab.is_displayed_as("projects_counter", context.last_set_values[key])
+    value_counter_splitter = value_counter.split()
+    assert value_counter_splitter[0] == counter
+
+
+@step('I open the workspace settings from stories')
+def step_impl(context):
+    context.page.do_action("Open Workspace Settings")

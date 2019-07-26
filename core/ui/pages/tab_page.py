@@ -21,6 +21,13 @@ class TabPage(Element):
             return ''
         return switch
 
+    def do_action_with_value(self, action_id, value):
+        switch = self._tab.do_action_with_value(action_id, value)
+        if switch in self._tabs:
+            self.go_to(switch)
+            return ''
+        return switch
+
     def get_tab(self):
         return self._tab
 
