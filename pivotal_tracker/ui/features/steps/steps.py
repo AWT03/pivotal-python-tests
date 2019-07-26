@@ -47,8 +47,6 @@ def step_impl(context, navigation):
     for index, tab in enumerate(navigation.split('->')):
         if tab is not '':
             eval("context.page" + ''.join(index*['.get_tab()']) + ".go_to(tab)")
-        else:
-            context.tab_level = 0
 
 
 @step('I create a story with')
@@ -120,13 +118,46 @@ def step_impl(context):
     context.page.do_action("Create")
 
 
-@step('I verify workspace settings were created according to characteristics')
+@step('I verify that workspace settings were created according to characteristics')
 def step_impl(context):
-    assert context.page.get_tab().get_tab().\
-        match_fields(**context.last_set_values) is True
+    assert eval('context.page' + ''.join(context.tab_level * ['.get_tab()'])+
+                '.match_fields(**context.last_set_values)') is True
 
 
 @step('I verify that project counter is equal to {counter}')
 def step_impl(context, counter):
     tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
     assert tab.validate_project_counter(counter) is True
+
+
+@step('I verify this message {message} is displayed for this {tag}')
+def step_impl(context, message, tag):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    assert tab.validate_sms_in_workspace(message, context.last_set_values[tag]) is True
+
+
+@step('I verify that {option} option is visible')
+def step_impl(context, option):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    assert tab.validate_option_displayed(option) is True
+
+
+@step('I do click on {button} of the {key}')
+def step_impl(context, button, key):
+    context.page.do_action_with_value(button, context.last_set_values[key])
+    context.tab_level = 1
+
+
+@step('I verify that {word} is displayed for {key}')
+def step_impl(context, word, key):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    value_sms_counter = tab.get_value_projects_counter_sms(word, context.last_set_values["workspace_name"])
+    assert value_sms_counter == word
+
+
+@step('I verify {counter} projects is displayed for {key}')
+def step_impl(context, counter, key):
+    tab = eval('context.page' + ''.join(context.tab_level * ['.get_tab()']))
+    value_counter = tab.get_value_projects_counter(context.last_set_values["workspace_name"])
+    value_counter_splitter = value_counter.split()
+    assert value_counter_splitter[0] == counter

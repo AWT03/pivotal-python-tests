@@ -7,12 +7,17 @@ from pivotal_tracker.ui.pages.pop_ups.project_creation_form import ProjectCreati
 from pivotal_tracker.ui.pages.pop_ups.workspace_creation_form import WorkspaceCreationForm
 from pivotal_tracker.ui.pages.workspace_view.workspace_main import WorkspaceMain
 from pivotal_tracker.ui.pages.workspace_view.workspace_more import WorkspaceMore
+from pivotal_tracker.ui.pages.pop_ups.main_menu import MainMenu
+from pivotal_tracker.ui.pages.workspace_view.workspaces_show_all import WorkspacesShowAll
+from pivotal_tracker.ui.pages.workspace_view.workspace_stories import WorkspaceStories
 
 go_dashboard_button = '.headerLogo__image'
 projects_dropdown_list = '.tc_projects_dropdown_link.tc_context_name'
 header_name = '//span[text()="$(expected_name)"]'
+header_name_more = '//div[text()="$(expected_name)"]'
 header_privacy = '//span[text()="($(privacy))"]'
 show_all_projects_button = '//span[text()="Show All Projects"]'
+show_all_workspaces_button = '//span[text()="Show All Projects"]'
 
 
 class UserPage(TabPage, ElementSearch):
@@ -20,6 +25,7 @@ class UserPage(TabPage, ElementSearch):
         super().__init__(driver)
         self._search_elements = {
             "header_name": lambda value: self.validate_header_name(value),
+            "header_name_more": lambda value: self.validate_header_name_more(value),
             "header_privacy": lambda value: self.validate_header_privacy(value)
         }
         self._tabs = {
@@ -29,7 +35,12 @@ class UserPage(TabPage, ElementSearch):
             "ProjectCreation": lambda: self.get_project_creation_form(),
             "WorkspaceCreation": lambda: self.get_workspace_creation_form(),
             "WorkspaceMain": lambda: self.get_workspace_main_tab(),
-            "WorkspaceMore": lambda: self.get_workspace_more_tab()
+            "WorkspaceMore": lambda: self.get_workspace_more_tab(),
+            "WorkspaceStory": lambda: self.get_workspace_story_tab(),
+            "AllWorkspaces": lambda: self.get_all_workspaces(),
+            "Stories": lambda: self.get_story(),
+            "MainMenuWorkspace": lambda: self.get_main_menu_workspace(),
+            "ShowAllWorkspaces": lambda: self.get_show_all_workspaces()
         }
         self._tab = DashboardPage(self._driver)
 
@@ -62,3 +73,23 @@ class UserPage(TabPage, ElementSearch):
 
     def get_workspace_more_tab(self):
         self._tab = WorkspaceMore(self._driver)
+
+    def get_workspace_story_tab(self):
+        self._tab = WorkspaceStories(self._driver)
+
+    def validate_header_name_more(self, name):
+        return self.is_existing(header_name_more.replace('$(expected_name)', name))
+
+    def get_all_workspaces(self):
+        self.click(projects_dropdown_list)
+        self.click(show_all_workspaces_button)
+        self._tab = WorkspacesShowAll(self._driver)
+
+    def get_story(self):
+        self._tab = WorkspaceStories(self._driver)
+
+    def get_main_menu_workspace(self):
+        self._tab = MainMenu(self._driver)
+
+    def get_show_all_workspaces(self):
+        self._tab = WorkspacesShowAll(self._driver)

@@ -1,5 +1,4 @@
 from core.ui.pages.tab_page import TabPage
-from pivotal_tracker.ui.pages.stories.stories_backlog import StoriesBacklog
 from pivotal_tracker.ui.pages.workspace_view.workspace_stories import WorkspaceStories
 from pivotal_tracker.ui.pages.workspace_view.workspace_more import WorkspaceMore
 
@@ -28,6 +27,10 @@ class WorkspaceMain(TabPage):
         self._tab = WorkspaceMore(self._driver)
 
     def get_settings_tab(self):
+        window_before = self._driver.window_handles[0]
         self.click(workspace_settings)
+        print(window_before)
         self.click(workspace_settings_item)
+        window_after = self._driver.window_handles[1]
+        self._driver.switch_to_window(window_after)
         self._tab = WorkspaceMore(self._driver)
