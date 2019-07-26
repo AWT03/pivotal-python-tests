@@ -8,13 +8,17 @@ from selenium.common.exceptions import NoSuchElementException
 class Element:
     def __init__(self, driver):
         self._driver = driver
-        self.__wait = WebDriverWait(self._driver, 30)
+        self.__wait = WebDriverWait(self._driver, 6)
+        self._driver.implicitly_wait(4)
 
     def get_driver(self):
         return self._driver
 
     def set_wait(self, seconds):
         self.__wait = WebDriverWait(self._driver, seconds)
+
+    def set_implicit_wait(self, seconds):
+        self._driver.implicitly_wait(seconds)
 
     @staticmethod
     def get_selector(value):
@@ -57,3 +61,7 @@ class Element:
     def wait_for_hidden(self, *be_hidden):
         for element in be_hidden:
             self.__wait.until(ec.invisibility_of_element((self.get_selector(element), element)))
+
+    def wait_for_visible(self, *be_shown):
+        for element in be_shown:
+            self.__wait.until(ec.presence_of_all_elements_located((self.get_selector(element), element)))
