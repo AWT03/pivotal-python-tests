@@ -9,7 +9,6 @@ project_stories_tab = '[data-aid="navTab-stories"]'
 project_analytics_tab = '[data-aid="navTab-analytics"]'
 project_members_tab = '[data-aid="navTab-members"]'
 project_more_tab = '[data-aid="navTab-more"]'
-background_div = '.scrim'
 
 
 class ProjectMain(TabPage):
@@ -22,7 +21,7 @@ class ProjectMain(TabPage):
             "More": lambda: self.get_more_tab()
         }
         self._tab = ProjectStories(self._driver)
-        self.wait_for_hidden(background_div)
+        # self.wait_for_hidden('.scrim')
 
     def get_stories_tab(self):
         self.click(project_stories_tab)

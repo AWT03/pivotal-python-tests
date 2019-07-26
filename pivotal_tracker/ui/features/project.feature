@@ -15,7 +15,7 @@ Feature: Create projects
     And I verify project settings were created according to characteristics
     And I go to Dashboard->Projects
     And I verify project_name is displayed on projects_dashboard
-    And I verify my projects counter is counting all projects
+    #    And I verify my projects counter is counting all projects
     And I go to AllProjects
     And I verify project_name is displayed on projects_list
       # Account name should be displayed side by side with project name
