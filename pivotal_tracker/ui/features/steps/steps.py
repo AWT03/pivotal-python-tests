@@ -196,3 +196,19 @@ def step_impl(context, key, selector):
         tab = context.page
     exists = tab.is_displayed_as(selector, context.last_set_values[key])
     assert exists is False
+
+
+@step('I verify that "message" message is displayed')
+def step_impl(context, message):
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    response = tab.verify_save_message(message)
+    assert response == 1
+
+
+@step('I update a workspace with')
+def step_impl(context):
+    assert context.table is not None
+    get_last_set_values(context)
+    eval('context.page' + ''.join((context.page.get_tab_level() + 1) * ['.get_tab()']) + '.set_form(**context.last_set_values)')
+    context.page.go_to
+    context.page.do_action("Save")

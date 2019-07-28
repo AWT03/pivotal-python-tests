@@ -1,21 +1,29 @@
 from core.ui.pages.action_page import ActionPage
+from core.ui.pages.form_page import FormPage
 from selenium.common.exceptions import NoSuchElementException
 from core.ui.pages.element_search import ElementSearch
 from pivotal_tracker.ui.pages.tabs.workspace_tabs import WorkspaceTabs
-from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 
 workspace_title_field = 'input[class="settings_field"][value="$(name)"]'
 header_name_more = '//div[text()="$(expected_name)"]'
 delete_selector = '//a[text()="Delete"]'
 delete_submit = '#confirm_delete'
 go_dashboard_button = '.headerLogo__image'
+edit_saved_changes_sms = '//div[@id="save_success_bar" and @style="display: none;"]' \
+                         '//following-sibling::div[1][text()="Changes saved."]'
+save_button = 'input[name="commit"][value="Save"]'
+workspace_title_field_edit = 'input[class="settings_field"]'
 
 field_map = {
     "workspace_name": workspace_title_field
 }
 
+sms_map = {
+    "changes_saved": edit_saved_changes_sms
+}
 
-class WorkspaceMore(ActionPage, ElementSearch):
+
+class WorkspaceMore(ActionPage, ElementSearch, FormPage):
     def __init__(self, driver):
         super().__init__(driver)
         self._search_elements = {
@@ -23,9 +31,14 @@ class WorkspaceMore(ActionPage, ElementSearch):
         }
         actions = {
             "Header Logo": lambda: self.click_header_logo(),
-            "Delete": lambda: self.delete_workspace()
+            "Delete": lambda: self.delete_workspace(),
+            "Save": lambda: self.save_workspace()
+        }
+        fields = {
+            "workspace_name": lambda value: self.set_value(workspace_title_field_edit, value)
         }
         self.update_actions(**actions)
+        self.update_form_fields(**fields)
 
     def match_fields(self, **values):
         for tag in values:
@@ -49,4 +62,11 @@ class WorkspaceMore(ActionPage, ElementSearch):
     def delete_workspace(self):
         self.click(delete_selector)
         self.click(delete_submit)
+        return WorkspaceTabs.DASHBOARD_ONLY
+
+    def save_workspace(self):
+        self.click(save_button)
+
+    def verify_save_message(self, message):
+        style = 'none'
         return WorkspaceTabs.DASHBOARD_ONLY
