@@ -9,3 +9,4 @@ class WorkspaceTabs(object):
     WORKSPACE_STORY = "WorkspaceStory"
     MAIN_MENU = "MainMenuWorkspace"
     SHOW_ALL_WORKSPACES = "AllWorkspaces"
+    DASHBOARD_ONLY = "DashboardOnly"

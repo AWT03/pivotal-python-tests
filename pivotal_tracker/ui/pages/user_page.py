@@ -41,7 +41,8 @@ class UserPage(TabPage, ElementSearch):
             "WorkspaceMain": lambda: self.get_workspace_main_tab(),
             "WorkspaceStory": lambda: self.get_workspace_story_tab(),
             "AllWorkspaces": lambda: self.get_show_all_workspaces(),
-            "MainMenu": lambda: self.get_main_menu()
+            "MainMenu": lambda: self.get_main_menu(),
+            "DashboardOnly": lambda: self.get_dashboard_project_default()
         }
         self._tab = DashboardPage(self._driver)
 
@@ -105,3 +106,6 @@ class UserPage(TabPage, ElementSearch):
 
     def get_search_keys(self):
         return list(self._search_elements.keys())
+
+    def get_dashboard_project_default(self):
+        self._tab = DashboardPage(self._driver)
