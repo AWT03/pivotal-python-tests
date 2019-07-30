@@ -5,6 +5,9 @@ from core.ui.utils.set_up_driver import set_up_driver
 from pivotal_tracker.ui.pivotal_tracker_dir import pivotal_tracker_ui_path
 from pivotal_tracker.ui.pages.login_page import LoginPage
 from pivotal_tracker.ui.util.format_string import format_string
+import logging
+
+log = logging.getLogger('foo')
 
 
 CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
@@ -23,6 +26,7 @@ def step_impl(context, username):
     context.page.set_form(sign_in_as=CONFIG.get("USERS").get(username).get("username"),
                           password=CONFIG.get("USERS").get(username).get("password"))
     context.page = context.page.do_action("Sign In")
+    log.info('foo bar Logging testing')
 
 
 @step('I create a project with')
@@ -209,6 +213,6 @@ def step_impl(context, message):
 def step_impl(context):
     assert context.table is not None
     get_last_set_values(context)
-    eval('context.page' + ''.join((context.page.get_tab_level() + 1) * 
+    eval('context.page' + ''.join((context.page.get_tab_level() + 1) *
                                   ['.get_tab()']) + '.set_form(**context.last_set_values)')
     context.page.do_action("Save")

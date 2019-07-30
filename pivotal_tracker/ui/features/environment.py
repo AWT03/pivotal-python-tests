@@ -1,4 +1,5 @@
 from pivotal_tracker.api.features.steps.functions import delete_items
+import logging
 
 
 def after_all(context):
@@ -7,6 +8,12 @@ def after_all(context):
 
 
 def before_all(context):
+    # context.config.setup_logging()
+    # -- SAME-AS:
+    # import logging
+    # logging.basicConfig(level=context.config.logging_level)
+    context.config.setup_logging(filename="debug.log", level=logging.DEBUG, format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
     delete_items('projects')
     delete_items('my/workspaces')
 
