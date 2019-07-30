@@ -7,7 +7,7 @@ Feature: Workspace
       | key            | value                        |
       | workspace_name | (prefix)w(current_date_time) |
 
-  @gui @acceptance @clean_workspaces
+  @gui @acceptance @clean_workspaces @wip
   Scenario: Verify that I can delete a Workspace
     When I go to WorkspaceMain->More
     And I click on Delete
