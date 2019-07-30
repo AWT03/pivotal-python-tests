@@ -9,8 +9,7 @@ header_name_more = '//div[text()="$(expected_name)"]'
 delete_selector = '//a[text()="Delete"]'
 delete_submit = '#confirm_delete'
 go_dashboard_button = '.headerLogo__image'
-edit_saved_changes_sms = '//div[@id="save_success_bar" and @style="display: none;"]' \
-                         '//following-sibling::div[1][text()="Changes saved."]'
+edit_saved_changes_sms = '//div[@id="save_success_bar"]//following-sibling::div[1][text()="$(message)"]'
 save_button = 'input[name="commit"][value="Save"]'
 workspace_title_field_edit = 'input[class="settings_field"]'
 
@@ -19,7 +18,7 @@ field_map = {
 }
 
 sms_map = {
-    "changes_saved": edit_saved_changes_sms
+    "changes_saved": "Changes saved."
 }
 
 
@@ -68,5 +67,8 @@ class WorkspaceMore(ActionPage, ElementSearch, FormPage):
         self.click(save_button)
 
     def verify_save_message(self, message):
-        style = 'none'
-        return WorkspaceTabs.DASHBOARD_ONLY
+        element = self.find_element(edit_saved_changes_sms.replace("$(message)", sms_map[message]))
+        is_visible = False
+        if element:
+            is_visible = True if element.is_displayed() else False
+        return is_visible

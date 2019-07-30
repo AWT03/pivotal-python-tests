@@ -21,6 +21,6 @@ Feature: Workspace
     And I update a workspace with
       | key            | value                        |
       | workspace_name | (prefix)W(current_date_time) |
-#    Then I verify that "changes_saved" message is displayed
+    Then I verify that "changes_saved" message is displayed
     And I go to Dashboard->Workspaces
     And I verify workspace_name is displayed on workspaces_list

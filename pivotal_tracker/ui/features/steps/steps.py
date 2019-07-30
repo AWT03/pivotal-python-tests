@@ -198,7 +198,7 @@ def step_impl(context, key, selector):
     assert exists is False
 
 
-@step('I verify that "message" message is displayed')
+@step('I verify that "{message}" message is displayed')
 def step_impl(context, message):
     tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
     response = tab.verify_save_message(message)
@@ -209,6 +209,6 @@ def step_impl(context, message):
 def step_impl(context):
     assert context.table is not None
     get_last_set_values(context)
-    eval('context.page' + ''.join((context.page.get_tab_level() + 1) * ['.get_tab()']) + '.set_form(**context.last_set_values)')
-    context.page.go_to
+    eval('context.page' + ''.join((context.page.get_tab_level() + 1) * 
+                                  ['.get_tab()']) + '.set_form(**context.last_set_values)')
     context.page.do_action("Save")
