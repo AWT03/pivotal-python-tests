@@ -16,7 +16,7 @@ def get_last_set_values(context):
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
 
 
-@given('I login the app as {username}')
+@step('I login the app as {username}')
 def step_impl(context, username):
     context.tab_level = 0
     context.page = LoginPage(set_up_driver(CONFIG))
@@ -212,3 +212,8 @@ def step_impl(context):
     eval('context.page' + ''.join((context.page.get_tab_level() + 1) * 
                                   ['.get_tab()']) + '.set_form(**context.last_set_values)')
     context.page.do_action("Save")
+
+
+@step("I save {feature} name")
+def step_impl(context, feature):
+    pass
