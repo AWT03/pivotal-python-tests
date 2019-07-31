@@ -6,6 +6,11 @@ create_project_button = 'button[id="create-project-button"'
 project_name_reference = '//a[text()="$(project_name)"]'
 projects_header_name = 'a.projectTileHeader__projectName'
 project_counter = '//span[@data-aid = "my-projects-count"]  [text()="$(counter)"]'
+success_delete_object_sms = '//li[@id="notice"][text()="$(workspace_name) was successfully deleted."]'
+
+sms_map = {
+    "success_delete": success_delete_object_sms
+}
 
 
 class DashboardProjects(ActionPage, ElementSearch):
@@ -13,7 +18,8 @@ class DashboardProjects(ActionPage, ElementSearch):
         super().__init__(driver)
         search_elements = {
             "projects_dashboard": lambda value: self.project_exists(value),
-            "projects_counter": lambda value: self.project_counter(value)
+            "projects_counter": lambda value: self.project_counter(value),
+            "success_delete": lambda value: self.success_delete_message(value)
         }
         actions = {
             "Create Project": lambda: self.open_create_project_form()
@@ -33,3 +39,7 @@ class DashboardProjects(ActionPage, ElementSearch):
 
     def number_projects(self):
         return len(self.find_elements(projects_header_name))
+
+    def success_delete_message(self, value):
+        replace = success_delete_object_sms.replace('$(workspace_name)', value)
+        return len(self.find_elements(replace))

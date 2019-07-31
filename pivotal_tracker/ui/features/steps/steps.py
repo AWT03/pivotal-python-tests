@@ -179,3 +179,36 @@ def step_impl(context, counter, key):
 @step('I open the workspace settings from stories')
 def step_impl(context):
     context.page.do_action("Open Workspace Settings")
+
+
+@step('I verify that "{message}" message is displayed for "{object_attribute}"')
+def step_impl(context, message, object_attribute):
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    response = tab.is_displayed_as(message, context.last_set_values[object_attribute])
+    assert response == 1
+
+
+@step("I verify {key} is not displayed on {selector}")
+def step_impl(context, key, selector):
+    if selector not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    exists = tab.is_displayed_as(selector, context.last_set_values[key])
+    assert exists is False
+
+
+@step('I verify that "{message}" message is displayed')
+def step_impl(context, message):
+    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    response = tab.verify_save_message(message)
+    assert response == 1
+
+
+@step('I update a workspace with')
+def step_impl(context):
+    assert context.table is not None
+    get_last_set_values(context)
+    eval('context.page' + ''.join((context.page.get_tab_level() + 1) * 
+                                  ['.get_tab()']) + '.set_form(**context.last_set_values)')
+    context.page.do_action("Save")
