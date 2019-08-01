@@ -6,7 +6,6 @@ from pivotal_tracker.ui.pivotal_tracker_dir import pivotal_tracker_ui_path
 from pivotal_tracker.ui.pages.login_page import LoginPage
 from pivotal_tracker.ui.util.format_string import format_string
 
-
 CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
 
 
@@ -216,4 +215,4 @@ def step_impl(context):
 
 @step("I save {feature} name")
 def step_impl(context, feature):
-    pass
+    print(context.data.text)
