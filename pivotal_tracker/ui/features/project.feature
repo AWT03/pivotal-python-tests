@@ -22,6 +22,47 @@ Feature: Create projects
     And I verify account is displayed on account_list
 
 
+    Feature: Create projects
+  Background: preconditions
+    Given I login the app as owner
+
+
+  Scenario: Verify that a new project is created by project logo header
+    When I go to AllProjects
+    And I create a project on project list with
+        | key           | value                                |
+        | project_name  | (prefix)_project_(current_date_time) |
+        | account       | (prefix)_account                     |
+        | privacy       | Public                               |
+    Then I verify project_name is displayed on header_name
+    And I verify privacy is displayed on header_privacy
+    And I go to ProjectMain->More
+    And I verify project settings were created according to characteristics
+    And I go to Dashboard->Projects
+    And I verify project_name is displayed on projects_dashboard
+    And I go to AllProjects
+    And I verify project_name is displayed on projects_list
+    And I verify account is displayed on account_list
+
+
+    Scenario: Verify that a new project is created by main header
+    When I click on projects_dropdown_list
+    And I create a project on main header with
+        | key           | value                                |
+        | project_name  | (prefix)_project_(current_date_time) |
+        | account       | (prefix)_account                     |
+        | privacy       | Public                               |
+    Then I verify project_name is displayed on header_name
+    And I verify privacy is displayed on header_privacy
+    And I go to ProjectMain->More
+    And I verify project settings were created according to characteristics
+    And I go to Dashboard->Projects
+    And I verify project_name is displayed on projects_dashboard
+    And I go to AllProjects
+    And I verify project_name is displayed on projects_list
+    And I verify account is displayed on account_list
+
+
   Scenario: Verify that is not possible to manage tasks in a project when disable this property
     When I create a project with
         | key           | value                                |

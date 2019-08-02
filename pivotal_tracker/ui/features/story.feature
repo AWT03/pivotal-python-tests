@@ -17,3 +17,5 @@ Feature: Create stories
     And I create a story with
       | key         | value                              |
       | story_title | (prefix)_story_(current_date_time) |
+
+

@@ -34,6 +34,26 @@ def step_impl(context):
     context.page.do_action("Create")
 
 
+@step('I create a project on project list with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.context.get_tab().do_action("Create Project")
+    get_last_set_values(context)
+    context.page.go_to("ProjectCreation")
+    context.page.get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Create")
+
+
+@step('I create a project on main header with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.context.get_tab().do_action("Create Project")
+    get_last_set_values(context)
+    context.page.go_to("ProjectCreation")
+    context.page.get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Create")
+
+
 @step('I create an account with name {account_name}')
 def step_impl(context, account_name):
     new_account_name = format_string(account_name)
