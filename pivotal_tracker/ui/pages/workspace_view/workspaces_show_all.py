@@ -1,8 +1,6 @@
 from core.ui.pages.element_search import ElementSearch
 from core.ui.pages.action_page import ActionPage
 from pivotal_tracker.ui.pages.tabs.workspace_tabs import WorkspaceTabs
-from pivotal_tracker.ui.pages.workspace_view.workspace_more import WorkspaceMore
-from core.ui.pages.tab_page import TabPage
 
 
 workspace_list = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]'
@@ -56,7 +54,5 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
     def open_workspace_more_settings(self, value):
         selector = workspace_settings.replace('$(workspace_name)', value)
         self.click(selector)
-        # return WorkspaceTabs.WORKSPACE_MORE
-        # self._tab = WorkspaceMore(self._driver)
         return WorkspaceTabs.WORKSPACE_MORE
 
