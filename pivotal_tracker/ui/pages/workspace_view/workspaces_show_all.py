@@ -1,6 +1,8 @@
 from core.ui.pages.element_search import ElementSearch
 from core.ui.pages.action_page import ActionPage
 from pivotal_tracker.ui.pages.tabs.workspace_tabs import WorkspaceTabs
+from pivotal_tracker.ui.pages.workspace_view.workspace_more import WorkspaceMore
+from core.ui.pages.tab_page import TabPage
 
 
 workspace_list = '//div[@class="workspaces column"]/a[text()="$(workspace_name)"]'
@@ -23,7 +25,8 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
         }
         actions = {
             "Settings": lambda value: self.open_settings_workspace(value),
-            "Workspace name": lambda value: self.open_workspace_created(value)
+            "Workspace name": lambda value: self.open_workspace_created(value),
+            "Workspace settings": lambda value: self.open_workspace_more_settings(value),
         }
         self.update_actions(**actions)
         self.update_search_fields(**search_elements)
@@ -49,3 +52,11 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
         selector = workspace_title_field.replace('$(workspace_name)', value)
         self.click(selector)
         return WorkspaceTabs.STORIES
+
+    def open_workspace_more_settings(self, value):
+        selector = workspace_settings.replace('$(workspace_name)', value)
+        self.click(selector)
+        # return WorkspaceTabs.WORKSPACE_MORE
+        # self._tab = WorkspaceMore(self._driver)
+        return WorkspaceTabs.WORKSPACE_MORE
+
