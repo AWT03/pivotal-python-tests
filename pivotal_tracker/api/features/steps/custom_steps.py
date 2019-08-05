@@ -45,6 +45,7 @@ def step_impl(context):
     context.headers = None
     context.ids_list = []
     context.save_response = []
+    context.save_names = {}
     context.projects_already_created = 0
 
 

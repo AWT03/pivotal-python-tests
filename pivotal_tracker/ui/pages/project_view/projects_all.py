@@ -15,7 +15,8 @@ class ProjectAll(ElementSearch, ActionPage):
             "account_list": lambda value: self.account_exist_in_list(value)
         }
         actions = {
-            "Create Project": lambda: self.open_create_project_form()
+            "Create Project": lambda: self.open_create_project_form(),
+            "Project_name": lambda value: self.open_selected_project(value)
         }
         self.update_actions(**actions)
         self.update_search_fields(**search_elements)
@@ -29,3 +30,7 @@ class ProjectAll(ElementSearch, ActionPage):
 
     def account_exist_in_list(self, account_name):
         return self.is_existing(account_list.replace('$(account)', account_name))
+
+    def open_selected_project(self, name):
+        self.click(project_list.replace('$(project_name)', name))
+        return UserMainTabs.PROJECT_MAIN

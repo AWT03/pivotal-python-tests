@@ -5,6 +5,9 @@ from core.ui.utils.set_up_driver import set_up_driver
 from pivotal_tracker.ui.pivotal_tracker_dir import pivotal_tracker_ui_path
 from pivotal_tracker.ui.pages.login_page import LoginPage
 from pivotal_tracker.ui.util.format_string import format_string
+import pivotal_tracker.api.features.steps.custom_steps
+import core.api.features.steps.steps
+from pivotal_tracker.ui.features.steps.functions import *
 
 CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
 
@@ -13,6 +16,20 @@ def get_last_set_values(context):
     context.last_set_values = {}
     for row in context.table.rows:
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
+
+
+@step("I save {feature}")
+def step_impl(context, feature):
+    print ("hola")
+    api_response = loads(context.api.get_full_response())
+    context.save_names[feature] = api_response['name']
+    print(context.save_names)
+    print("hola")
+
+
+@step('I click on {feature} created by API')
+def step_impl(context, feature):
+    context.page.do_action(feature)
 
 
 @step('I login the app as {username}')
@@ -233,6 +250,5 @@ def step_impl(context):
     context.page.do_action("Save")
 
 
-@step("I save {feature} name")
-def step_impl(context, feature):
-    print(context.data.text)
+
+

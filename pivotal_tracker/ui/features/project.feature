@@ -22,10 +22,6 @@ Feature: Create projects
     And I verify account is displayed on account_list
 
 
-    Feature: Create projects
-  Background: preconditions
-    Given I login the app as owner
-
 
   Scenario: Verify that a new project is created by project logo header
     When I go to AllProjects
