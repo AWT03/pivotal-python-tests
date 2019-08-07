@@ -26,7 +26,7 @@ Feature: Delete a Workspace
     And I verify workspace_name is not displayed on workspaces_list
 
 
-  @gui @acceptance @clean_workspaces
+  @gui @acceptance @clean_workspaces @wip
   Scenario: Verify that I can delete to a Workspace from settings
     Given I go to Dashboard->Workspaces
     When I do click on Workspace settings of the workspace_name
