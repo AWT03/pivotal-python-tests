@@ -17,7 +17,6 @@ def step_impl(context, user_name):
     user_config = pivotal_config.get("USER").get(user_name)
     context.headers[pivotal_config.get("HEADERS").get("TOKEN")] = user_config.get("TOKEN")
     context.user_id = user_config.get("ID")
-    # context.path_data_files = join(pivotal_tracker_path, pivotal_config.get("PATH_TEST_FILES"))
 
 
 @given('I start a connection with the Pivotal Tracker API')
