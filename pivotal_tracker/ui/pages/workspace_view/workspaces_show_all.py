@@ -23,7 +23,8 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
         }
         actions = {
             "Settings": lambda value: self.open_settings_workspace(value),
-            "Workspace name": lambda value: self.open_workspace_created(value)
+            "Workspace name": lambda value: self.open_workspace_created(value),
+            "Workspace settings": lambda value: self.open_workspace_more_settings(value),
         }
         self.update_actions(**actions)
         self.update_search_fields(**search_elements)
@@ -49,3 +50,9 @@ class WorkspacesShowAll(ElementSearch, ActionPage):
         selector = workspace_title_field.replace('$(workspace_name)', value)
         self.click(selector)
         return WorkspaceTabs.STORIES
+
+    def open_workspace_more_settings(self, value):
+        selector = workspace_settings.replace('$(workspace_name)', value)
+        self.click(selector)
+        return WorkspaceTabs.WORKSPACE_MORE
+
