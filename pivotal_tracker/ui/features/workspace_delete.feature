@@ -38,7 +38,7 @@ Feature: Delete a Workspace
     And I verify workspace_name is not displayed on workspaces_list
 
 
-  @gui @acceptance @clean_workspaces
+  @gui @acceptance @clean_workspaces @wip
   Scenario: Verify that I can delete to a Workspace from story side bar settings
     Given I go to Dashboard->Workspaces
     And I open the Workspace Name
@@ -49,7 +49,7 @@ Feature: Delete a Workspace
     And I verify workspace_name is not displayed on workspaces_list
 
 
-  @gui @acceptance @clean_workspaces
+  @gui @acceptance @clean_workspaces @wip
   Scenario: Verify that I can delete to a Workspace from the Show All Workspace List
     Given I go to MainMenu
     And I click on Show All Workspaces
