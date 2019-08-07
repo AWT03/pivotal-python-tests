@@ -1,38 +1,23 @@
-from behave import given, then, when
+from behave import given, then, step
 from pivotal_tracker.api.features.steps.functions import *
-from pivotal_tracker.api.pivotal_tracker_dir import pivotal_tracker_path
+from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 from pivotal_tracker.api.pivotal_tracker_api import PivotalTrackerApi
 
-path_data_files = get_config(join(pivotal_tracker_path, 'config.json'))['PATH_DATA_FILES']
+path_data_files = get_config(join(pivotal_tracker_path, 'config.json'))['PATH_TEST_FILES']
 
 
 # This way of logging as user is proper of Pivotal Tracker
-@given('I log in as user {user_name}')
+@step('I log in as user {user_name}')
 def step_impl(context, user_name):
     pivotal_config = get_config(join(pivotal_tracker_path, "config.json"))
-    pivotal_message = get_config(join(pivotal_tracker_path, "message.json"))
     context.api.set_config(pivotal_config)
-    context.api.set_message(pivotal_message)
+    context.api.set_message(get_config(join(pivotal_tracker_path, "api", "message.json")))
     if not context.headers:
         context.headers = {}
     user_config = pivotal_config.get("USER").get(user_name)
-    context.headers[pivotal_config.get("TOKEN_HEADER")] = user_config.get("TOKEN")
+    context.headers[pivotal_config.get("HEADERS").get("TOKEN")] = user_config.get("TOKEN")
     context.user_id = user_config.get("ID")
-    context.path_data_files = join(pivotal_tracker_path, pivotal_config.get("PATH_DATA_FILES"))
-
-# This way of logging as user is proper of Pivotal Tracker
-@when('I log in as user {user_name}')
-def step_impl(context, user_name):
-    pivotal_config = get_config(join(pivotal_tracker_path, "config.json"))
-    pivotal_message = get_config(join(pivotal_tracker_path, "message.json"))
-    context.api.set_config(pivotal_config)
-    context.api.set_message(pivotal_message)
-    if not context.headers:
-        context.headers = {}
-    user_config = pivotal_config.get("USER").get(user_name)
-    context.headers[pivotal_config.get("TOKEN_HEADER")] = user_config.get("TOKEN")
-    context.user_id = user_config.get("ID")
-    context.path_data_files = join(pivotal_tracker_path, pivotal_config.get("PATH_DATA_FILES"))
+    # context.path_data_files = join(pivotal_tracker_path, pivotal_config.get("PATH_TEST_FILES"))
 
 
 @given('I start a connection with the Pivotal Tracker API')

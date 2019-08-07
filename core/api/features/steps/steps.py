@@ -33,7 +33,7 @@ def step_impl(context, post_type, feature, description, complete, position):
     data = dumps(data_dict)
     context.data = data
     context.data_text = None
-    content_type = context.api.get_config()['Content-Type']
+    content_type = context.api.get_config()['HEADERS']['Content-Type']
     context.headers.update({"Content-Type": content_type})
     do_request(context, feature, post_type, context.headers, True)
 
@@ -195,7 +195,7 @@ def step_impl(context, type_method, feature, json_file):
     data = file.read()
     context.data = data
     context.data_text = None
-    content_type = context.api.get_config()['Content-Type']
+    content_type = context.api.get_config()['HEADERS']['Content-Type']
     context.headers.update({"Content-Type": content_type})
     do_request(context, feature, type_method, context.headers, True)
 

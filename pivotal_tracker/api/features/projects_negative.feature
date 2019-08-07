@@ -32,7 +32,7 @@ Feature: Projects
       | (prefix)_project_(random) | Thursday       | 2019-07-19 |
       | (prefix)_project_(random) | Friday         | 2019-07-20 |
 
-  @corner_case
+  @corner_case @wip
   Scenario: Verify that I can create a project with "public" attribute as "false" and prohibit
   other accounts to see projects information
     When I send a POST request to projects with data

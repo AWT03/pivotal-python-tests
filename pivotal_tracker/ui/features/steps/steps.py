@@ -1,17 +1,12 @@
-from behave import given, step
-from json import loads
-from os.path import join
 from core.ui.utils.set_up_driver import set_up_driver
-from pivotal_tracker.ui.pivotal_tracker_dir import pivotal_tracker_ui_path
 from pivotal_tracker.ui.pages.login_page import LoginPage
 from pivotal_tracker.ui.util.format_string import format_string
-import pivotal_tracker.api.features.steps.custom_steps
-import core.api.features.steps.steps
-from pivotal_tracker.ui.features.steps.functions import *
+from pivotal_tracker.api.features.steps.custom_steps import *
+from core.api.features.steps.steps import *
 from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 
 
-CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
+CONFIG = loads(open(join(pivotal_tracker_path, 'config.json')).read())
 
 
 def get_last_set_values(context):
@@ -24,8 +19,8 @@ def get_last_set_values(context):
 def step_impl(context, username):
     context.tab_level = 0
     context.page = LoginPage(set_up_driver(CONFIG))
-    context.page.set_form(sign_in_as=CONFIG.get("USERS").get(username).get("username"),
-                          password=CONFIG.get("USERS").get(username).get("password"))
+    context.page.set_form(sign_in_as=CONFIG.get("USER").get(username).get("USERNAME"),
+                          password=CONFIG.get("USER").get(username).get("PASSWORD"))
     context.page = context.page.do_action("Sign In")
 
 

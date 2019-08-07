@@ -1,10 +1,10 @@
 from core.api.features.steps.functions import *
 from pivotal_tracker.api.pivotal_tracker_api import PivotalTrackerApi
-from pivotal_tracker.api.pivotal_tracker_dir import pivotal_tracker_path
+from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 
 
 def get_message(message_tag):
-    return get_config(join(pivotal_tracker_path, 'message.json'))[message_tag]
+    return get_config(join(pivotal_tracker_path, 'api', 'message.json'))[message_tag]
 
 
 # Delete items of the object
@@ -14,7 +14,7 @@ def delete_items(object_endpoint):
     pivotal_config = get_config(join(pivotal_tracker_path, "config.json"))
     api.set_config(pivotal_config)
     user_config = pivotal_config.get("USER").get('owner')
-    headers = {pivotal_config.get("TOKEN_HEADER"): user_config.get("TOKEN")}
+    headers = {pivotal_config.get("HEADERS").get("TOKEN"): user_config.get("TOKEN")}
     basic = pivotal_config.get("BASE_URL")
     prefix = pivotal_config.get("PREFIX")
     url = basic + '/' + object_endpoint
