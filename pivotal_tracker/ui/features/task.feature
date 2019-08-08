@@ -18,3 +18,4 @@ Feature: Create tasks
       | key         | value                              |
       | story_title | (prefix)_story_(current_date_time) |
       | task_title  | (prefix)_task_(current_date_time)  |
+# Missing validations

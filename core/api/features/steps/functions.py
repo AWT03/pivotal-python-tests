@@ -4,7 +4,7 @@ from datetime import datetime
 from project_path import PROJECT_PATH
 
 
-current_date_time = datetime.now().strftime('_%d-%m-%Y_%H:%M:%S')
+current_date_time = datetime.now().strftime('%d-%m-%Y_%H:%M:%S')
 current_ISO8601_datetime = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 

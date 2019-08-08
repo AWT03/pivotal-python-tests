@@ -31,6 +31,9 @@ class TabPage(Element):
     def get_tab(self):
         return self._tab
 
+    def set_tab(self, tab):
+        self._tab = tab
+
     def get_tab_level(self):
         current = self
         has_tab = True

@@ -21,7 +21,8 @@ Feature: Create projects
       # Account name should be displayed side by side with project name
     And I verify account is displayed on account_list
 
-
+Modify the validation for account in the list
+    Modify line 7,28 and 47 as only one step definition.
 
   Scenario: Verify that a new project is created by project logo header
     When I go to AllProjects
@@ -39,6 +40,7 @@ Feature: Create projects
     And I go to AllProjects
     And I verify project_name is displayed on projects_list
     And I verify account is displayed on account_list
+
 
 
     Scenario: Verify that a new project is created by main header
@@ -72,3 +74,6 @@ Feature: Create projects
     And I go to ProjectMain->Stories
     And I click on Add Story
     Then I verify add_task element is not displayed
+
+  #When starts-> II got Ptojetc Main
+  #Create project with API
