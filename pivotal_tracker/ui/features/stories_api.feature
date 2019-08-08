@@ -11,10 +11,11 @@ Feature: Create stories
     And I save project_name
 
       @acceptance
-  Scenario: Verify that I can get a project information
-    When
+  Scenario: Verify that I can create story
     When  I login the app as owner
-      And I click on project_name created by API
+      And I go to Dashboard->Projects
+      And I access_project that contains project_name saved
+      And I go to ProjectMain->Stories
       And I create a story with
       | key         | value                              |
       | story_title | (prefix)_story_(current_date_time) |

@@ -29,7 +29,7 @@ def step_impl(context, feature):
 
 @step('I click on {feature} created by API')
 def step_impl(context, feature):
-    context.page.do_action(feature)
+    context.page.do_action(feature, context.save_names)
 
 
 @step('I login the app as {username}')
@@ -122,6 +122,15 @@ def step_impl(context, word, key):
         tab = context.page
     exists = tab.is_displayed_as(key, context.last_set_values[word])
     assert exists is True
+
+
+@step('I {key} that contains {word} saved')
+def step_impl(context, key, word):
+    if key not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    tab.is_displayed_as(key, context.save_names[word])
 
 
 @step('I verify that {key} is displayed as {value}')
