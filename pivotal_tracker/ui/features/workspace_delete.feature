@@ -12,7 +12,7 @@ Feature: Delete a Workspace
   "name": "(prefix)w(current_date_time)"
   }
   '''
-    And I login the app as owner
+    And I login the Pivotal Tracker web application as owner
 
 
   @gui @acceptance @clean_workspaces @wip

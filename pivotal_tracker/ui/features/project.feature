@@ -1,6 +1,6 @@
 Feature: Create projects
   Background: preconditions
-    Given I login the app as owner
+    Given I login the Pivotal Tracker web application as owner
 
   @wip
   Scenario: Verify that new projects are displayed correctly

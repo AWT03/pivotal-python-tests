@@ -17,7 +17,7 @@ def get_last_set_values(context):
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
 
 
-@given('I login the app as {username}')
+@given('I login the Pivotal Tracker web application as {username}')
 def step_impl(context, username):
     context.tab_level = 0
     context.page = LoginPage(set_up_driver(CONFIG))
@@ -97,8 +97,7 @@ def step_impl(context, word, key):
 
 @step('I verify that {key} is displayed as {value}')
 def step_impl(context, key, value):
-    print(context.tab_level)
-    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    tab = eval('context.page' + ''.join((context.page.get_tab_level()+1) * ['.get_tab()']))
     exists = tab.is_displayed_as(key, value)
     assert exists is True
 
@@ -273,3 +272,9 @@ def step_impl(context, key, selector):
     else:
         exists = tab.is_displayed_as(selector, context.last_set_values[key_split[1]])
     assert exists is False
+
+
+@step("I verify that I am the owner of the account")
+def step_impl(context):
+    tab = eval('context.page' + ''.join((context.tab_level + 1) * ['.get_tab()']))
+    tab.is_displayed_as("Owner", CONFIG.get("USER").get("owner").get("EMAIL"))

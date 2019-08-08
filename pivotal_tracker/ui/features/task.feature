@@ -1,6 +1,6 @@
 Feature: Create tasks
   Background: preconditions
-    Given I login the app as owner
+    Given I login the Pivotal Tracker web application as owner
 
   Scenario: Verify that new tasks are created in a story
     When I create a project with

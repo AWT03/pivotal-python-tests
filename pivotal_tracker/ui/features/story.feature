@@ -1,6 +1,6 @@
 Feature: Create stories
   Background: preconditions
-    Given I login the app as owner
+    Given I login the Pivotal Tracker web application as owner
 
   Scenario: Verify that new stories are created in a project
     When I create a project with

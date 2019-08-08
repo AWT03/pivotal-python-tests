@@ -9,6 +9,7 @@
     "owner": {
       "USERNAME": "",
       "PASSWORD": "",
+      "EMAIL": "",
       "ID": "",
       "TOKEN": ""
     }
