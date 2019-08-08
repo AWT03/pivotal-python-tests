@@ -1,8 +1,10 @@
+from behave import given, then, when, step
+from json import loads
+from os.path import join
+from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 from core.ui.utils.set_up_driver import set_up_driver
 from pivotal_tracker.ui.pages.login_page import LoginPage
 from pivotal_tracker.ui.util.format_string import format_string
-from pivotal_tracker.api.features.steps.custom_steps import *
-from core.api.features.steps.steps import *
 from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 
 
