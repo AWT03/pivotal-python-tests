@@ -15,18 +15,15 @@ Feature: Create projects
     And I verify project settings were created according to characteristics
     And I go to Dashboard->Projects
     And I verify project_name is displayed on projects_dashboard
-    #    And I verify my projects counter is counting all projects
     And I go to AllProjects
     And I verify project_name is displayed on projects_list
-      # Account name should be displayed side by side with project name
     And I verify account is displayed on account_list
 
-Modify the validation for account in the list
-    Modify line 7,28 and 47 as only one step definition.
+
 
   Scenario: Verify that a new project is created by project logo header
     When I go to AllProjects
-    And I create a project on project list with
+    And I create a project with
         | key           | value                                |
         | project_name  | (prefix)_project_(current_date_time) |
         | account       | (prefix)_account                     |
@@ -45,7 +42,7 @@ Modify the validation for account in the list
 
     Scenario: Verify that a new project is created by main header
     When I click on projects_dropdown_list
-    And I create a project on main header with
+    And I create a project with
         | key           | value                                |
         | project_name  | (prefix)_project_(current_date_time) |
         | account       | (prefix)_account                     |
@@ -75,5 +72,3 @@ Modify the validation for account in the list
     And I click on Add Story
     Then I verify add_task element is not displayed
 
-  #When starts-> II got Ptojetc Main
-  #Create project with API

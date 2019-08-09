@@ -11,6 +11,9 @@ add_task = 'div[data-aid*="Tasks"] span[class*="AddSubresourceButton__message"]'
 task_title = 'textarea[placeholder*="Add a task"]'
 add_button = 'button[data-aid*="addTaskButton"]'
 expand_story = 'div[aria-label="$(story_name)"] button'
+label = 'input[placeholder*="Add a label"]'
+description = 'textarea[data-focus-id*="DescriptionEdit"]'
+comment = 'textarea[data-aid*="Comment__textarea"]'
 
 
 class StoriesBacklog(ActionPage, FormPage,ElementSearch):
@@ -21,7 +24,10 @@ class StoriesBacklog(ActionPage, FormPage,ElementSearch):
         }
         fields = {
             "story_title": lambda value: self.set_value(story_title, value),
-            "task_title": lambda value: self.set_task(value)
+            "task_title": lambda value: self.set_task(value),
+            "label": lambda value: self.set_value(label, value),
+            "description": lambda value: self.set_value(description, value),
+            "comment": lambda value: self.set_value(comment, value)
         }
         actions = {
             "Add Story": lambda: self.click(add_story_backlog),

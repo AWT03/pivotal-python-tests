@@ -8,11 +8,8 @@ from pivotal_tracker.ui.util.format_string import format_string
 import pivotal_tracker.api.features.steps.custom_steps
 import core.api.features.steps.steps
 from pivotal_tracker.ui.features.steps.functions import *
-<<<<<<< HEAD
-=======
 from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 
->>>>>>> 7a3743dc8fa3b1e247306e14d9f489ac039b9d0f
 
 CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
 
@@ -142,6 +139,24 @@ def step_impl(context, key, word):
     else:
         tab = context.page
     tab.is_displayed_as(key, context.save_names[word])
+
+
+@step('I open the {name} project')
+def step_impl(context, name ):
+    if "access_project" not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    tab.is_displayed_as("access_project", context.save_names["project_name"])
+
+
+@step('I expand the {name} story')
+def step_impl(context, name):
+    if "expand_story" not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    tab.is_displayed_as("expand_story", context.save_names["story_name"])
 
 
 @step('I verify that {key} is displayed as {value}')
@@ -281,10 +296,6 @@ def step_impl(context):
     context.page.do_action("Save")
 
 
-<<<<<<< HEAD
-
-
-=======
 @step('I open the Workspace Name')
 def step_impl(context):
     last_name_workspace = loads(context.api.get_full_response())["name"]
@@ -326,4 +337,3 @@ def step_impl(context, key, selector):
     else:
         exists = tab.is_displayed_as(selector, context.last_set_values[key_split[1]])
     assert exists is False
->>>>>>> 7a3743dc8fa3b1e247306e14d9f489ac039b9d0f

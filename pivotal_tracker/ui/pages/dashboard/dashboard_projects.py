@@ -2,11 +2,12 @@ from core.ui.pages.action_page import ActionPage
 from core.ui.pages.element_search import ElementSearch
 from pivotal_tracker.ui.pages.tabs.user_main_tabs import UserMainTabs
 
-create_project_button = 'button[id="create-project-button]"'
+create_project_button = 'button[id="create-project-button"]'
 project_name_reference = '//a[text()="$(project_name)"]'
 projects_header_name = 'a.projectTileHeader__projectName'
 project_counter = '//span[@data-aid = "my-projects-count"]  [text()="$(counter)"]'
 success_delete_object_sms = '//li[@id="notice"][text()="$(workspace_name) was successfully deleted."]'
+background_div = '.scrim'
 
 sms_map = {
     "success_delete": success_delete_object_sms
@@ -30,6 +31,7 @@ class DashboardProjects(ActionPage, ElementSearch):
 
     def open_create_project_form(self):
         self.click(create_project_button)
+        self.wait_for_hidden(background_div)
         return UserMainTabs.PROJECT_CREATION
 
     def project_exists(self, name):
