@@ -278,3 +278,27 @@ def step_impl(context, key, selector):
 def step_impl(context):
     tab = eval('context.page' + ''.join((context.tab_level + 1) * ['.get_tab()']))
     tab.is_displayed_as("Owner", CONFIG.get("USER").get("owner").get("EMAIL"))
+
+
+@step('I create two projects for this account')
+def step_impl(context):
+    account_id = context.page.do_action("get_account_id")
+    context.execute_steps('Given I start a connection with the Pivotal Tracker API')
+    context.execute_steps('Given I log in as user owner')
+    context.execute_steps('Given I send a POST request to projects with data \n'
+                          '| name                    | account_id         | \n'
+                          '| (prefix)_test_project_1 | ' + account_id + ' | \n'
+                          '| (prefix)_test_project_2 | ' + account_id + ' | \n')
+
+
+@step('I verify that two projects were created')
+def step_impl(context):
+    context.projects_on_account = eval(context.page.do_action('get_project_names'))
+    assert len(context.projects_on_account) == 2
+
+
+@step('I verify projects are not displayed')
+def step_impl(context):
+    tab = eval('context.page' + ''.join((context.tab_level + 1) * ['.get_tab()']))
+    for project in context.projects_on_account:
+        assert tab.is_displayed_as('projects_dashboard', project) is False
