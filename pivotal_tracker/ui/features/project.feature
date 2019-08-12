@@ -1,6 +1,6 @@
 Feature: Create projects
   Background: preconditions
-    Given I login the app as owner
+    Given I login the Pivotal Tracker web application as owner
 
   @wip
   Scenario: Verify that new projects are displayed correctly
@@ -58,17 +58,18 @@ Feature: Create projects
     And I verify account is displayed on account_list
 
 
-  Scenario: Verify that is not possible to manage tasks in a project when disable this property
+
+  Scenario: Verify that disable tasks property do not allow to edit or create tasks
     When I create a project with
         | key           | value                                |
         | project_name  | (prefix)_project_(current_date_time) |
         | account       | (prefix)_account                     |
         | privacy       | Public                               |
-    And I go to ProjectMain->More
+    And I go to ->More
     And I modify project settings with
       | key          | value |
       | enable_tasks | false |
-    And I go to ProjectMain->Stories
+    And I go to ->Stories
     And I click on Add Story
     Then I verify add_task element is not displayed
 

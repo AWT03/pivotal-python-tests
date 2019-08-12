@@ -48,4 +48,5 @@ class ProjectCreationForm(FormPage, ActionPage):
     def create_project(self):
         self.click(create_button)
         self.wait_for_hidden(background_div)
+        self.wait_for_hidden('.scrim.visible')
         return UserMainTabs.PROJECT_MAIN

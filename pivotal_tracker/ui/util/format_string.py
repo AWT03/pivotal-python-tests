@@ -1,9 +1,9 @@
 from json import loads
 from os.path import join
 from datetime import datetime
-from pivotal_tracker.ui.pivotal_tracker_dir import pivotal_tracker_ui_path
+from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 
-CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
+CONFIG = loads(open(join(pivotal_tracker_path, 'config.json')).read())
 
 
 def format_string(value):

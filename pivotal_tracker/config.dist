@@ -1,0 +1,33 @@
+{
+  "BASE_URL": "https://www.pivotaltracker.com/services/v5",
+  "INITIAL_PAGE": "https://www.pivotaltracker.com/signin",
+  "BROWSER": "",
+  "PREFIX": "",
+  "PATH_TEST_FILES": "/pivotal_tracker/api/features/test_data",
+
+  "USER": {
+    "owner": {
+      "USERNAME": "",
+      "PASSWORD": "",
+      "EMAIL": "",
+      "ID": "",
+      "TOKEN": ""
+    }
+  },
+
+  "HEADERS": {
+    "TOKEN": "X-TrackerToken",
+    "Content-Type": "application/json"
+  },
+
+  "ACCOUNTS": {
+    "API": {
+      "ID": "",
+      "NAME": ""
+    },
+    "GUI": {
+      "ID": "",
+      "NAME": ""
+    }
+  }
+}

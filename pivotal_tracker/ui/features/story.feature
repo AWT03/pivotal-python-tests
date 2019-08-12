@@ -6,10 +6,10 @@ Feature: Create stories
       | name                                |
       | (prefix)_multiple_projects_(random) |
     And I save project_name
+    And I login the Pivotal Tracker web application as owner
 
     Scenario: Verify that I can create story
-      And  I login the app as owner
-      And I go to Dashboard->Projects
+      When I go to Dashboard->Projects
       And I open the project_name project
       And I go to ProjectMain->Stories
       When I create a story with
@@ -23,6 +23,7 @@ Feature: Create stories
       And I verify task_title is displayed on task_list
       And I verify description is displayed on description_box
       And I verify comment is displayed on activity_list
+
 
 
 
