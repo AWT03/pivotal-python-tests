@@ -1,17 +1,14 @@
-from behave import given, step
+from behave import given, then, when, step
 from json import loads
 from os.path import join
+from pivotal_tracker.pivotal_tracker_dir import pivotal_tracker_path
 from core.ui.utils.set_up_driver import set_up_driver
-from pivotal_tracker.ui.pivotal_tracker_dir import pivotal_tracker_ui_path
 from pivotal_tracker.ui.pages.login_page import LoginPage
 from pivotal_tracker.ui.util.format_string import format_string
-import pivotal_tracker.api.features.steps.custom_steps
-import core.api.features.steps.steps
-from pivotal_tracker.ui.features.steps.functions import *
 from pivotal_tracker.ui.pages.dashboard.dashboard_page import DashboardPage
 
 
-CONFIG = loads(open(join(pivotal_tracker_ui_path, 'config.json')).read())
+CONFIG = loads(open(join(pivotal_tracker_path, 'config.json')).read())
 
 
 def get_last_set_values(context):
@@ -20,12 +17,12 @@ def get_last_set_values(context):
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
 
 
-@given('I login the app as {username}')
+@given('I login the Pivotal Tracker web application as {username}')
 def step_impl(context, username):
     context.tab_level = 0
     context.page = LoginPage(set_up_driver(CONFIG))
-    context.page.set_form(sign_in_as=CONFIG.get("USERS").get(username).get("username"),
-                          password=CONFIG.get("USERS").get(username).get("password"))
+    context.page.set_form(sign_in_as=CONFIG.get("USER").get(username).get("USERNAME"),
+                          password=CONFIG.get("USER").get(username).get("PASSWORD"))
     context.page = context.page.do_action("Sign In")
 
 
@@ -100,8 +97,7 @@ def step_impl(context, word, key):
 
 @step('I verify that {key} is displayed as {value}')
 def step_impl(context, key, value):
-    print(context.tab_level)
-    tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    tab = eval('context.page' + ''.join((context.page.get_tab_level()+1) * ['.get_tab()']))
     exists = tab.is_displayed_as(key, value)
     assert exists is True
 
@@ -276,3 +272,33 @@ def step_impl(context, key, selector):
     else:
         exists = tab.is_displayed_as(selector, context.last_set_values[key_split[1]])
     assert exists is False
+
+
+@step("I verify that I am the owner of the account")
+def step_impl(context):
+    tab = eval('context.page' + ''.join((context.tab_level + 1) * ['.get_tab()']))
+    tab.is_displayed_as("Owner", CONFIG.get("USER").get("owner").get("EMAIL"))
+
+
+@step('I create two projects for this account')
+def step_impl(context):
+    account_id = context.page.do_action("get_account_id")
+    context.execute_steps('Given I start a connection with the Pivotal Tracker API')
+    context.execute_steps('Given I log in as user owner')
+    context.execute_steps('Given I send a POST request to projects with data \n'
+                          '| name                    | account_id         | \n'
+                          '| (prefix)_test_project_1 | ' + account_id + ' | \n'
+                          '| (prefix)_test_project_2 | ' + account_id + ' | \n')
+
+
+@step('I verify that two projects were created')
+def step_impl(context):
+    context.projects_on_account = eval(context.page.do_action('get_project_names'))
+    assert len(context.projects_on_account) == 2
+
+
+@step('I verify projects are not displayed')
+def step_impl(context):
+    tab = eval('context.page' + ''.join((context.tab_level + 1) * ['.get_tab()']))
+    for project in context.projects_on_account:
+        assert tab.is_displayed_as('projects_dashboard', project) is False

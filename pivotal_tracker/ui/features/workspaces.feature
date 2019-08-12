@@ -1,7 +1,7 @@
 Feature: Workspace
 
   Background: Preconditions
-    Given I login the app as owner
+    Given I login the Pivotal Tracker web application as owner
 
   @gui @acceptance @clean_workspaces
   Scenario: Verify that I can create a Workspace

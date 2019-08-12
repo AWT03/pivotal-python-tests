@@ -90,7 +90,7 @@ Feature: Projects
     Then I expect status code is 400
     And I expect this error too_large_name is thrown
 
-  @functional
+  @functional @wip
   Scenario: Verify that I can create a project with "public" attribute to be visible for all
     When I send a POST request to projects with data
   '''

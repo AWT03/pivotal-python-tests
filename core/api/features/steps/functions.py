@@ -28,9 +28,9 @@ def get_data_text(file_path):
 
 # From a context.table returns data as a dict
 def generate_dict_from_data_table(context):
+    dict_data = {}
     if context.table:
         data_list = context.data_row
-        dict_data = {}
         row_header = data_list.headings
         for head in row_header:
             if head != 'error':
@@ -44,7 +44,8 @@ def generate_data(context):
         data = context.data_text.replace('(prefix)', context.api.get_config().get("PREFIX"))
         data = data.replace('(current_date_time)', current_date_time)
         data = data.replace('(current_date_time_ISO8601)', current_ISO8601_datetime)
-        data = data.replace('(current_account_id)', context.api.get_config().get("ACCOUNT_ID"))
+        data = data.replace('(current_account_id)', context.api.get_config()
+                            .get("ACCOUNTS").get("API").get("ID"))
         data = loads(data)
     elif context.table:
         dict_data = generate_dict_from_data_table(context)
