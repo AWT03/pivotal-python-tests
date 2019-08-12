@@ -2,6 +2,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.keys import Keys
 
 
 # Elements class
@@ -65,3 +66,4 @@ class Element:
     def wait_for_visible(self, *be_shown):
         for element in be_shown:
             self.__wait.until(ec.presence_of_all_elements_located((self.get_selector(element), element)))
+

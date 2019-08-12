@@ -49,4 +49,5 @@ class DashboardProjects(ActionPage, ElementSearch):
 
     def open_project(self, name):
         self.click(project_name_reference.replace('$(project_name)', name))
+        self.wait_for_hidden(background_div)
         return UserMainTabs.PROJECT_MAIN

@@ -4,7 +4,7 @@ from pivotal_tracker.ui.pages.tabs.user_main_tabs import UserMainTabs
 
 project_list = '//a[@class="project_name"][text()="$(project_name)"]'
 account_list = '//div[contains(@class,"account")]/a[text()="$(account)"]'
-create_project_button = '//a[text()="Create Project"]'
+create_project_button = '//a[text()="+ Create Project"]'
 
 
 class ProjectAll(ElementSearch, ActionPage):
