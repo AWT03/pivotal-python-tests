@@ -1,4 +1,4 @@
-Feature: Create stories
+Feature: Create tasks
   Background: preconditions
     Given I start a connection with the Pivotal Tracker API
     And I log in as user owner
