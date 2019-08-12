@@ -8,6 +8,7 @@ Feature: Create stories
     And I save project_name
     And I login the Pivotal Tracker web application as owner
 
+    @wisp
     Scenario: Verify that I can create a story
       When I go to Dashboard->Projects
       And I open the project_name project

@@ -8,7 +8,7 @@ Feature: Create tasks
     And I save project_name
     And I login the Pivotal Tracker web application as owner
 
-
+    @wisp
     Scenario: Verify that stories are created and registered when completed
     When I go to Dashboard->Projects
     And I open the project_name project
