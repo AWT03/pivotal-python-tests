@@ -20,7 +20,7 @@ class ProjectMain(TabPage):
             "Members": lambda: self.get_members_tab(),
             "More": lambda: self.get_more_tab()
         }
-        self._tab = ProjectStories(self._driver)
+        self._tab = StoriesBacklog(self._driver)
         # self.wait_for_hidden('.scrim')
 
     def get_stories_tab(self):

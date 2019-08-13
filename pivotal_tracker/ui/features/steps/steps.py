@@ -17,6 +17,17 @@ def get_last_set_values(context):
         context.last_set_values[row[0]] = format_string(row[1]) if isinstance(row[1], str) else row[1]
 
 
+@step("I save {feature}")
+def step_impl(context, feature):
+    api_response = loads(context.api.get_full_response())
+    context.save_names[feature] = api_response['name']
+
+
+@step('I click on {feature} created by API')
+def step_impl(context, feature):
+    context.page.do_action(feature, context.save_names)
+
+
 @given('I login the Pivotal Tracker web application as {username}')
 def step_impl(context, username):
     context.tab_level = 0
@@ -29,7 +40,29 @@ def step_impl(context, username):
 @step('I create a project with')
 def step_impl(context):
     assert context.table is not None
+    if "projects_dashboard" not in context.page.get_search_keys():
+        context.page.get_tab()
     context.page.do_action("Create Project")
+    get_last_set_values(context)
+    context.page.go_to("ProjectCreation")
+    context.page.get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Create")
+
+
+@step('I create a project on project list with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.get_tab().do_action("Create Project")
+    get_last_set_values(context)
+    context.page.go_to("ProjectCreation")
+    context.page.get_tab().set_form(**context.last_set_values)
+    context.page.do_action("Create")
+
+
+@step('I create a project on main header with')
+def step_impl(context):
+    assert context.table is not None
+    context.page.context.get_tab().do_action("Create Project")
     get_last_set_values(context)
     context.page.go_to("ProjectCreation")
     context.page.get_tab().set_form(**context.last_set_values)
@@ -91,8 +124,42 @@ def step_impl(context, word, key):
         tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
     else:
         tab = context.page
-    exists = tab.is_displayed_as(key, context.last_set_values[word])
+    if word in context.last_set_values:
+        exists = tab.is_displayed_as(key, context.last_set_values[word])
+    else:
+        exists = tab.is_displayed_as(key, word)
     assert exists is True
+
+
+@step('Check {task} box as completed')
+def step_impl(context, task):
+    if 'complete_task' not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    exists = tab.is_displayed_as('complete_task', context.last_set_values[task])
+    assert exists is True
+
+
+@step('I open the {name} project')
+def step_impl(context, name ):
+    if "access_project" not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    tab.is_displayed_as("access_project", context.save_names["project_name"])
+
+
+@step('I expand the {name} story')
+def step_impl(context, name):
+    if "expand_story" not in context.page.get_search_keys():
+        tab = eval('context.page' + ''.join((context.tab_level+1) * ['.get_tab()']))
+    else:
+        tab = context.page
+    if name == "story_name":
+        tab.is_displayed_as("expand_story", context.save_names["story_name"])
+    else:
+        tab.is_displayed_as("expand_story", context.last_set_values["story_title"])
 
 
 @step('I verify that {key} is displayed as {value}')

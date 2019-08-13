@@ -60,3 +60,7 @@ Feature: Delete a Workspace
     Then I verify that "success_delete" message is displayed for "workspace_name"
     And I go to ->Workspaces
     And I verify workspace_name is not displayed on workspaces_list
+
+
+    #Change the step about login for api and UI
+  #Run in mode headless

@@ -2,11 +2,12 @@ from core.ui.pages.action_page import ActionPage
 from core.ui.pages.element_search import ElementSearch
 from pivotal_tracker.ui.pages.tabs.user_main_tabs import UserMainTabs
 
-create_project_button = 'button[id="create-project-button"'
+create_project_button = 'button[id="create-project-button"]'
 project_name_reference = '//a[text()="$(project_name)"]'
 projects_header_name = 'a.projectTileHeader__projectName'
 project_counter = '//span[@data-aid = "my-projects-count"]  [text()="$(counter)"]'
 success_delete_object_sms = '//li[@id="notice"][text()="$(workspace_name) was successfully deleted."]'
+background_div = '.scrim'
 
 sms_map = {
     "success_delete": success_delete_object_sms
@@ -19,16 +20,18 @@ class DashboardProjects(ActionPage, ElementSearch):
         search_elements = {
             "projects_dashboard": lambda value: self.project_exists(value),
             "projects_counter": lambda value: self.project_counter(value),
-            "success_delete": lambda value: self.success_delete_message(value)
+            "success_delete": lambda value: self.success_delete_message(value),
+            "access_project": lambda value: self.open_project(value)
         }
         actions = {
-            "Create Project": lambda: self.open_create_project_form()
+            "Create Project": lambda: self.open_create_project_form(),
         }
         self.update_actions(**actions)
         self.update_search_fields(**search_elements)
 
     def open_create_project_form(self):
         self.click(create_project_button)
+        self.wait_for_hidden(background_div)
         return UserMainTabs.PROJECT_CREATION
 
     def project_exists(self, name):
@@ -43,3 +46,8 @@ class DashboardProjects(ActionPage, ElementSearch):
     def success_delete_message(self, value):
         replace = success_delete_object_sms.replace('$(workspace_name)', value)
         return len(self.find_elements(replace))
+
+    def open_project(self, name):
+        self.click(project_name_reference.replace('$(project_name)', name))
+        self.wait_for_hidden(background_div)
+        return UserMainTabs.PROJECT_MAIN
